@@ -1,16 +1,28 @@
+import NavItem from './NavItem';
 import './styles.css';
-export default function RootLayout({ children }: { children: any }){
+
+export default function RootLayout({ children }: { children: React.ReactNode }){
     return (
         <html>
-            <head></head>
+            <head>
+
+            </head>
             <body>
                 <div className="hero">
-                    {children}
+                    <aside>
+                        <NavItem name='About Me' url='/' />
+                        <NavItem name='My Projects' url='/projects' />
+                        <NavItem name='My Skills' url='/skills' />
+                        <NavItem name='My Experience' url='/experience' />
+                    </aside>
+                    <main>
+                        {children}
+                    </main>
                 </div>
-            </body>
-            <footer>
-                Built with devotion, drive, and NextJS.
+                <footer>
+                Built with devotion, care, and NextJS.
             </footer>
+            </body>
         </html>
     )
 }
