@@ -1,0 +1,28 @@
+html {
+  min-height: 100vh;
+}
+body {
+  background-image: url("./background.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96vh;
+}
+
+footer {
+  height: 2rem;
+  text-align: end;
+  margin-right: 1rem;
+  color: white;
+}
+
+.hero {
+  width: 60rem;
+  height: 40rem;
+  background-color: rgba(208, 205, 205, 0.16);
+  backdrop-filter: blur(25px);
+  border-radius: 40px;
+}
