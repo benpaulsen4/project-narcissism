@@ -33,6 +33,17 @@ main {
   grid-column: 2;
 }
 
+h1 {
+  font-size: 2.5em;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+code {
+  font-size: 1.5em;
+  color: #adadad;
+}
+
 .hero {
   width: 60rem;
   height: 40rem;
