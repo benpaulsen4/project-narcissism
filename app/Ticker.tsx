@@ -88,6 +88,6 @@ export default function Ticker(){
   }, []);
 
     return (
-        <code className={JBmono.className}>{current}</code>
+        <div className="fix"><code className={JBmono.className}>{current}</code></div>
     );
 }
