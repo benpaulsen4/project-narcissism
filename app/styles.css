@@ -42,11 +42,17 @@ h1 {
 
 h2 {
     font-size: 1.75em;
+    margin-bottom: 0.5rem;
 }
 
 code {
   font-size: 1.5em;
   color: #adadad;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
 
 .hero {
@@ -67,7 +73,25 @@ code {
     display: flex;
 }
 
+.flex-center {
+  align-items: center;
+}
+
 .slash {
     margin-left: 0.25rem;
     color: #ff0099;
+}
+
+.bi {
+  font-size: 2rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+
+.bigger {
+  font-size: 1.25rem;
+}
+
+.left-gap {
+  margin-left: 2rem;
 }

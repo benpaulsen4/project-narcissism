@@ -1,4 +1,5 @@
 import Ticker from "./Ticker";
+import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
 
 export default function Home(){
     return (
@@ -11,6 +12,22 @@ export default function Home(){
             <div className="d-flex">
                 <h2>Connect With Me</h2>
                 <h2 className="slash">/</h2>
+            </div>
+            <div className="d-flex bigger flex-center">
+                <a href="https://www.linkedin.com/in/ben-paulsen-26979b237/" className="d-flex flex-center" target="_blank">
+                    <i className="bi bi-linkedin"></i>
+                    LinkedIn
+                </a>
+
+                <a href="https://github.com/benpaulsen4" className="d-flex flex-center" target="_blank">
+                    <i className="bi bi-github left-gap"></i>
+                    GitHub
+                </a>
+
+                <a href="mailto:ben.paulsen4@gmail.com" className="d-flex flex-center">
+                    <i className="bi bi-envelope-fill left-gap"></i>
+                    Email
+                </a>
             </div>
         </div>
     )
