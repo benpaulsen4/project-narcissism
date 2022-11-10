@@ -1,16 +1,19 @@
 .projects {
     display: grid;
     grid-template: 34rem / 2rem auto;
+    overflow-y: auto;
+    -webkit-mask: linear-gradient(0deg,#0000,#000 1% 99%,#0000);
 }
 
 .bar {
-    height: 97%;
+    height: 83%;
     width: 0.75rem;
     background: rgba(215, 215, 215, 0.15);
     grid-column: 1;
     border-radius: 20px;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
+    position: fixed;
 }
 
 .barbit {
@@ -25,6 +28,7 @@
 
 .entries {
     grid-column: 2;
+    margin-top: 0.5rem;
 }
 
 .entry {
