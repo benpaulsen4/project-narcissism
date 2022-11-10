@@ -1,0 +1,75 @@
+.projects {
+    display: grid;
+    grid-template: 34rem / 2rem auto;
+}
+
+.bar {
+    height: 97%;
+    width: 0.75rem;
+    background: rgba(215, 215, 215, 0.15);
+    grid-column: 1;
+    border-radius: 20px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.barbit {
+    height: 1.75rem;
+    width: 0.75rem;
+    background: rgba(215, 215, 215, 0.8);
+    border-radius: 20px;
+    position: absolute;
+    left: -32px;
+    top: -2px;
+}
+
+.entries {
+    grid-column: 2;
+}
+
+.entry {
+    display: grid;
+    grid-template: 1rem auto / 17rem auto;
+    grid-gap: 0.5rem;
+}
+
+.entry img {
+    grid-column: 1;
+    grid-row: 2;
+    width: 100%;
+    border-radius: 1rem;
+}
+
+.datestamp {
+    grid-column: 1;
+    grid-row: 1;
+    position: relative;
+}
+
+.textContent {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.title {
+    margin-bottom: 0;
+    margin-top: -0.5rem;
+}
+
+.description {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+.tag {
+    background: rgba(215, 215, 215, 0.15);
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.link {
+    text-decoration: underline;
+    display: flex;
+    align-items: center;
+}
