@@ -4,7 +4,6 @@ import dataset from "../../data/projects.json";
 import {ProjectData} from "../../data/structs";
 
 export default function Projects(){
-
     const projects = dataset.data as ProjectData[];
 
     return (

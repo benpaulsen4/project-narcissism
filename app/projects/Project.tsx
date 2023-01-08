@@ -7,7 +7,7 @@ export default function Project({data}: {data: ProjectData}) {
         return (
             <div className={styles.entry}>
                 <div className={styles.datestamp}>{data.date} <div className={styles.barbit}></div></div>
-                <Image src={data.imgUrl} alt={data.name} />
+                <div className={styles.imageContainer}> <Image className={styles.image} src={data.imgUrl} alt={data.name} fill={true} /></div>
                 <div className={styles.textContent}>
                     <h2 className={styles.title}>{data.name}</h2>
                     <p className={styles.description}>{data.description}</p>

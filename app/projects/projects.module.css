@@ -33,15 +33,20 @@
 
 .entry {
     display: grid;
-    grid-template: 1rem auto / 17rem auto;
+    grid-template: 1.5rem auto / 17rem auto;
     grid-gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .entry img {
+    border-radius: 1rem;
+    object-fit: cover;
+}
+
+.imageContainer {
     grid-column: 1;
     grid-row: 2;
-    width: 100%;
-    border-radius: 1rem;
+    position: relative;
 }
 
 .datestamp {
