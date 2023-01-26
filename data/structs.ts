@@ -38,4 +38,21 @@ export class ExperienceData {
     }
 }
 
+export class SkillData {
+    name: string;
+    imgUrl: string;
+    circleSize: number;
+    circleTop: number;
+    circleLeft: number;
+
+    constructor(name:string, imgUrl: string, circleSize: number, circleTop: number,
+                circleLeft: number) {
+        this.name = name;
+        this.imgUrl = imgUrl;
+        this.circleSize = circleSize;
+        this.circleTop = circleTop;
+        this.circleLeft = circleLeft;
+    }
+}
+
 export type Link = { name: string, href: string };

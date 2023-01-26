@@ -13,8 +13,7 @@ export default function Experience() {
                 <h1 className="slash">/</h1>
             </div>
             <div className={styles.experiences}>
-                {experiences.map((e) => <ExperienceBox data={e} key={e.name}></ExperienceBox>)}
-
+                {experiences.map((e) => <ExperienceBox data={e} key={e.name}/>)}
             </div>
         </div>
     )

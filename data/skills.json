@@ -1,0 +1,179 @@
+{
+    "data": [
+        {
+            "name": "DevOps",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 80,
+            "circleLeft": 85
+        },
+        {
+            "name": "MongoDB",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 77,
+            "circleLeft": 180
+        },
+        {
+            "name": "Angular",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 166,
+            "circleLeft": 95
+        },
+        {
+            "name": "Docker",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 290,
+            "circleLeft": 129
+        },
+        {
+            "name": "REST APIs",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 422,
+            "circleLeft": 105
+        },
+        {
+            "name": "C# / .NET",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 3,
+            "circleTop": 142,
+            "circleLeft": 216
+        },
+        {
+            "name": "Linux",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 341,
+            "circleLeft": 193
+        },
+        {
+            "name": "CI / CD",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 467,
+            "circleLeft": 238
+        },
+        {
+            "name": "Express",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 80,
+            "circleLeft": 330
+        },
+        {
+            "name": "Azure",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 295,
+            "circleLeft": 304
+        },
+        {
+            "name": "HTML / CSS",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 412,
+            "circleLeft": 333
+        },
+        {
+            "name": "NextJS",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 45,
+            "circleLeft": 410
+        },
+        {
+            "name": "Node.js",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 199,
+            "circleLeft": 389
+        },
+        {
+            "name": "JS / TS",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 3,
+            "circleTop": 268,
+            "circleLeft": 422
+        },
+        {
+            "name": "Python",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 437,
+            "circleLeft": 455
+        },
+        {
+            "name": "React",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 115,
+            "circleLeft": 452
+        },
+        {
+            "name": "SQL",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 204,
+            "circleLeft": 545
+        },
+        {
+            "name": "UI Design",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 287,
+            "circleLeft": 588
+        },
+        {
+            "name": "AWS",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 450,
+            "circleLeft": 620
+        },
+        {
+            "name": "Solutions Consulting",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 2,
+            "circleTop": 49,
+            "circleLeft": 566
+        },
+        {
+            "name": "CosmosDB",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 170,
+            "circleLeft": 624
+        },
+        {
+            "name": "Jira",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 360,
+            "circleLeft": 645
+        },
+        {
+            "name": "Vue",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 248,
+            "circleLeft": 670
+        },
+        {
+            "name": "Flutter",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 405,
+            "circleLeft": 549
+        },
+        {
+            "name": "Railway",
+            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "circleSize": 1,
+            "circleTop": 490,
+            "circleLeft": 525
+        }
+    ]
+}

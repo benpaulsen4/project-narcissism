@@ -78,6 +78,10 @@ a {
   align-items: center;
 }
 
+.p-relative {
+    position: relative;
+}
+
 .slash {
     margin-left: 0.25rem;
     color: #ff0099;
