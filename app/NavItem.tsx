@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-export default function NavItem({name, url, active}: {name: string, url: string, active?: boolean}){
+export default function NavItem({name, url}: {name: string, url: string}){
     const path = usePathname();
     return (
         <>

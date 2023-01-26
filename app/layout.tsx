@@ -23,7 +23,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                 </main>
             </div>
             <footer>
-                Built with love and NextJS 13.
+                This is a <b>beta version</b> of the site - Built with love and NextJS 13.
             </footer>
             </body>
         </html>
