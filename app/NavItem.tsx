@@ -6,23 +6,13 @@ import {useEffect} from "react";
 import {Analytics, logEvent} from "@firebase/analytics";
 import AnalyticsHelper, {EnvironmentInfo} from "../lib/AnalyticsHelper";
 
-export default function NavItem({name, url}: { name: string, url: string }) {
+export default function NavItem({name, url, firebaseConfig}: { name: string, url: string, firebaseConfig?: any }) {
     const path = usePathname();
     let environment: EnvironmentInfo;
     let envSet = false;
     let analytics: Analytics | undefined;
-    
-    const firebaseConfig = {
-        apiKey: process.env.FB_APIKEY,
-        authDomain: process.env.FB_AUTH,
-        projectId: process.env.FB_PROJECT,
-        storageBucket: process.env.FB_STORAGE,
-        messagingSenderId: process.env.FB_MESSAGING,
-        appId: process.env.FB_APPID,
-        measurementId: process.env.FB_MEASUREMENT,
-    };
 
-    if (process.env.NODE_ENV === 'production') {
+    if (firebaseConfig) {
         let helper = new AnalyticsHelper();
         analytics = helper.initialize(firebaseConfig);
         new AnalyticsHelper().getEnvironment().then((value) => {
@@ -32,7 +22,7 @@ export default function NavItem({name, url}: { name: string, url: string }) {
     }
 
     useEffect(() => {
-        if (process.env.NODE_ENV === 'production' && envSet && analytics) {
+        if (firebaseConfig && envSet && analytics) {
             logEvent(analytics, "page_view", {
                 date: new Date().toISOString(),
                 page: path,
