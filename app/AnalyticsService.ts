@@ -1,10 +1,9 @@
-import * as mongoDB from "mongodb";
 import clientPromise from "./MongoClientside";
 export default class AnalyticsService {
     private userAgent?: string;
     private ip?: string;
     private location?: string;
-    private dataCollection?: mongoDB.Collection;
+    private dataCollection?: any;
     public initialized = false;
 
     async initialize(config: DbConfig){
