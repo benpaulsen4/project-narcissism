@@ -1,4 +1,14 @@
+import {initializeApp} from "firebase/app";
+import {getAnalytics} from "@firebase/analytics";
+
 export default class AnalyticsHelper{
+
+    initialize(config: any){
+        if (process.env.NODE_ENV === 'production'){
+            let app = initializeApp(config)
+            return getAnalytics(app)
+        }
+    }
     async getEnvironment(): Promise<EnvironmentInfo>{
         const data = this.JSONify(await (await fetch("https://www.cloudflare.com/cdn-cgi/trace")).text());
 

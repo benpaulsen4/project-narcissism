@@ -3,16 +3,19 @@
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useEffect} from "react";
-import {analytics} from "../lib/firebase";
-import {logEvent} from "@firebase/analytics";
+import {firebaseConfig} from "../lib/firebase";
+import {Analytics, logEvent} from "@firebase/analytics";
 import AnalyticsHelper, {EnvironmentInfo} from "../lib/AnalyticsHelper";
 
 export default function NavItem({name, url}: { name: string, url: string }) {
     const path = usePathname();
     let environment: EnvironmentInfo;
     let envSet = false;
+    let analytics: Analytics | undefined;
 
     if (process.env.NODE_ENV === 'production') {
+        let helper = new AnalyticsHelper();
+        analytics = helper.initialize(firebaseConfig);
         new AnalyticsHelper().getEnvironment().then((value) => {
             environment = value;
             envSet = true;
@@ -20,14 +23,14 @@ export default function NavItem({name, url}: { name: string, url: string }) {
     }
 
     useEffect(() => {
-        if (process.env.NODE_ENV === 'production' && envSet) {
+        if (process.env.NODE_ENV === 'production' && envSet && analytics) {
             logEvent(analytics, "page_view", {
                 date: new Date().toISOString(),
                 page: path,
                 environment
             });
         }
-    }, [path, envSet]);
+    }, [path, envSet, analytics]);
 
     return (
         <>
