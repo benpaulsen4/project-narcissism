@@ -3,33 +3,25 @@
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {useEffect} from "react";
-import {Analytics, logEvent} from "@firebase/analytics";
-import AnalyticsHelper, {EnvironmentInfo} from "../lib/AnalyticsHelper";
+import {logEvent} from "@firebase/analytics";
+import AnalyticsHelper from "../lib/AnalyticsHelper";
 
 export default function NavItem({name, url, firebaseConfig}: { name: string, url: string, firebaseConfig?: any }) {
     const path = usePathname();
-    let environment: EnvironmentInfo;
-    let envSet = false;
-    let analytics: Analytics | undefined;
-
-    if (firebaseConfig) {
-        let helper = new AnalyticsHelper();
-        analytics = helper.initialize(firebaseConfig);
-        new AnalyticsHelper().getEnvironment().then((value) => {
-            environment = value;
-            envSet = true;
-        });
-    }
 
     useEffect(() => {
-        if (firebaseConfig && envSet && analytics) {
-            logEvent(analytics, "page_view", {
-                date: new Date().toISOString(),
-                page: path,
-                environment
+        if (firebaseConfig) {
+            let helper = new AnalyticsHelper();
+            let analytics = helper.initialize(firebaseConfig);
+            new AnalyticsHelper().getEnvironment().then((value) => {
+                logEvent(analytics!, "page_view", {
+                    date: new Date().toISOString(),
+                    page: path,
+                    environment: value
+                });
             });
         }
-    }, [path, envSet, analytics]);
+    }, [path]);
 
     return (
         <>
