@@ -1,10 +1,33 @@
 "use client";
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import {usePathname} from 'next/navigation';
+import {useEffect} from "react";
+import {analytics} from "../lib/firebase";
+import {logEvent} from "@firebase/analytics";
+import AnalyticsHelper, {EnvironmentInfo} from "../lib/AnalyticsHelper";
 
-export default function NavItem({name, url}: {name: string, url: string}){
+export default function NavItem({name, url}: { name: string, url: string }) {
     const path = usePathname();
+    let environment: EnvironmentInfo;
+    let envSet = false;
+
+    if (process.env.NODE_ENV === 'production') {
+        new AnalyticsHelper().getEnvironment().then((value) => {
+            environment = value;
+            envSet = true;
+        });
+    }
+
+    useEffect(() => {
+        if (process.env.NODE_ENV === 'production' && envSet) {
+            logEvent(analytics, "page_view", {
+                date: new Date().toISOString(),
+                page: path,
+                environment
+            });
+        }
+    }, [path, envSet]);
 
     return (
         <>
