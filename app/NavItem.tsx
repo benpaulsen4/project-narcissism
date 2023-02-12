@@ -2,26 +2,9 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import {useEffect} from "react";
-import AnalyticsService, {DbConfig} from "./AnalyticsService";
 
-export default function NavItem({name, url, dbconfig}: {name: string, url: string, dbconfig?: DbConfig}){
+export default function NavItem({name, url}: {name: string, url: string}){
     const path = usePathname();
-    let analyticsService: AnalyticsService = new AnalyticsService();
-
-    useEffect(() => {
-        const analyze = async () => {
-            if (dbconfig) {
-                if (!analyticsService?.initialized) {
-                    await analyticsService.initialize(dbconfig);
-                }
-                await analyticsService.collect(path);
-            }
-        };
-
-        analyze()
-        .catch(console.error);
-    }, [dbconfig, path]);
 
     return (
         <>

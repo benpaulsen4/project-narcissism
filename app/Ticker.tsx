@@ -2,7 +2,7 @@
 import { JetBrains_Mono } from "@next/font/google";
 import { useEffect, useState } from "react";
 
-const JBmono = JetBrains_Mono({weight:"400"});
+const JBmono = JetBrains_Mono({weight:"400", subsets: ["latin"]});
 
 const sleep = (ms: number) => {
     return new Promise(resolve => setTimeout(resolve, ms));
