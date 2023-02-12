@@ -6,7 +6,7 @@ import {DbConfig} from "./AnalyticsService";
 const IPS = IBM_Plex_Sans({weight: "400"});
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
-    const dbConfig = new DbConfig(process.env.MONGO_URL, process.env.DB_NAME, process.env.COLLECTION_NAME);
+    const dbConfig = new DbConfig(process.env.DB_NAME, process.env.COLLECTION_NAME);
 
     return (
         <html className={IPS.className}>

@@ -1,4 +1,5 @@
 import * as mongoDB from "mongodb";
+import clientPromise from "./MongoClientside";
 export default class AnalyticsService {
     private userAgent?: string;
     private ip?: string;
@@ -7,11 +8,11 @@ export default class AnalyticsService {
     public initialized = false;
 
     async initialize(config: DbConfig){
-        if (!config || !config.connection || !config.db || !config.collection){
+        if (!config || !config.db || !config.collection){
             throw new Error("Missing/incomplete configuration!");
         }
 
-        const client = new mongoDB.MongoClient(config.connection);
+        const client = await clientPromise;
         await client.connect();
         this.dataCollection = client.db(config.db).collection(config.collection);
 
@@ -48,12 +49,10 @@ export default class AnalyticsService {
 }
 
 export class DbConfig {
-    connection?: string;
     db?: string;
     collection?: string
 
-    constructor(connection?: string, db?: string, collection?: string) {
-        this.connection = connection;
+    constructor(db?: string, collection?: string) {
         this.db = db;
         this.collection = collection;
     }
