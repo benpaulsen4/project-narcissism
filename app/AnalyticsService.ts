@@ -1,4 +1,5 @@
-import clientPromise from "./MongoClientside";
+import clientPromise from "../lib/MongoClientside";
+
 export default class AnalyticsService {
     private userAgent?: string;
     private ip?: string;
