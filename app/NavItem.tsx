@@ -14,10 +14,11 @@ export default function NavItem({name, url, firebaseConfig}: { name: string, url
             let helper = new AnalyticsHelper();
             let analytics = helper.initialize(firebaseConfig);
             new AnalyticsHelper().getEnvironment().then((value) => {
-                logEvent(analytics!, "page_view", {
+                logEvent(analytics!, "page_engagement", {
                     date: new Date().toISOString(),
                     page: path,
-                    environment: value
+                    ua: value.userAgent,
+                    ip: value.ip
                 });
             });
         }
