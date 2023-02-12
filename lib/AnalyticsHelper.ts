@@ -4,7 +4,7 @@ import {getAnalytics} from "@firebase/analytics";
 export default class AnalyticsHelper{
 
     initialize(config: any){
-        if (process.env.NODE_ENV === 'production'){
+        if (config){
             let app = initializeApp(config)
             return getAnalytics(app)
         }
