@@ -7,12 +7,12 @@ import AnalyticsService, {DbConfig} from "./AnalyticsService";
 
 export default function NavItem({name, url, dbconfig}: {name: string, url: string, dbconfig?: DbConfig}){
     const path = usePathname();
-    let analyticsService: AnalyticsService;
+    let analyticsService: AnalyticsService = new AnalyticsService();
 
     useEffect(() => {
         const analyze = async () => {
             if (dbconfig) {
-                if (!analyticsService.initialized) {
+                if (!analyticsService?.initialized) {
                     await analyticsService.initialize(dbconfig);
                 }
                 await analyticsService.collect(path);
