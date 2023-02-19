@@ -2,17 +2,13 @@
     "data": [
         {
             "name": "This Website",
-            "date": "2022, November",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in eros eu magna malesuada fringilla. Nullam sed purus sit amet ipsum posuere porttitor dictum pellentesque elit. ",
+            "date": "2023, February",
+            "description": "What started out as a passing thought towards the end of my degree eventually snowballed into a high-quality demonstration of my abilities. After many months of working on this project on the side, I finally had enough to release the very first version of my personal portfolio in February 2023.",
             "imgUrl": "https://www.chicken.ca/wp-content/uploads/2013/05/Moist-Chicken-Burgers-1180x580.jpg",
             "links": [
                 {
                     "name": "GitHub",
-                    "href": "https://google.com"
-                },
-                {
-                    "name": "Other",
-                    "href": "https://sussy.amogus"
+                    "href": "https://github.com/benpaulsen4/project-narcissism"
                 }
             ],
             "tags": [
@@ -22,14 +18,36 @@
             ]
         },
         {
-            "name": "Tanda Job Hub",
+            "name": "Youtube Stats Collector",
+            "date": "2023, January",
+            "description": "As somewhat of a data science nerd myself, and a major fan of many Youtube creators, this was a perfect opportunity to try out something new. In the span of 2 Sunday afternoons, I created a highly configurable application which could regularly collect subscriber counts of selected creators and provide analytics demonstrating their relative performance.",
+            "imgUrl": "https://www.chicken.ca/wp-content/uploads/2013/05/Moist-Chicken-Burgers-1180x580.jpg",
+            "links": [
+                {
+                    "name": "GitHub (Coming soon)",
+                    "href": "#"
+                }
+            ],
+            "tags": [
+                "CS",
+                ".NET Console",
+                "Youtube API v3",
+                "ScottPlot"
+            ]
+        },
+        {
+            "name": "Tanda JobHub",
             "date": "2022, September",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in eros eu magna malesuada fringilla. Nullam sed purus sit amet ipsum posuere porttitor dictum pellentesque elit. ",
+            "description": "In the final year of my degree, I was partnered with real-world organization Tanda to construct a solution for them as part of a team. JobHub is a job listing site focused on short-term flexible work, allowing employees of consenting organizations to work temporary positions in other parts of the organization or even in other partner organizations entirely. For this project we were awarded a grade of 95% - reflecting our excellent fit of the polished project to Tanda's needs.",
             "imgUrl": "https://media.tenor.com/KlR2A_kgIFoAAAAd/aster-arcadia-aster.gif",
             "links": [
                 {
-                    "name": "Deployed Version (by request)",
-                    "href": "https://sussy.amogus"
+                    "name": "Deployed Version (By request)",
+                    "href": "https://tandajobhub-qut.up.railway.app/"
+                },
+                {
+                    "name": "Tanda Website",
+                    "href": "https://www.tanda.co/"
                 }
             ],
             "tags": [
@@ -42,12 +60,12 @@
         {
             "name": "Web Spider",
             "date": "2022, August",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in eros eu magna malesuada fringilla. Nullam sed purus sit amet ipsum posuere porttitor dictum pellentesque elit. ",
+            "description": "My first experimental home project, Web Spider is a simple web crawler that demonstrates on a high level how a search engine crawler works. It is even multi-threaded to allow for a greater throughput of web request creation and processing.",
             "imgUrl": "https://cosmosmagazine.com/wp-content/uploads/2022/09/Hacker.jpg",
             "links": [
                 {
-                    "name": "GitHub",
-                    "href": "https://google.com"
+                    "name": "GitHub (Coming soon)",
+                    "href": "#"
                 }
             ],
             "tags": [
@@ -58,13 +76,17 @@
         },
         {
             "name": "REX NOC Comment Portal",
-            "date": "2022, Your Mom",
-            "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in eros eu magna malesuada fringilla. Nullam sed purus sit amet ipsum posuere porttitor dictum pellentesque elit. ",
+            "date": "2022, July",
+            "description": "As part of my short time at REX, I was tasked with developing a beta solution to submitting comments to a database so that they could be read in a PowerBI dashboard. This was my first non-university web project.",
             "imgUrl": "https://www.standards.org.au/getattachment/c4e407fe-9976-4cfe-90db-9596e37105d0/PCMS.jpg.aspx?lang=en-AU&width=1200&height=840&ext=.jpg",
             "links": [
                 {
                     "name": "GitHub",
-                    "href": "https://google.com"
+                    "href": "https://github.com/benpaulsen4/REX-NOC-Comments-Portal"
+                },
+                {
+                    "name": "REX Website",
+                    "href": "https://rexenergy.com.au"
                 }
             ],
             "tags": [
