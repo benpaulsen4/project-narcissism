@@ -2,8 +2,8 @@
     "data": [
         {
             "name": "Queensland University of Technology",
-            "description": "Bachelor of Information Technology (Computer Science) w/ Distiction & Bachelor of Business (Management) w/ Distiction",
-            "imgUrl": "https://www.qut.edu.au/__data/assets/image/0007/909781/qut-logo-og-1200.jpg",
+            "description": "Bachelor of Information Technology (Computer Science) with Distiction & Bachelor of Business (Management) with Distiction",
+            "imgUrl": "/assets/experience-images/qut.jpg",
             "boxHeight": 1,
             "boxWidth": 3,
             "startx": 1,
@@ -12,7 +12,7 @@
         {
             "name": "Grey Matta Solutions",
             "description": "Digital Solutions Consultant & Developer",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/experience-images/gms.png",
             "boxHeight": 2,
             "boxWidth": 1,
             "startx": 4,
@@ -21,7 +21,7 @@
         {
             "name": "REX Energy",
             "description": "Solutions Consultant & DevOps Developer",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/experience-images/rex.png",
             "boxHeight": 1,
             "boxWidth": 2,
             "startx": 1,
@@ -30,7 +30,7 @@
         {
             "name": "Freelance",
             "description": "My Personal Projects",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/experience-images/freelance.png",
             "boxHeight": 1,
             "boxWidth": 1,
             "startx": 3,
@@ -39,7 +39,7 @@
         {
             "name": "Gruntify",
             "description": "Software Developer & Customer Experience Liason",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/experience-images/gruntify.webp",
             "boxHeight": 1,
             "boxWidth": 3,
             "startx": 2,

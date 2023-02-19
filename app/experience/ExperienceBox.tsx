@@ -9,7 +9,7 @@ export default function ExperienceBox({data}: { data: ExperienceData }) {
             gridColumn: data.startx + " / span " + data.boxWidth,
             gridRow: data.starty + " / span " + data.boxHeight
         }}>
-            <Image src={data.imgUrl} alt={data.name} width="70" height="70"></Image>
+            <Image style={{objectFit: "contain"}} src={data.imgUrl} alt={data.name} width="70" height="70"></Image>
             <div className={styles.textContainer}>
                 {data.name == "_filler" ? <h3 className={styles.title}>Your Org Here?</h3> :
                     <>
