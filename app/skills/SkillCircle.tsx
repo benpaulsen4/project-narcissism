@@ -18,7 +18,7 @@ export default function SkillCircle({data}: {data: SkillData}){
     return (
             <div className={`${styles.circle} ${styles[sizeName]}`} style={{top: data.circleTop, left: data.circleLeft}}>
                 <br/>
-                <Image src={data.imgUrl} alt={data.name} width={imageSize} height={imageSize}></Image>
+                <Image src={data.imgUrl} alt={data.name} width={imageSize} height={imageSize} style={{objectFit: "contain"}}></Image>
                 <p className={styles.name}>{data.name}</p>
                 <br/>
             </div>

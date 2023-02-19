@@ -2,175 +2,175 @@
     "data": [
         {
             "name": "DevOps",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/devops.webp",
             "circleSize": 1,
             "circleTop": 30,
             "circleLeft": 35
         },
         {
             "name": "MongoDB",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/mongodb.webp",
             "circleSize": 1,
             "circleTop": 27,
             "circleLeft": 130
         },
         {
             "name": "Angular",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/angular.png",
             "circleSize": 2,
             "circleTop": 116,
             "circleLeft": 45
         },
         {
             "name": "Docker",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/docker.webp",
             "circleSize": 1,
             "circleTop": 240,
             "circleLeft": 79
         },
         {
             "name": "REST APIs",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/api.png",
             "circleSize": 2,
             "circleTop": 372,
             "circleLeft": 55
         },
         {
             "name": "C# / .NET",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/csharp.png",
             "circleSize": 3,
             "circleTop": 92,
             "circleLeft": 166
         },
         {
             "name": "Linux",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/linux.png",
             "circleSize": 2,
             "circleTop": 291,
             "circleLeft": 143
         },
         {
             "name": "CI / CD",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/cicd.png",
             "circleSize": 1,
             "circleTop": 417,
             "circleLeft": 188
         },
         {
             "name": "Express",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/express.png",
             "circleSize": 1,
             "circleTop": 30,
             "circleLeft": 280
         },
         {
             "name": "Azure",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/azure.png",
             "circleSize": 2,
             "circleTop": 245,
             "circleLeft": 254
         },
         {
             "name": "HTML / CSS",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/html.png",
             "circleSize": 2,
             "circleTop": 362,
             "circleLeft": 283
         },
         {
             "name": "NextJS",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/next.png",
             "circleSize": 1,
             "circleTop": -5,
             "circleLeft": 360
         },
         {
             "name": "Node.js",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/node.png",
             "circleSize": 1,
             "circleTop": 149,
             "circleLeft": 339
         },
         {
             "name": "JS / TS",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/js.png",
             "circleSize": 3,
             "circleTop": 218,
             "circleLeft": 372
         },
         {
             "name": "Python",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/python.png",
             "circleSize": 1,
             "circleTop": 387,
             "circleLeft": 405
         },
         {
             "name": "React",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/react.png",
             "circleSize": 2,
             "circleTop": 65,
             "circleLeft": 402
         },
         {
             "name": "SQL",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/sql.png",
             "circleSize": 1,
             "circleTop": 154,
             "circleLeft": 495
         },
         {
             "name": "UI Design",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/ui.png",
             "circleSize": 1,
             "circleTop": 237,
             "circleLeft": 538
         },
         {
             "name": "AWS",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/aws.jpg",
             "circleSize": 2,
             "circleTop": 400,
             "circleLeft": 570
         },
         {
             "name": "Solutions Consulting",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/solutions.webp",
             "circleSize": 2,
             "circleTop": -1,
             "circleLeft": 516
         },
         {
             "name": "CosmosDB",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/cosmos.png",
             "circleSize": 1,
             "circleTop": 120,
             "circleLeft": 574
         },
         {
             "name": "Jira",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/jira.webp",
             "circleSize": 1,
             "circleTop": 310,
             "circleLeft": 595
         },
         {
             "name": "Vue",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/vue.png",
             "circleSize": 1,
             "circleTop": 198,
             "circleLeft": 620
         },
         {
             "name": "Flutter",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/flutter.webp",
             "circleSize": 1,
             "circleTop": 355,
             "circleLeft": 499
         },
         {
             "name": "Railway",
-            "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
+            "imgUrl": "/assets/skill-images/railway.png",
             "circleSize": 1,
             "circleTop": 440,
             "circleLeft": 475
