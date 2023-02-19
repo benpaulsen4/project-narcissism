@@ -67,7 +67,7 @@ a {
 }
 
 .fix {
-    min-height: 1.5rem;
+    min-height: 2rem;
 }
 
 .d-flex {
@@ -99,6 +99,21 @@ a {
 
 .left-gap {
   margin-left: 2rem;
+}
+
+.home {
+    position: relative;
+}
+
+.profile-image {
+    background: url("https://cdn-icons-png.flaticon.com/512/1068/1068623.png") no-repeat;
+    background-size: contain;
+    border-radius: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    height: 100px;
 }
 
 ::-webkit-scrollbar {
