@@ -4,176 +4,176 @@
             "name": "DevOps",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 80,
-            "circleLeft": 85
+            "circleTop": 30,
+            "circleLeft": 35
         },
         {
             "name": "MongoDB",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 77,
-            "circleLeft": 180
+            "circleTop": 27,
+            "circleLeft": 130
         },
         {
             "name": "Angular",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 166,
-            "circleLeft": 95
+            "circleTop": 116,
+            "circleLeft": 45
         },
         {
             "name": "Docker",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 290,
-            "circleLeft": 129
+            "circleTop": 240,
+            "circleLeft": 79
         },
         {
             "name": "REST APIs",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 422,
-            "circleLeft": 105
+            "circleTop": 372,
+            "circleLeft": 55
         },
         {
             "name": "C# / .NET",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 3,
-            "circleTop": 142,
-            "circleLeft": 216
+            "circleTop": 92,
+            "circleLeft": 166
         },
         {
             "name": "Linux",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 341,
-            "circleLeft": 193
+            "circleTop": 291,
+            "circleLeft": 143
         },
         {
             "name": "CI / CD",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 467,
-            "circleLeft": 238
+            "circleTop": 417,
+            "circleLeft": 188
         },
         {
             "name": "Express",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 80,
-            "circleLeft": 330
+            "circleTop": 30,
+            "circleLeft": 280
         },
         {
             "name": "Azure",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 295,
-            "circleLeft": 304
+            "circleTop": 245,
+            "circleLeft": 254
         },
         {
             "name": "HTML / CSS",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 412,
-            "circleLeft": 333
+            "circleTop": 362,
+            "circleLeft": 283
         },
         {
             "name": "NextJS",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 45,
-            "circleLeft": 410
+            "circleTop": -5,
+            "circleLeft": 360
         },
         {
             "name": "Node.js",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 199,
-            "circleLeft": 389
+            "circleTop": 149,
+            "circleLeft": 339
         },
         {
             "name": "JS / TS",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 3,
-            "circleTop": 268,
-            "circleLeft": 422
+            "circleTop": 218,
+            "circleLeft": 372
         },
         {
             "name": "Python",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 437,
-            "circleLeft": 455
+            "circleTop": 387,
+            "circleLeft": 405
         },
         {
             "name": "React",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 115,
-            "circleLeft": 452
+            "circleTop": 65,
+            "circleLeft": 402
         },
         {
             "name": "SQL",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 204,
-            "circleLeft": 545
+            "circleTop": 154,
+            "circleLeft": 495
         },
         {
             "name": "UI Design",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 287,
-            "circleLeft": 588
+            "circleTop": 237,
+            "circleLeft": 538
         },
         {
             "name": "AWS",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 450,
-            "circleLeft": 620
+            "circleTop": 400,
+            "circleLeft": 570
         },
         {
             "name": "Solutions Consulting",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 2,
-            "circleTop": 49,
-            "circleLeft": 566
+            "circleTop": -1,
+            "circleLeft": 516
         },
         {
             "name": "CosmosDB",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 170,
-            "circleLeft": 624
+            "circleTop": 120,
+            "circleLeft": 574
         },
         {
             "name": "Jira",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 360,
-            "circleLeft": 645
+            "circleTop": 310,
+            "circleLeft": 595
         },
         {
             "name": "Vue",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 248,
-            "circleLeft": 670
+            "circleTop": 198,
+            "circleLeft": 620
         },
         {
             "name": "Flutter",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 405,
-            "circleLeft": 549
+            "circleTop": 355,
+            "circleLeft": 499
         },
         {
             "name": "Railway",
             "imgUrl": "https://cdn-icons-png.flaticon.com/512/1068/1068623.png",
             "circleSize": 1,
-            "circleTop": 490,
-            "circleLeft": 525
+            "circleTop": 440,
+            "circleLeft": 475
         }
     ]
 }

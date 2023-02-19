@@ -5,11 +5,6 @@ import {SkillData} from "../../data/structs";
 export default function Skills(){
     const skills = dataset.data as SkillData[];
 
-    skills.forEach((s) => {
-        s.circleTop -= 50;
-        s.circleLeft -= 50;
-    });
-
     return (
         <div className="skills">
             <div className="d-flex">
