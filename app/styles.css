@@ -123,4 +123,9 @@ a {
 ::-webkit-scrollbar-thumb {
     background: rgba(215, 215, 215, 0.15);
     border-radius: 10px;
+    /*Transition does not work here*/
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(215, 215, 215, 0.3);
 }

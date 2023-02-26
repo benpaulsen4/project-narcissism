@@ -5,6 +5,7 @@ import {usePathname} from 'next/navigation';
 import {useEffect} from "react";
 import {logEvent} from "@firebase/analytics";
 import AnalyticsHelper from "../lib/AnalyticsHelper";
+import styles from "./nav.module.css";
 
 export default function NavItem({name, url, firebaseConfig}: { name: string, url: string, firebaseConfig?: any }) {
     const path = usePathname();
@@ -25,34 +26,8 @@ export default function NavItem({name, url, firebaseConfig}: { name: string, url
     }, [path]);
 
     return (
-        <>
-            <Link className={"navitem" + (path == url ? " navactive" : "")} href={url}>
+            <Link className={styles.navitem + (path == url ? " " + styles.navactive : "")} href={url}>
                 {name}
             </Link>
-
-            {/*Styles inlined because of use client*/}
-            <style>{`
-            .navitem {
-                height: 2rem;
-                background: rgba(215, 215, 215, 0.15);
-                border-radius: 10px;
-                margin: 5px 20px;
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-                padding-left: 8px;
-                text-decoration: none;
-                color: white;
-              }
-              
-              .navitem:hover {
-                background: rgba(215, 215, 215, 0.3);
-              }
-              
-              .navactive {
-                background: linear-gradient(90deg, #8E0ADE 0%, rgba(230, 11, 103, 0.5) 111.9%) !important;
-              }
-            `}</style>
-        </>
     )
 }

@@ -19,8 +19,8 @@ TODOs for Beta v1:
 - [ ] Replace filler images
 - [ ] Add profile photo to home screen
 - [ ] Perform testing and necessary refactoring
-- [ ] Add basic animations
-- [ ] Add SSO details and metadata
+- [x] Add basic animations
+- [ ] Add SEO details and metadata
 - [x] Update Next version to latest
 
 

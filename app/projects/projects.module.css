@@ -76,6 +76,11 @@
     border-radius: 1rem;
     padding: 0.1rem 0.5rem;
     margin-right: 0.5rem;
+    transition: 0.2s ease-in;
+}
+
+.tag:hover {
+    background: rgba(215, 215, 215, 0.3);
 }
 
 .link {
