@@ -15,20 +15,28 @@ support. The site will be published through Railway, which will provide CI/CD an
 
 TODOs for Beta v1:
 
-* Replace filler text
-* Replace filler images
-* Add profile photo to home screen
-* Perform testing and necessary refactoring
+- [ ] Replace filler text
+- [ ] Replace filler images
+- [ ] Add profile photo to home screen
+- [ ] Perform testing and necessary refactoring
+- [ ] Add basic animations
+- [ ] Add SSO details and metadata
+- [x] Update Next version to latest
 
 
 TODOs for Beta v2:
 
-* Make the site mobile friendly
-* Continue to update information and iterate
+- [ ] Make the site mobile friendly
+  - [ ] Meta viewport
+  - [ ] Hero fullscreen
+  - [ ] Fix any page-specific issues...
+- [ ] Continue to update information and iterate
+- [ ] Update Next version to latest
 
 
 TODOs for Realease v3:
 
-* Add animations and visual flaire
-* Perform final polish
-* Purchase and activate professional domain name
+- [ ] Add more, fancier animations and visual flaire
+- [ ] Perform final polish, including planning for potential new features
+- [ ] Purchase and activate professional domain name
+- [ ] Update Next version to latest
