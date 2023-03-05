@@ -15,12 +15,13 @@ support. The site will be published through Railway, which will provide CI/CD an
 
 TODOs for Beta v1:
 
-- [ ] Replace filler text
-- [ ] Replace filler images
-- [ ] Add profile photo to home screen
-- [ ] Perform testing and necessary refactoring
+- [x] Replace filler text
+- [x] Replace filler images
+- [x] Add profile photo to home screen
+- [x] Perform testing and necessary refactoring
 - [x] Add basic animations
 - [ ] Add SEO details and metadata
+- [ ] Change favicon
 - [x] Update Next version to latest
 
 
