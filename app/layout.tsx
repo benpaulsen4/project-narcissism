@@ -1,8 +1,19 @@
 import {IBM_Plex_Sans} from '@next/font/google';
 import NavItem from './NavItem';
 import './styles.css';
+import {Metadata} from "next";
 
 const IPS = IBM_Plex_Sans({weight: "400", subsets: ["latin"]});
+
+export const metadata: Metadata = {
+    title: "About Me - Ben Paulsen",
+    description: "My name is Ben, and I am a full-stack developer and digital solutions consultant working from Brisbane, Australia. Check out my portfolio site to see my wide range of experience in a variety of fields and technologies.",
+    keywords: ["developer", "full-stack", "web developer", ".NET developer", "react developer", "angular developer", "digital solutions", "digital consultant", "software consulting", "brisbane developer", "azure developer"],
+    colorScheme: "dark",
+    viewport: {width:"device-width", initialScale:1},
+    creator: "Ben Paulsen"
+
+}
 
 export default function RootLayout({children}: { children: React.ReactNode }) {
     let firebaseConfig;
@@ -20,9 +31,6 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
 
     return (
         <html className={IPS.className}>
-            <head>
-                <title>About Me - Ben Paulsen</title>
-            </head>
             <body>
             <div className="hero">
                 <aside>
