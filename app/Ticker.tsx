@@ -39,7 +39,7 @@ const builtflicker = async (setNew: Function, word: string) => {
 const buildWord = async (setNew: Function, word: string) => {
   let current = "";
   for (let i = 0; i < word.length; i++) {
-    await sleep(250);
+    await sleep(200);
     current += word[i];
     setNew(current + "_");
   }
