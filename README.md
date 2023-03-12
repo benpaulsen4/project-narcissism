@@ -26,9 +26,13 @@ CI/CD and hosting.
 TODOs for Beta v2:
 
 - [ ] Make the site mobile friendly
-  - [ ] Meta viewport
-  - [ ] Hero fullscreen
+  - [x] Meta viewport
+  - [x] Hero fullscreen
   - [ ] Fix any page-specific issues...
+    - [x] About me
+    - [ ] My Experience
+    - [ ] My Projects
+    - [ ] My Skills
 - [ ] Continue to update information and iterate
 - [ ] Update Next version to latest
 

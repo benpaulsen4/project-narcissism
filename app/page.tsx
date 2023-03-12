@@ -39,7 +39,7 @@ export default function Home() {
         <h2>Connect With Me</h2>
         <h2 className="slash">/</h2>
       </div>
-      <div className="d-flex bigger flex-center">
+      <div className="d-flex bigger flex-center contact-links">
         <a
           href="https://www.linkedin.com/in/ben-paulsen-26979b237/"
           className="d-flex flex-center"
@@ -56,12 +56,12 @@ export default function Home() {
           target="_blank"
           rel="noreferrer"
         >
-          <i className="bi bi-github left-gap"></i>
+          <i className="bi bi-github"></i>
           GitHub
         </a>
 
         <a href="mailto:ben.paulsen4@gmail.com" className="d-flex flex-center">
-          <i className="bi bi-envelope-fill left-gap"></i>
+          <i className="bi bi-envelope-fill"></i>
           Email
         </a>
       </div>
