@@ -2,7 +2,7 @@ body {
   background-image: url("./background.jpg");
   background-position: center;
   background-repeat: no-repeat;
-  background-size: cover; 
+  background-size: cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,8 +42,8 @@ h1 {
 }
 
 h2 {
-    font-size: 1.75em;
-    margin-bottom: 0.5rem;
+  font-size: 1.75em;
+  margin-bottom: 0.5rem;
 }
 
 code {
@@ -67,11 +67,11 @@ a {
 }
 
 .fix {
-    min-height: 2rem;
+  min-height: 2rem;
 }
 
 .d-flex {
-    display: flex;
+  display: flex;
 }
 
 .flex-center {
@@ -79,12 +79,12 @@ a {
 }
 
 .p-relative {
-    position: relative;
+  position: relative;
 }
 
 .slash {
-    margin-left: 0.25rem;
-    color: #ff0099;
+  margin-left: 0.25rem;
+  color: #ff0099;
 }
 
 .bi {
@@ -102,30 +102,31 @@ a {
 }
 
 .home {
-    position: relative;
+  position: relative;
 }
 
 .profile-image {
-    background: url("https://media.licdn.com/dms/image/D5603AQFgv5TpEuT2zQ/profile-displayphoto-shrink_800_800/0/1665104890198?e=1683763200&v=beta&t=S80AqLFPOJsMICiFTze0-JSmYo5Nf-iCHi5tO5RfTEI") no-repeat;
-    background-size: contain;
-    border-radius: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 100px;
-    height: 100px;
+  background: url("https://media.licdn.com/dms/image/D5603AQFgv5TpEuT2zQ/profile-displayphoto-shrink_800_800/0/1665104890198?e=1683763200&v=beta&t=S80AqLFPOJsMICiFTze0-JSmYo5Nf-iCHi5tO5RfTEI")
+    no-repeat;
+  background-size: contain;
+  border-radius: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgba(215, 215, 215, 0.15);
-    border-radius: 10px;
-    /*Transition does not work here*/
+  background: rgba(215, 215, 215, 0.15);
+  border-radius: 10px;
+  /*Transition does not work here*/
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgba(215, 215, 215, 0.3);
+  background: rgba(215, 215, 215, 0.3);
 }

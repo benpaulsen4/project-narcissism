@@ -1,25 +1,29 @@
 .navitem {
-    height: 2rem;
-    background: rgba(215, 215, 215, 0.15);
-    border-radius: 10px;
-    margin: 5px 20px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    padding-left: 8px;
-    text-decoration: none;
-    color: white;
-    transition: 0.2s ease-in;
+  height: 2rem;
+  background: rgba(215, 215, 215, 0.15);
+  border-radius: 10px;
+  margin: 5px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 8px;
+  text-decoration: none;
+  color: white;
+  transition: 0.2s ease-in;
 }
 
 .navitem:hover {
-    background: rgba(215, 215, 215, 0.3);
+  background: rgba(215, 215, 215, 0.3);
 }
 
 .navactive {
-    background: linear-gradient(90deg, #8E0ADE 0%, rgba(230, 11, 103, 0.5) 111.9%) !important;
+  background: linear-gradient(
+    90deg,
+    #8e0ade 0%,
+    rgba(230, 11, 103, 0.5) 111.9%
+  ) !important;
 }
 
 .navactive:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 0 8px 2px rgba(0, 0, 0, 0.01);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 0 8px 2px rgba(0, 0, 0, 0.01);
 }

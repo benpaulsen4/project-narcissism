@@ -1,42 +1,42 @@
-.circle{
-    border-radius: 100%;
-    background: rgba(215, 215, 215, 0.15);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-    position: absolute;
-    text-align: center;
-    transition: 0.2s ease-in;
+.circle {
+  border-radius: 100%;
+  background: rgba(215, 215, 215, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  position: absolute;
+  text-align: center;
+  transition: 0.2s ease-in;
 }
 
-.circle:hover{
-    background: rgba(215, 215, 215, 0.2);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 0 8px 2px rgba(0, 0, 0, 0.01);
+.circle:hover {
+  background: rgba(215, 215, 215, 0.2);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 0 8px 2px rgba(0, 0, 0, 0.01);
 }
 
 .size1 {
-    width: 5rem;
-    height: 5rem;
-    font-size: 12px;
-    gap: 4px;
+  width: 5rem;
+  height: 5rem;
+  font-size: 12px;
+  gap: 4px;
 }
 
 .size2 {
-    width: 7rem;
-    height: 7rem;
-    font-size: 14px;
-    line-height: 14px;
-    gap: 6px;
+  width: 7rem;
+  height: 7rem;
+  font-size: 14px;
+  line-height: 14px;
+  gap: 6px;
 }
 
 .size3 {
-    width: 10rem;
-    height: 10rem;
-    font-size: 16px;
-    gap: 12px;
+  width: 10rem;
+  height: 10rem;
+  font-size: 16px;
+  gap: 12px;
 }
 
 .name {
-    margin: 0;
+  margin: 0;
 }

@@ -1,58 +1,58 @@
 {
-    "data": [
-        {
-            "name": "Queensland University of Technology",
-            "description": "Bachelor of Information Technology (Computer Science) with Distiction & Bachelor of Business (Management) with Distiction",
-            "imgUrl": "/assets/experience-images/qut.jpg",
-            "boxHeight": 1,
-            "boxWidth": 3,
-            "startx": 1,
-            "starty": 1
-        },
-        {
-            "name": "Grey Matta Solutions",
-            "description": "Digital Solutions Consultant & Developer",
-            "imgUrl": "/assets/experience-images/gms.png",
-            "boxHeight": 2,
-            "boxWidth": 1,
-            "startx": 4,
-            "starty": 1
-        },
-        {
-            "name": "REX Energy",
-            "description": "Solutions Consultant & DevOps Developer",
-            "imgUrl": "/assets/experience-images/rex.png",
-            "boxHeight": 1,
-            "boxWidth": 2,
-            "startx": 1,
-            "starty": 2
-        },
-        {
-            "name": "Freelance",
-            "description": "My Personal Projects",
-            "imgUrl": "/assets/experience-images/freelance.png",
-            "boxHeight": 1,
-            "boxWidth": 1,
-            "startx": 3,
-            "starty": 2
-        },
-        {
-            "name": "Gruntify",
-            "description": "Software Developer & Customer Experience Liason",
-            "imgUrl": "/assets/experience-images/gruntify.webp",
-            "boxHeight": 1,
-            "boxWidth": 3,
-            "startx": 2,
-            "starty": 3
-        },
-        {
-            "name": "_filler",
-            "description": null,
-            "imgUrl": "https://www.iconsdb.com/icons/preview/white/plus-7-xxl.png",
-            "boxHeight": 1,
-            "boxWidth": 1,
-            "startx": 1,
-            "starty": 3
-        }
-    ]
+  "data": [
+    {
+      "name": "Queensland University of Technology",
+      "description": "Bachelor of Information Technology (Computer Science) with Distiction & Bachelor of Business (Management) with Distiction",
+      "imgUrl": "/assets/experience-images/qut.jpg",
+      "boxHeight": 1,
+      "boxWidth": 3,
+      "startx": 1,
+      "starty": 1
+    },
+    {
+      "name": "Grey Matta Solutions",
+      "description": "Digital Solutions Consultant & Developer",
+      "imgUrl": "/assets/experience-images/gms.png",
+      "boxHeight": 2,
+      "boxWidth": 1,
+      "startx": 4,
+      "starty": 1
+    },
+    {
+      "name": "REX Energy",
+      "description": "Solutions Consultant & DevOps Developer",
+      "imgUrl": "/assets/experience-images/rex.png",
+      "boxHeight": 1,
+      "boxWidth": 2,
+      "startx": 1,
+      "starty": 2
+    },
+    {
+      "name": "Freelance",
+      "description": "My Personal Projects",
+      "imgUrl": "/assets/experience-images/freelance.png",
+      "boxHeight": 1,
+      "boxWidth": 1,
+      "startx": 3,
+      "starty": 2
+    },
+    {
+      "name": "Gruntify",
+      "description": "Software Developer & Customer Experience Liason",
+      "imgUrl": "/assets/experience-images/gruntify.webp",
+      "boxHeight": 1,
+      "boxWidth": 3,
+      "startx": 2,
+      "starty": 3
+    },
+    {
+      "name": "_filler",
+      "description": null,
+      "imgUrl": "https://www.iconsdb.com/icons/preview/white/plus-7-xxl.png",
+      "boxHeight": 1,
+      "boxWidth": 1,
+      "startx": 1,
+      "starty": 3
+    }
+  ]
 }
