@@ -30,7 +30,7 @@ TODOs for Beta v2:
   - [x] Hero fullscreen
   - [ ] Fix any page-specific issues...
     - [x] About me
-    - [ ] My Experience
+    - [x] My Experience
     - [ ] My Projects
     - [ ] My Skills
 - [ ] Continue to update information and iterate

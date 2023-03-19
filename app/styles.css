@@ -136,16 +136,20 @@ a {
 @media screen and (max-width: 800px) {
   body {
     display: block;
-    min-height: 0;
+    min-height: unset;
+    overflow-y: auto;
+    margin-bottom: -1rem;
   }
   .hero {
     width: 100vw;
-    height: 100vh;
+    height: unset;
+    min-height: 98vh;
     margin-top: -0.5rem;
     margin-left: -0.5rem;
     display: flex;
     flex-direction: column;
     border-radius: 0;
+    padding-bottom: 1rem;
   }
   aside {
     margin-top: 0.5rem;
@@ -159,10 +163,7 @@ a {
     padding-right: 1rem;
   }
   .home {
-    overflow-y: auto;
-    overflow-x: hidden;
     text-align: justify;
-    max-height: 88vh;
   }
   .profile-image {
     display: none;
