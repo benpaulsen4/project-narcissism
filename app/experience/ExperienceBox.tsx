@@ -25,7 +25,7 @@ export default function ExperienceBox({ data }: { data: ExperienceData }) {
         ) : (
           <>
             <h3 className={styles.title}>
-              {data.name} <span style={{ color: "#ff0099" }}>/</span>
+              {data.name} <span className={styles.slashColor}>/</span>
             </h3>
             <p className={styles.description}>{data.description}</p>
           </>

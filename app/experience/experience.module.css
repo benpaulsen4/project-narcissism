@@ -57,6 +57,10 @@
   font-size: 1.05rem;
 }
 
+.slashColor {
+  color: var(--slash-color);
+}
+
 @media screen and (max-width: 900px) {
   .experiences {
     display: flex;

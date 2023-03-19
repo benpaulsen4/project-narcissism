@@ -49,7 +49,7 @@ h2 {
 
 code {
   font-size: 1.5em;
-  color: #adadad;
+  color: var(--code-color);
 }
 
 a {
