@@ -73,6 +73,12 @@ a {
 .d-flex {
   display: flex;
 }
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.half-gap {
+  gap: 0.5rem;
+}
 
 .flex-center {
   align-items: center;
@@ -133,7 +139,7 @@ a {
   background: rgba(215, 215, 215, 0.3);
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   body {
     display: block;
     min-height: unset;
@@ -164,6 +170,9 @@ a {
   }
   .home {
     text-align: justify;
+  }
+  .fix {
+    text-align: left;
   }
   .profile-image {
     display: none;

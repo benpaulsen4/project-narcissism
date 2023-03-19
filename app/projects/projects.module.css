@@ -75,7 +75,6 @@
   background: rgba(215, 215, 215, 0.15);
   border-radius: 1rem;
   padding: 0.1rem 0.5rem;
-  margin-right: 0.5rem;
   transition: 0.2s ease-in;
 }
 
@@ -87,4 +86,26 @@
   text-decoration: underline;
   display: flex;
   align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .projects {
+    overflow-y: unset;
+    -webkit-mask: none;
+    grid-template: auto / 2rem auto;
+  }
+  .entry {
+    display: flex;
+    flex-direction: column;
+  }
+  .imageContainer {
+    height: 200px;
+    margin-bottom: 0.75rem;
+  }
+  .entry img {
+    max-width: 350px;
+  }
+  .bar {
+    height: calc(100% - 210px);
+  }
 }

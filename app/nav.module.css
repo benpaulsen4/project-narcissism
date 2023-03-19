@@ -28,7 +28,7 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 0 8px 2px rgba(0, 0, 0, 0.01);
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 900px) {
   .navitem {
     padding-right: 8px;
     margin: 5px;

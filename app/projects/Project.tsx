@@ -10,20 +10,19 @@ export default function Project({ data }: { data: ProjectData }) {
         {data.date} <div className={styles.barbit}></div>
       </div>
       <div className={styles.imageContainer}>
-        {" "}
         <Image src={data.imgUrl} alt={data.name} fill={true} />
       </div>
       <div className={styles.textContent}>
         <h2 className={styles.title}>{data.name}</h2>
         <p className={styles.description}>{data.description}</p>
-        <div className="d-flex" style={{ marginBottom: "0.25rem" }}>
+        <div className="d-flex flex-wrap half-gap" style={{ marginBottom: "0.25rem" }}>
           {data.tags.map((t) => (
             <div className={styles.tag} key={t}>
               {t}
             </div>
           ))}
         </div>
-        <div className="d-flex" style={{ marginLeft: "-0.5rem" }}>
+        <div className="d-flex flex-wrap" style={{ marginLeft: "-0.5rem" }}>
           {data.links.map((l) => (
             <a
               className={styles.link}
