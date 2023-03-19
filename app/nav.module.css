@@ -1,3 +1,4 @@
+/* IMPORTANT: This is a client-side stylesheet, it cannot use config variables */
 .navitem {
   height: 2rem;
   background: rgba(215, 215, 215, 0.15);
@@ -19,8 +20,8 @@
 .navactive {
   background: linear-gradient(
     90deg,
-    #8e0ade 0%,
-    rgba(230, 11, 103, 0.5) 111.9%
+    var(--gradient-start),
+    var(--gradient-end)
   ) !important;
 }
 
