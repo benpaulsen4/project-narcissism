@@ -2,6 +2,7 @@ import dataset from "../../data/skills.json";
 import SkillCircle from "./SkillCircle";
 import { SkillData } from "../../data/structs";
 import { Metadata } from "next";
+import styles from "./skills.module.css";
 
 export const metadata: Metadata = {
   title: "My Skills - Ben Paulsen",
@@ -19,7 +20,7 @@ export default function Skills() {
         <h1>My Skills</h1>
         <h1 className="slash">/</h1>
       </div>
-      <div className="p-relative">
+      <div className={styles.circleContainer}>
         {skills.map((s) => (
           <SkillCircle data={s} key={s.name} />
         ))}

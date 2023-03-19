@@ -15,6 +15,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15), 0 0 8px 2px rgba(0, 0, 0, 0.01);
 }
 
+.circleContainer {
+  position: relative;
+}
+
 .size1 {
   width: 5rem;
   height: 5rem;
@@ -39,4 +43,33 @@
 
 .name {
   margin: 0;
+}
+
+@media screen and (max-width: 900px) {
+  .circle {
+    position: relative;
+    top: unset !important;
+    left: unset !important;
+  }
+  .circleContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .size1,
+  .size3 {
+    width: 7rem;
+    height: 7rem;
+    font-size: 14px;
+    line-height: 14px;
+    gap: 6px;
+  }
+
+  .circle img {
+    width: 50px;
+    height: 50px;
+  }
 }
