@@ -8,9 +8,8 @@ and regenerative Next apps, based on React server. As this feature is currently 
 
 ## Current App Version
 
-The current version is **Beta v1** At this time, the app is still incomplete. Beta 1 will be the first complete version
-of the site, which will begin with only desktop support. The site will be published through Railway, which will provide
-CI/CD and hosting.
+The current version is **Beta v2** At this time, the app is pretty much complete - the only remaining tasks are polish
+and admin related. The site will be published through Railway, which will provide CI/CD and hosting.
 
 ~~TODOs for Beta v1:~~
 
@@ -23,18 +22,18 @@ CI/CD and hosting.
 - [x] Change favicon
 - [x] Update Next version to latest
 
-TODOs for Beta v2:
+~~TODOs for Beta v2:~~
 
-- [ ] Make the site mobile friendly
+- [x] Make the site mobile friendly
   - [x] Meta viewport
   - [x] Hero fullscreen
-  - [ ] Fix any page-specific issues...
+  - [x] Fix any page-specific issues...
     - [x] About me
     - [x] My Experience
-    - [ ] My Projects
-    - [ ] My Skills
-- [ ] Continue to update information and iterate
-- [ ] Update Next version to latest
+    - [x] My Projects
+    - [x] My Skills
+- [x] Continue to update information and iterate
+- [x] Update Next version to latest
 
 TODOs for Realease v3:
 

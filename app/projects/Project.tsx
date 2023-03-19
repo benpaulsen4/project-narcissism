@@ -15,7 +15,10 @@ export default function Project({ data }: { data: ProjectData }) {
       <div className={styles.textContent}>
         <h2 className={styles.title}>{data.name}</h2>
         <p className={styles.description}>{data.description}</p>
-        <div className="d-flex flex-wrap half-gap" style={{ marginBottom: "0.25rem" }}>
+        <div
+          className="d-flex flex-wrap half-gap"
+          style={{ marginBottom: "0.25rem" }}
+        >
           {data.tags.map((t) => (
             <div className={styles.tag} key={t}>
               {t}
