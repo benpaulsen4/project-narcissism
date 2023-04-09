@@ -1,18 +1,23 @@
-import styles from './notifications.module.css'
-import {Notification} from "../../data/structs";
+import styles from "./notifications.module.css";
+import { Notification } from "../../data/structs";
 import Button from "../Button";
 
-export default function NotificationModal({notification, closeModal}: {notification: Notification, closeModal: () => void}){
-  
+export default function NotificationModal({
+  notification,
+  closeModal,
+}: {
+  notification: Notification;
+  closeModal: () => void;
+}) {
   return (
     <div className={styles.backdrop}>
       <div className={styles.modal}>
-        <div className={styles['modal-header']}>
+        <div className={styles["modal-header"]}>
           <i className="bi bi-info-circle"></i>
           <h3>Announcement: {notification.title}</h3>
         </div>
         <div>{notification.content}</div>
-        <div className={styles['modal-footer']}>
+        <div className={styles["modal-footer"]}>
           <Button onClick={closeModal} type="secondary">
             Close
           </Button>
@@ -22,5 +27,5 @@ export default function NotificationModal({notification, closeModal}: {notificat
         </div>
       </div>
     </div>
-  )
+  );
 }
