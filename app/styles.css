@@ -65,6 +65,7 @@ a {
   border-radius: 40px;
   display: grid;
   grid-template: auto / 12.5rem auto;
+  border: 3px solid rgba(255, 255, 255, 0.15);
 }
 
 .fix {
@@ -178,5 +179,11 @@ a {
   }
   footer {
     display: none;
+  }
+}
+
+@media screen and (max-height: 830px) {
+  .hero {
+    margin-bottom: 5rem;
   }
 }

@@ -39,6 +39,7 @@ TODOs for Realease v3:
 
 - [ ] Add more, fancier animations and visual flaire
 - [ ] Perform final polish, including planning for potential new features
-- [ ] Purchase and activate professional domain name
-- [ ] Google search console
+- [x] Purchase and activate professional domain name
+- [x] Google search console
 - [ ] Update Next version to latest
+- [ ] Remove beta message
