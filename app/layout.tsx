@@ -2,6 +2,7 @@ import { IBM_Plex_Sans } from "next/font/google";
 import NavItem from "./NavItem";
 import "./styles.css";
 import { Metadata } from "next";
+import NotificationsHost from "./notifications/NotificationsHost";
 
 const IPS = IBM_Plex_Sans({ weight: "400", subsets: ["latin"] });
 
@@ -51,13 +52,19 @@ export default function RootLayout({
       <body>
         <div className="hero">
           <aside>
-            <NavItem name="About Me" url="/" firebaseConfig={firebaseConfig} />
+            <NavItem
+              name="About Me"
+              url="/"
+              firebaseConfig={firebaseConfig}
+              isStaging={!!process.env.STAGING}
+            />
             <NavItem name="My Projects" url="/projects" />
             <NavItem name="My Skills" url="/skills" />
             <NavItem name="My Experience" url="/experience" />
           </aside>
           <main>{children}</main>
         </div>
+        <NotificationsHost firebaseConfig={firebaseConfig}></NotificationsHost>
         <footer>
           This is a <b>beta version</b> of the site - Built with love and NextJS
           13.

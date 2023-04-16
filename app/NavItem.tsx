@@ -11,15 +11,17 @@ export default function NavItem({
   name,
   url,
   firebaseConfig,
+  isStaging,
 }: {
   name: string;
   url: string;
   firebaseConfig?: any;
+  isStaging?: boolean;
 }) {
   const path = usePathname();
 
   useEffect(() => {
-    if (firebaseConfig) {
+    if (firebaseConfig && !isStaging) {
       let helper = new AnalyticsHelper();
       let analytics = helper.initialize(firebaseConfig);
       helper.getEnvironment().then((value) => {

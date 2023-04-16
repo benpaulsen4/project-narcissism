@@ -65,6 +65,7 @@ a {
   border-radius: 40px;
   display: grid;
   grid-template: auto / 12.5rem auto;
+  border: 3px solid rgba(255, 255, 255, 0.15);
 }
 
 .fix {
@@ -155,6 +156,7 @@ a {
     flex-direction: column;
     border-radius: 0;
     padding-bottom: 1rem;
+    border: none;
   }
   aside {
     margin-top: 0.5rem;
@@ -178,5 +180,11 @@ a {
   }
   footer {
     display: none;
+  }
+}
+
+@media screen and (max-height: 830px) and (min-width: 900px) {
+  .hero {
+    margin-bottom: 5rem;
   }
 }

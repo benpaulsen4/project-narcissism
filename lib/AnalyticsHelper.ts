@@ -1,10 +1,10 @@
-import { initializeApp } from "firebase/app";
 import { getAnalytics } from "@firebase/analytics";
+import FirebaseConfigHelper from "./FirebaseConfig";
 
 export default class AnalyticsHelper {
   initialize(config: any) {
     if (config) {
-      let app = initializeApp(config);
+      let app = new FirebaseConfigHelper(config).firebaseApp;
       return getAnalytics(app);
     }
   }

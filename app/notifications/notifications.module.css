@@ -1,0 +1,130 @@
+.widget {
+  display: grid;
+  grid-template:
+    [row1-start] "icon content" auto [row1-end]
+    / 3rem auto;
+
+  background: rgba(208, 205, 205, 0.16);
+  backdrop-filter: blur(25px);
+  border-radius: 100px;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  transition: background-color 0.3s ease;
+  animation: blink 2s linear 2s 3;
+
+  height: 5rem;
+  width: 25rem;
+  padding: 0 5px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+.widget:hover {
+  cursor: pointer;
+  background: rgba(208, 205, 205, 0.25);
+}
+
+@keyframes blink {
+  from,
+  to {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 0.75);
+  }
+}
+
+.title {
+  margin: 0;
+}
+
+.content {
+  margin: 0;
+  line-height: 18px;
+}
+
+.content span {
+  color: #bcbcbc;
+}
+
+.contentContainer {
+  grid-area: content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 5px;
+}
+
+.icon {
+  grid-area: icon;
+  align-self: center;
+}
+
+.backdrop {
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  z-index: 3;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: rgba(208, 205, 205, 0.2);
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(25px);
+  border-radius: 30px;
+  padding: 10px 15px;
+  max-width: 40vw;
+}
+
+.modal-header {
+  display: grid;
+  grid-template: auto / 3rem auto;
+  margin-bottom: 1rem;
+}
+
+.modal-header i {
+  grid-column: 1;
+  align-self: center;
+}
+
+.modal-header h3 {
+  grid-column: 2;
+  margin: 0 5px;
+  align-self: center;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 10px 2px 2px 2px;
+}
+
+@media screen and (max-width: 900px) {
+  .widget {
+    width: calc(100% + 5px);
+    position: sticky;
+    border: none;
+    border-top: 3px solid rgba(255, 255, 255, 0.15);
+    margin-left: -8px;
+    bottom: 0;
+    border-radius: unset;
+    background: rgba(0, 0, 0, 0.16);
+  }
+
+  .backdrop {
+    position: fixed;
+  }
+
+  .modal {
+    max-width: 100%;
+  }
+}

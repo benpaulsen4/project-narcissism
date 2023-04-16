@@ -8,7 +8,7 @@ and regenerative Next apps, based on React server. As this feature is currently 
 
 ## Current App Version
 
-The current version is **Beta v2** At this time, the app is pretty much complete - the only remaining tasks are polish
+The current version is **Beta v2.5** At this time, the app is pretty much complete - the only remaining tasks are polish
 and admin related. The site will be published through Railway, which will provide CI/CD and hosting.
 
 ~~TODOs for Beta v1:~~
@@ -39,6 +39,7 @@ TODOs for Realease v3:
 
 - [ ] Add more, fancier animations and visual flaire
 - [ ] Perform final polish, including planning for potential new features
-- [ ] Purchase and activate professional domain name
-- [ ] Google search console
+- [x] Purchase and activate professional domain name
+- [x] Google search console
 - [ ] Update Next version to latest
+- [ ] Remove beta message
