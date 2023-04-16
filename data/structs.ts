@@ -76,13 +76,11 @@ export class SkillData {
 export class Notification {
   title: string;
   content: string;
-  priority: number;
   action: Link;
 
-  constructor(title: string, content: string, priority: number, action: Link) {
+  constructor(title: string, content: string, action: Link) {
     this.title = title;
     this.content = content;
-    this.priority = priority;
     this.action = action;
   }
 }

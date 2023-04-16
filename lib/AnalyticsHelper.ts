@@ -1,11 +1,11 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "@firebase/analytics";
+import firebaseApp from "./FirebaseConfig";
 
 export default class AnalyticsHelper {
-  initialize(config: any) {
-    if (config) {
-      let app = initializeApp(config);
-      return getAnalytics(app);
+  initialize() {
+    if (firebaseApp) {
+      return getAnalytics(firebaseApp);
     }
   }
   async getEnvironment(): Promise<EnvironmentInfo> {

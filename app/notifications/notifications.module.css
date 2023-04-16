@@ -9,6 +9,7 @@
   border-radius: 100px;
   border: 3px solid rgba(255, 255, 255, 0.15);
   transition: background-color 0.3s ease;
+  animation: blink 2s linear 2s 3;
 
   height: 5rem;
   width: 25rem;
@@ -21,6 +22,16 @@
 .widget:hover {
   cursor: pointer;
   background: rgba(208, 205, 205, 0.25);
+}
+
+@keyframes blink {
+  from,
+  to {
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  50% {
+    border-color: rgba(255, 255, 255, 0.75);
+  }
 }
 
 .title {

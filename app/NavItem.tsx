@@ -6,22 +6,23 @@ import { useEffect } from "react";
 import { logEvent } from "@firebase/analytics";
 import AnalyticsHelper from "../lib/AnalyticsHelper";
 import styles from "./nav.module.css";
+import firebaseApp from "../lib/FirebaseConfig";
 
 export default function NavItem({
   name,
   url,
-  firebaseConfig,
+  isStaging
 }: {
   name: string;
   url: string;
-  firebaseConfig?: any;
+  isStaging?: boolean;
 }) {
   const path = usePathname();
 
   useEffect(() => {
-    if (firebaseConfig) {
+    if (firebaseApp && !isStaging) {
       let helper = new AnalyticsHelper();
-      let analytics = helper.initialize(firebaseConfig);
+      let analytics = helper.initialize();
       helper.getEnvironment().then((value) => {
         logEvent(analytics!, "page_engagement", {
           date: new Date().toISOString(),
