@@ -52,7 +52,12 @@ export default function RootLayout({
       <body>
         <div className="hero">
           <aside>
-            <NavItem name="About Me" url="/" firebaseConfig={firebaseConfig} isStaging={!!process.env.STAGING} />
+            <NavItem
+              name="About Me"
+              url="/"
+              firebaseConfig={firebaseConfig}
+              isStaging={!!process.env.STAGING}
+            />
             <NavItem name="My Projects" url="/projects" />
             <NavItem name="My Skills" url="/skills" />
             <NavItem name="My Experience" url="/experience" />

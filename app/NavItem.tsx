@@ -11,7 +11,7 @@ export default function NavItem({
   name,
   url,
   firebaseConfig,
-  isStaging
+  isStaging,
 }: {
   name: string;
   url: string;
