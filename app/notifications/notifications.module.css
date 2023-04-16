@@ -107,3 +107,24 @@
   gap: 10px;
   margin: 2px;
 }
+
+@media screen and (max-width: 900px) {
+  .widget {
+    width: calc(100% + 5px);
+    position: sticky;
+    border: none;
+    border-top: 3px solid rgba(255, 255, 255, 0.15);
+    margin-left: -8px;
+    bottom: 0;
+    border-radius: unset;
+    background: rgba(0, 0, 0, 0.16);
+  }
+
+  .backdrop {
+    position: fixed;
+  }
+
+  .modal {
+    max-width: 100%;
+  }
+}

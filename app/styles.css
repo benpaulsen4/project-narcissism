@@ -156,6 +156,7 @@ a {
     flex-direction: column;
     border-radius: 0;
     padding-bottom: 1rem;
+    border: none;
   }
   aside {
     margin-top: 0.5rem;
