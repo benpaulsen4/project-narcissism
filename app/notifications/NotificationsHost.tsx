@@ -40,12 +40,6 @@ export default function NotificationsHost({
     }
   }, []);
 
-  //  const notification = new Notification(
-  //    "Thank you and welcome!",
-  //    "Thank you for checking out my brand new portfolio website! I'm super excited to show you all what I've done here and how my career has progressed so far. Stay tuned for updates, theres always more in the pipeline! 😀",
-  //    { name: "Google it", href: "https://google.com" }
-  //  );
-
   return (
     <>
       {modalOpen && notification && (

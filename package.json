@@ -1,6 +1,6 @@
 {
   "name": "project-narcissism",
-  "version": "1-beta.0.0",
+  "version": "2-beta.5.0",
   "private": true,
   "scripts": {
     "dev": "next dev",

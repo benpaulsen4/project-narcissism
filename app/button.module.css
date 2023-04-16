@@ -13,7 +13,11 @@
 }
 
 .primary {
-  background: linear-gradient(90deg, #8e0ade 0%, rgba(230, 11, 103, 0.5) 100%);
+  background: linear-gradient(
+    90deg,
+    var(--gradient-start) 0%,
+    var(--gradient-end) 100%
+  );
 }
 
 .primary:hover {
