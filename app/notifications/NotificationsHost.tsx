@@ -4,16 +4,17 @@ import {useEffect, useState } from "react";
 import { Notification } from "../../data/structs";
 import NotificationModal from "./NotificationModal";
 import NotificationWidget from "./NotificationWidget";
-import firebaseApp from "../../lib/FirebaseConfig";
-import {collection, doc, getDoc, getFirestore, DocumentSnapshot} from "@firebase/firestore";
+import {doc, getDoc, getFirestore, DocumentSnapshot} from "@firebase/firestore";
+import FirebaseConfigHelper from "../../lib/FirebaseConfig";
 
-export default function NotificationsHost() {
+export default function NotificationsHost({firebaseConfig}: {firebaseConfig?: any}) {
   const [notification, setNotification] = useState<Notification>();
   const [modalOpen, setModal] = useState(false);
 
   useEffect(() => {
-    if (firebaseApp) {
-      const db = getFirestore()
+    if (firebaseConfig) {
+      const app = new FirebaseConfigHelper(firebaseConfig).firebaseApp;
+      const db = getFirestore(app)
       let document: DocumentSnapshot;
        getDoc(doc(db, "siteData", "ANNOUNCEMENT"))
       .then(result => document = result)
