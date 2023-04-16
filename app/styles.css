@@ -183,7 +183,7 @@ a {
   }
 }
 
-@media screen and (max-height: 830px) {
+@media screen and (max-height: 830px) and (min-width: 900px) {
   .hero {
     margin-bottom: 5rem;
   }
