@@ -30,7 +30,7 @@ export default function Home() {
         as well as provide some valuable learning opportunities. I believe this
         has greatly contributed to my abilities as a developer, and best allowed
         my to apply my formal teachings from university as I entered the
-        professional space. Please check out the pages I've put together on this
+        professional space. Please check out the pages I&apos;ve put together on this
         site if you have the chance, as together they form a well-rounded depiction
         of how I have applied my various skills.
       </p>
