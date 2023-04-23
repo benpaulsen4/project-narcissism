@@ -15,7 +15,7 @@ export default function Skills() {
   const skills = dataset.data as SkillData[];
 
   return (
-    <div className="skills">
+    <div className="skills animate">
       <div className="d-flex">
         <h1>My Skills</h1>
         <h1 className="slash">/</h1>

@@ -1,5 +1,5 @@
 import { IBM_Plex_Sans } from "next/font/google";
-import NavItem from "./NavItem";
+import NavItem from "./common/NavItem";
 import "./styles.css";
 import { Metadata } from "next";
 import NotificationsHost from "./notifications/NotificationsHost";
@@ -65,10 +65,7 @@ export default function RootLayout({
           <main>{children}</main>
         </div>
         <NotificationsHost firebaseConfig={firebaseConfig}></NotificationsHost>
-        <footer>
-          This is a <b>beta version</b> of the site - Built with love and NextJS
-          13.
-        </footer>
+        <footer>Built with love and NextJS 13</footer>
       </body>
     </html>
   );

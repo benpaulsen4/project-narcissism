@@ -1,5 +1,5 @@
 :root {
-  --background-image: url("./background.jpg");
+  --background-image: url("./background.webp");
   --profile-image: url("https://media.licdn.com/dms/image/D5603AQFgv5TpEuT2zQ/profile-displayphoto-shrink_800_800/0/1665104890198?e=1683763200&v=beta&t=S80AqLFPOJsMICiFTze0-JSmYo5Nf-iCHi5tO5RfTEI");
 
   --slash-color: #ff0099;
@@ -7,4 +7,15 @@
   --code-color: #adadad;
   --gradient-start: #8e0ade;
   --gradient-end: rgba(230, 11, 103, 0.5);
+}
+
+@keyframes come-in {
+  0% {
+    opacity: 0;
+    translate: 0 -20px;
+  }
+  100% {
+    opacity: 1;
+    translate: none;
+  }
 }

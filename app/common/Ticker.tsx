@@ -4,6 +4,27 @@ import { useEffect, useState } from "react";
 
 const JBmono = JetBrains_Mono({ weight: "400", subsets: ["latin"] });
 
+export default function Ticker() {
+  const words = [
+    "Web Developer",
+    "Full-Stack Developer",
+    "UI Wizard",
+    "Solutions Architect",
+    "Digital Problem Solver",
+  ];
+  const [current, setNew] = useState("");
+
+  useEffect(() => {
+    flicker(setNew).then(() => animateWords(setNew, words));
+  }, []);
+
+  return (
+    <div className="fix">
+      <code className={JBmono.className}>{current}</code>
+    </div>
+  );
+}
+
 const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
@@ -75,25 +96,3 @@ const animateWords = async (setNew: Function, words: string[]) => {
     }
   }
 };
-
-export default function Ticker() {
-  const words = [
-    "Web Developer",
-    "Full-Stack Developer",
-    "UI Designer",
-    "Solutions Architect",
-    "Quality Assurance Tester",
-    "Digital Problem Solver",
-  ];
-  const [current, setNew] = useState("");
-
-  useEffect(() => {
-    flicker(setNew).then(() => animateWords(setNew, words));
-  }, []);
-
-  return (
-    <div className="fix">
-      <code className={JBmono.className}>{current}</code>
-    </div>
-  );
-}
