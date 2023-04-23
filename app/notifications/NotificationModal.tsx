@@ -1,6 +1,6 @@
 import styles from "./notifications.module.css";
 import { Notification } from "../../data/structs";
-import Button from "../Button";
+import Button from "../common/Button";
 import { motion } from "framer-motion";
 
 export default function NotificationModal({

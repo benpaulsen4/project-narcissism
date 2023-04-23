@@ -1,4 +1,4 @@
-import Ticker from "./Ticker";
+import Ticker from "./common/Ticker";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 export default function Home() {

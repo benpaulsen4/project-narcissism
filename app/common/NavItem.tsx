@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { logEvent } from "@firebase/analytics";
-import AnalyticsHelper from "../lib/AnalyticsHelper";
+import AnalyticsHelper from "../../lib/AnalyticsHelper";
 import styles from "./nav.module.css";
 
 export default function NavItem({
