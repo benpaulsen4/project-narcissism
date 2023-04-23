@@ -37,9 +37,9 @@ and admin related. The site will be published through Railway, which will provid
 
 TODOs for Realease v3:
 
-- [ ] Add more, fancier animations and visual flaire
-- [ ] Perform final polish, including planning for potential new features
+- [x] Add more, fancier animations and visual flaire
+- [x] Perform final polish, including planning for potential new features
 - [x] Purchase and activate professional domain name
 - [x] Google search console
 - [ ] Update Next version to latest
-- [ ] Remove beta message
+- [ ] Remove beta message and make content tweaks
