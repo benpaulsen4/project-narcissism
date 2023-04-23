@@ -112,6 +112,11 @@ a {
 
 .home {
   position: relative;
+  animation: come-in 0.3s ease;
+}
+
+.animate {
+  animation: come-in 0.3s ease;
 }
 
 .profile-image {

@@ -15,7 +15,7 @@ export default function Experience() {
   const experiences = dataset.data as ExperienceData[];
 
   return (
-    <div className="experience">
+    <div className="experience animate">
       <div className="d-flex">
         <h1>My Experience</h1>
         <h1 className="slash">/</h1>

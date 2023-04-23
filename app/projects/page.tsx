@@ -15,7 +15,7 @@ export default function Projects() {
   const projects = dataset.data as ProjectData[];
 
   return (
-    <div>
+    <div className="animate">
       <div className="d-flex">
         <h1>My Projects</h1>
         <h1 className="slash">/</h1>

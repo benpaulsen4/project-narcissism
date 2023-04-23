@@ -11,7 +11,7 @@ import {
   DocumentSnapshot,
 } from "@firebase/firestore";
 import FirebaseConfigHelper from "../../lib/FirebaseConfig";
-import {AnimatePresence} from "framer-motion";
+import { AnimatePresence } from "framer-motion";
 
 export default function NotificationsHost({
   firebaseConfig,
@@ -44,22 +44,22 @@ export default function NotificationsHost({
   return (
     <>
       <AnimatePresence>
-      {modalOpen && notification && (
-        <NotificationModal
-          closeModal={() => setModal(false)}
-          notification={notification}
-        />
-      )}
+        {modalOpen && notification && (
+          <NotificationModal
+            closeModal={() => setModal(false)}
+            notification={notification}
+          />
+        )}
       </AnimatePresence>
 
-    <AnimatePresence>
-      {notification && (
-        <NotificationWidget
-          onClick={() => setModal(true)}
-          notification={notification}
-        />
-      )}
-    </AnimatePresence>
+      <AnimatePresence>
+        {notification && (
+          <NotificationWidget
+            onClick={() => setModal(true)}
+            notification={notification}
+          />
+        )}
+      </AnimatePresence>
     </>
   );
 }

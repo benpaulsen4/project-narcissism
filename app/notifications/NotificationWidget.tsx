@@ -19,7 +19,13 @@ export default function NotificationWidget({
   }
 
   return (
-    <motion.div initial={{y: 20, opacity: 0}} animate={{y:0, opacity: 1}} transition={{ type: "spring",  duration: 0.75 }} className={styles.widget} onClick={onClick}>
+    <motion.div
+      initial={{ y: 20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ type: "spring", duration: 0.75 }}
+      className={styles.widget}
+      onClick={onClick}
+    >
       <i className={`bi bi-info-circle ${styles.icon}`}></i>
       <div className={styles.contentContainer}>
         <h4 className={styles.title}>{notification.title}</h4>
