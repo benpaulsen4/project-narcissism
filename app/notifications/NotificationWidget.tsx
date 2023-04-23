@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Notification } from "../../data/structs";
 import styles from "./notifications.module.css";
 
@@ -18,7 +19,7 @@ export default function NotificationWidget({
   }
 
   return (
-    <div className={styles.widget} onClick={onClick}>
+    <motion.div initial={{y: 20, opacity: 0}} animate={{y:0, opacity: 1}} transition={{ type: "spring",  duration: 0.75 }} className={styles.widget} onClick={onClick}>
       <i className={`bi bi-info-circle ${styles.icon}`}></i>
       <div className={styles.contentContainer}>
         <h4 className={styles.title}>{notification.title}</h4>
@@ -26,6 +27,6 @@ export default function NotificationWidget({
           <span>{text}</span> Click for more
         </p>
       </div>
-    </div>
+    </motion.div>
   );
 }
