@@ -65,10 +65,7 @@ export default function RootLayout({
           <main>{children}</main>
         </div>
         <NotificationsHost firebaseConfig={firebaseConfig}></NotificationsHost>
-        <footer>
-          This is a <b>beta version</b> of the site - Built with love and NextJS
-          13.
-        </footer>
+        <footer>Built with love and NextJS 13</footer>
       </body>
     </html>
   );

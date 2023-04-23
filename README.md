@@ -2,44 +2,26 @@
 
 ## A personal portfolio website by Ben Paulsen
 
-This app is built in NextJS 13 making full use of the new Apps directory which will form the next generation of fluid
-and regenerative Next apps, based on React server. As this feature is currently in beta, some features (like a custom
-404 page) are not available. As the app directory exits beta I will update node modules to get the production version.
+This app is built in NextJS 13 making full use of the new Apps directory-based routing which will form the next
+generation of fluid and regenerative Next apps, based on React server. Not only does this bring performance improvements
+and reduce the JS bundle size sent to the browser, but it greatly improves SEO performance of relatively static sites
+like this one. As the app directory exits beta I will update node modules to get the production version.
 
 ## Current App Version
 
-The current version is **Beta v2.5** At this time, the app is pretty much complete - the only remaining tasks are polish
-and admin related. The site will be published through Railway, which will provide CI/CD and hosting.
+The current version is **Release v3.0**. This is the first release version of the website. The site is published through
+Railway, which provides CI/CD and hosting, and a Cloudflare proxy for performance and DDOS protection. Firebase is used
+for analytics as well as to provide basic database functions for notifications.
 
-~~TODOs for Beta v1:~~
-
-- [x] Replace filler text
-- [x] Replace filler images
-- [x] Add profile photo to home screen
-- [x] Perform testing and necessary refactoring
-- [x] Add basic animations
-- [x] Add SEO details and metadata
-- [x] Change favicon
-- [x] Update Next version to latest
-
-~~TODOs for Beta v2:~~
-
-- [x] Make the site mobile friendly
-  - [x] Meta viewport
-  - [x] Hero fullscreen
-  - [x] Fix any page-specific issues...
-    - [x] About me
-    - [x] My Experience
-    - [x] My Projects
-    - [x] My Skills
-- [x] Continue to update information and iterate
-- [x] Update Next version to latest
-
-TODOs for Realease v3:
+~~TODOs for Realease v3:~~
 
 - [x] Add more, fancier animations and visual flaire
 - [x] Perform final polish, including planning for potential new features
 - [x] Purchase and activate professional domain name
 - [x] Google search console
-- [ ] Update Next version to latest
-- [ ] Remove beta message and make content tweaks
+- [x] Update Next version to latest
+- [x] Remove beta message and make content tweaks
+
+TODOs for Release v3.1:
+
+- [ ] Update Next once app routing is marked stable
