@@ -1,6 +1,6 @@
 {
   "name": "project-narcissism",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,7 +13,7 @@
     "bootstrap-icons": "^1.9.1",
     "firebase": "^9.17.1",
     "framer-motion": "^10.12.4",
-    "next": "^13.3.1",
+    "next": "^13.4.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sharp": "^0.31.3"
@@ -23,7 +23,7 @@
     "@types/react": "18.0.24",
     "@types/react-dom": "18.0.8",
     "eslint": "8.26.0",
-    "eslint-config-next": "^13.3.1",
+    "eslint-config-next": "^13.4.5",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
     "prettier": "^2.8.4",
