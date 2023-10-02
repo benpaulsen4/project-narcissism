@@ -1,12 +1,12 @@
 :root {
-  --background-image: url("./background.webp");
+  --background-image: url("./backdrop.webp");
   --profile-image: url("./profile.png");
 
-  --slash-color: #ff0099;
+  --slash-color: #354f52;
   --text-color: white;
-  --code-color: #adadad;
-  --gradient-start: #8e0ade;
-  --gradient-end: rgba(230, 11, 103, 0.5);
+  --code-color: #cad2c5;
+  --gradient-start: #2f3e46;
+  --gradient-end: rgba(202, 210, 197, 0.3);
 }
 
 @keyframes come-in {
