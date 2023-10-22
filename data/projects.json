@@ -1,6 +1,19 @@
 {
   "data": [
     {
+      "name": "YoutubeStats Config Editor",
+      "date": "2023, November",
+      "description": "As I have continued to add new features to my YoutubeStats project, I came to realize that one major pain point was all the configuration that was necessary to get started collecting data. As I was interested in trying out some native platform development for the first time in a while, I decided to tackle this with a WinUI 3 app. The app I created has significantly simplified the process of getting started with YoutubeStats, all while providing helpful guidance to new users.",
+      "imgUrl": "/assets/project-images/config-editor.png",
+      "links": [
+        {
+          "name": "GitHub",
+          "href": "https://github.com/benpaulsen4/YoutubeStats"
+        }
+      ],
+      "tags": ["C#", "WinUI 3", "WinApp SDK"]
+    },
+    {
       "name": "This Website",
       "date": "2023, February",
       "description": "What started out as a passing thought towards the end of my degree eventually snowballed into a fun but challenging demonstration of my abilities. After many months of working on this project on the side, I finally had enough to release the very first version of my personal portfolio in February 2023. I will continue to update the site to spice things up whenever I see fit.",
