@@ -1,6 +1,23 @@
 {
   "data": [
     {
+      "name": "Imperfections - The Game",
+      "date": "2023, December",
+      "description": "Built in two days as a hackathon-style challenge, this simple game written in Angular aims to replicate the 1980s boardgame 'Heartthrob' with a modern Pop-culture twist. I really enjoyed putting this together in a lightweight and cloud-portable style with Caddy server - a bit of a departure from my usual Azure-focused work.",
+      "imgUrl": "/assets/project-images/imperfections.png",
+      "links": [
+        {
+          "name": "Play Now",
+          "href": "https://imperfections.benpaulsen.tech/"
+        },
+        {
+          "name": "GitHub",
+          "href": "https://github.com/benpaulsen4/Imperfections"
+        }
+      ],
+      "tags": ["TS", "Angular", "Railway", "Caddy"]
+    },
+    {
       "name": "YoutubeStats Config Editor",
       "date": "2023, November",
       "description": "As I have continued to add new features to my YoutubeStats project, I came to realize that one major pain point was all the configuration that was necessary to get started collecting data. As I was interested in trying out some native platform development for the first time in a while, I decided to tackle this with a WinUI 3 app. The app I created has significantly simplified the process of getting started with YoutubeStats, all while providing helpful guidance to new users.",
