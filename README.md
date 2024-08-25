@@ -9,6 +9,6 @@ like this one.
 
 ## Current App Version
 
-The current version is **Release v3.2**. The site is published through Railway, which provides CI/CD and hosting, and a
-Cloudflare proxy for performance and DDOS protection. Firebase is used for analytics as well as to provide basic
-database functions for notifications.
+The current version is **Release v3.3**. The site is published through Vercel, which provides CI/CD and hosting, and a
+Cloudflare proxy for performance and DDOS protection. Firebase is used to provide basic database functions for
+notifications.
