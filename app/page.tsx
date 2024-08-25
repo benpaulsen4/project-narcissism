@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <div className="home">
       <h1>Ben Paulsen</h1>
-      <Ticker/>
+      <Ticker />
       <div className="profile-image"></div>
       <p>
         Hi! My name is Ben and I am an experienced software developer in
@@ -18,21 +18,22 @@ export default function Home() {
       <p>
         I am currently working at Gruntify, a small GIS startup that focuses on
         delivering a high-quality work management product for companies dealing
-        with geospatial work. In my role, I work with our .NET API and
-        Angular-based web front end regularly - all as part of an Azure-deployed
-        solution. As well as standard development work, I assist in tailoring
-        personalized solutions to our enterprise clients thanks to my combined
-        Computer Science/Business Management backgrounds.
+        with field work and asset management. In my role, I work with our .NET
+        API and Angular-based web front end regularly - all as part of an
+        Azure-deployed solution. As well as standard development work, I assist
+        in tailoring personalized solutions to our enterprise clients thanks to
+        my combined Computer Science/Business Management backgrounds.
       </p>
 
       <p>
         On the side, I often dabble in side projects both to keep me entertained
-        as well as provide some valuable learning opportunities. I believe this
-        has greatly contributed to my abilities as a developer, and best allowed
-        my to apply my formal teachings from university as I entered the
-        professional space. Please check out the pages I&apos;ve put together on this
-        site if you have the chance, as together they form a well-rounded depiction
-        of how I have applied my various skills.
+        as well as provide some valuable learning opportunities. Please check
+        out the pages I&apos;ve put together on this site if you have the
+        chance, as together they form a well-rounded depiction of how I have
+        applied my various skills. If you&apos;ve read this far, I&apos;m
+        impressed. This website is a few years old now as of writing, and while
+        it looks pretty the code isn&apos;t my best. Stay tuned for the day I
+        have enough time to rewrite this in Astro...
       </p>
 
       <div className="d-flex">

@@ -1,7 +1,8 @@
 import { IBM_Plex_Sans } from "next/font/google";
 import NavItem from "./common/NavItem";
 import "./styles.css";
-import { Metadata } from "next";
+import { Metadata, Viewport } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import NotificationsHost from "./notifications/NotificationsHost";
 
 const IPS = IBM_Plex_Sans({ weight: "400", subsets: ["latin"] });
@@ -24,9 +25,14 @@ export const metadata: Metadata = {
     "brisbane developer",
     "azure developer",
   ],
-  colorScheme: "dark",
-  viewport: { width: "device-width", initialScale: 1 },
   creator: "Ben Paulsen",
+};
+
+export const viewport: Viewport = {
+width: "device-width",
+initialScale: 1,
+colorScheme: "dark",
+themeColor: "#354f52"
 };
 
 export default function RootLayout({
@@ -49,15 +55,11 @@ export default function RootLayout({
 
   return (
     <html className={IPS.className}>
+      <SpeedInsights/>
       <body>
         <div className="hero">
           <aside>
-            <NavItem
-              name="About Me"
-              url="/"
-              firebaseConfig={firebaseConfig}
-              isStaging={!!process.env.STAGING}
-            />
+            <NavItem name="About Me"url="/" />
             <NavItem name="My Projects" url="/projects" />
             <NavItem name="My Skills" url="/skills" />
             <NavItem name="My Experience" url="/experience" />
@@ -65,7 +67,7 @@ export default function RootLayout({
           <main>{children}</main>
         </div>
         <NotificationsHost firebaseConfig={firebaseConfig}></NotificationsHost>
-        <footer>Built with love and NextJS 13</footer>
+        <footer>We&apos;re on Vercel now 🔼</footer>
       </body>
     </html>
   );
