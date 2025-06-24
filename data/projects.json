@@ -1,6 +1,23 @@
 {
   "data": [
     {
+      "name": "API Workshop - Schema Editor",
+      "date": "2025, June",
+      "description": "After a false start with an ill-fated YoutubeStats follow-up project in early 2024, I was looking for fresh challenges to really sink my teeth into. One day at work, I needed to quickly throw together an Open API definition for a customer, and was appaled to discover how terrible (or expensive) all of the tooling was. With that spark, I endeavored on my most ambitious project yet - a full Open API designer thats free, open source, and designed by a modern-day developer. Thats a lofty goal, though, so to start with I've built just one portion of that platform - a JSON Schema editor with local-first data storage. I have big plans for this app, and I'm excited to start using it even in its early stages. I hope others out there will find use in it too!",
+      "imgUrl": "/assets/project-images/api-workshop.png",
+      "links": [
+        {
+          "name": "Try it Out!",
+          "href": "https://api-workshop.benpaulsen.tech/"
+        },
+        {
+          "name": "GitHub",
+          "href": "https://github.com/benpaulsen4/api-workshop"
+        }
+      ],
+      "tags": ["TS", "Angular", "RxDB", "Railway"]
+    },
+    {
       "name": "Imperfections - The Game",
       "date": "2023, December",
       "description": "Built in two days as a hackathon-style challenge, this simple game written in Angular aims to replicate the 1980s boardgame 'Heartthrob' with a modern Pop-culture twist. I really enjoyed putting this together in a lightweight and cloud-portable style with Caddy server - a bit of a departure from my usual Azure-focused work.",
