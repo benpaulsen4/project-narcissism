@@ -3,7 +3,7 @@
   "version": "3.2.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
@@ -13,18 +13,18 @@
     "@vercel/speed-insights": "^1.0.12",
     "bootstrap-icons": "^1.9.1",
     "firebase": "^10.13.0",
-    "framer-motion": "^10.12.4",
-    "next": "^14.2.6",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
+    "framer-motion": "^12.19.1",
+    "next": "15.3.4",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "sharp": "^0.31.3"
   },
   "devDependencies": {
     "@types/node": "18.11.8",
-    "@types/react": "18.0.24",
-    "@types/react-dom": "18.0.8",
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6",
     "eslint": "8.26.0",
-    "eslint-config-next": "^14.2.6",
+    "eslint-config-next": "15.3.4",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
     "prettier": "^2.8.4",
@@ -33,5 +33,9 @@
   "lint-staged": {
     "*.{js,ts}": "eslint --cache --fix",
     "*.{js,ts,css,md}": "prettier --write"
+  },
+  "overrides": {
+    "@types/react": "19.1.8",
+    "@types/react-dom": "19.1.6"
   }
 }
