@@ -12,9 +12,9 @@
   "dependencies": {
     "@vercel/speed-insights": "^1.0.12",
     "bootstrap-icons": "^1.9.1",
-    "firebase": "^10.13.0",
+    "firebase": "^12.11.0",
     "framer-motion": "^12.19.1",
-    "next": "15.3.8",
+    "next": "15.5.14",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "sharp": "^0.31.3"
