@@ -1,9 +1,43 @@
 {
   "data": [
     {
+      "name": "DeckOS",
+      "date": "2026, April",
+      "description":"Having used homelab management apps like CasaOS in the past, I wanted something new that gave me all the power of raw docker compose files, but with the convenience of templates and remote management. I don't need anything as complete as TrueNAS, or with nearly as many dials as Portainer, but a clean, well-rounded solution that skips the proprietary configuration and plugs right in to a stock Ubuntu server install. DeckOS is a solution that does just that.",
+      "imgUrl": "/assets/project-images/deckos.png",
+      "links": [
+        {
+          "name": "Live Demo (coming soon)",
+          "href": "#"
+        },
+        {
+          "name": "GitHub",
+          "href": "https://github.com/benpaulsen4/deck-os"
+        }
+      ],
+      "tags": ["TS", "React", "Hono", "Docker"]
+    },
+    {
+      "name": "WatchThis",
+      "date": "2025, November",
+      "description": "My take on a TV and movie tracking app. Using the excelent TMDB database, I have built a fun and feature-rich app that lets you track your watch history, organize content into lists, and stay in sync with friends. I've tried plenty of other apps in this category before, but I've never seen anything that enables quite as much collaboration as WatchThis. Perfect for people like me who watch 80% of movies and shows with their partner or friends!",
+      "imgUrl": "/assets/project-images/watchthis.png",
+      "links": [
+        {
+          "name": "Try it Out!",
+          "href": "https://watchthis.benpaulsen.tech/"
+        },
+        {
+          "name": "GitHub",
+          "href": "https://github.com/benpaulsen4/watch-this"
+        }
+      ],
+      "tags": ["TS", "NextJS", "Drizzle", "Postgres"]
+    },
+    {
       "name": "API Workshop - Schema Editor",
       "date": "2025, June",
-      "description": "After a false start with an ill-fated YoutubeStats follow-up project in early 2024, I was looking for fresh challenges to really sink my teeth into. One day at work, I needed to quickly throw together an Open API definition for a customer, and was appaled to discover how terrible (or expensive) all of the tooling was. With that spark, I endeavored on my most ambitious project yet - a full Open API designer thats free, open source, and designed by a modern-day developer. Thats a lofty goal, though, so to start with I've built just one portion of that platform - a JSON Schema editor with local-first data storage. I have big plans for this app, and I'm excited to start using it even in its early stages. I hope others out there will find use in it too!",
+      "description": "After a gap in projects, I was looking for fresh challenges to really sink my teeth into. One day at work, I needed to quickly throw together an Open API definition for a customer, and was appaled to discover how terrible (or expensive) all of the tooling was. With that spark, I endeavored on my most ambitious project yet - a full Open API designer thats free, open source, and designed by a modern-day developer. Thats a lofty goal, though, so to start with I've built just one portion of that platform - a JSON Schema editor with local-first data storage.",
       "imgUrl": "/assets/project-images/api-workshop.png",
       "links": [
         {
@@ -102,23 +136,6 @@
         }
       ],
       "tags": ["C#", ".NET Console", "HTML Agility Pack"]
-    },
-    {
-      "name": "REX NOC Comment Portal",
-      "date": "2022, July",
-      "description": "As part of my short time at REX, I was tasked with developing a beta solution to submitting comments to a database so that they could be read in a PowerBI dashboard. This was my first non-university web project.",
-      "imgUrl": "/assets/project-images/nocportal.png",
-      "links": [
-        {
-          "name": "GitHub",
-          "href": "https://github.com/benpaulsen4/REX-NOC-Comments-Portal"
-        },
-        {
-          "name": "REX Website",
-          "href": "https://rexenergy.com.au"
-        }
-      ],
-      "tags": ["JS", "React", "Express", "MSSQL"]
     }
   ]
 }
