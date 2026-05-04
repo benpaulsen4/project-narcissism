@@ -3,19 +3,19 @@ import { JetBrains_Mono } from "next/font/google";
 import { useEffect, useState } from "react";
 
 const JBmono = JetBrains_Mono({ weight: "400", subsets: ["latin"] });
+const TICKER_WORDS = [
+  "Web Developer",
+  "Full-Stack Developer",
+  "UI Wizard",
+  "Solutions Architect",
+  "Digital Problem Solver",
+];
 
 export default function Ticker() {
-  const words = [
-    "Web Developer",
-    "Full-Stack Developer",
-    "UI Wizard",
-    "Solutions Architect",
-    "Digital Problem Solver",
-  ];
   const [current, setNew] = useState("");
 
   useEffect(() => {
-    flicker(setNew).then(() => animateWords(setNew, words));
+    flicker(setNew).then(() => animateWords(setNew, TICKER_WORDS));
   }, []);
 
   return (
