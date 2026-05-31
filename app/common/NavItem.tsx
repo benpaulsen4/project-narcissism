@@ -10,7 +10,6 @@ export default function NavItem({
 }: {
   name: string;
   url: string;
-  firebaseConfig?: any;
   isStaging?: boolean;
 }) {
   const path = usePathname();

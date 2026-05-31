@@ -73,16 +73,4 @@ export class SkillData {
   }
 }
 
-export class Notification {
-  title: string;
-  content: string;
-  action: Link;
-
-  constructor(title: string, content: string, action: Link) {
-    this.title = title;
-    this.content = content;
-    this.action = action;
-  }
-}
-
 export type Link = { name: string; href: string };

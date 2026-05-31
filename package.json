@@ -12,7 +12,6 @@
   "dependencies": {
     "@vercel/speed-insights": "^1.0.12",
     "bootstrap-icons": "^1.9.1",
-    "firebase": "^12.11.0",
     "framer-motion": "^12.19.1",
     "next": "15.5.18",
     "react": "19.1.0",
