@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "eslint .",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -22,7 +22,7 @@
     "@types/node": "^25.9.1",
     "@types/react": "19.1.8",
     "@types/react-dom": "19.1.6",
-    "eslint": "^8.57.1",
+    "eslint": "^9",
     "eslint-config-next": "^15.5.15",
     "husky": "^8.0.3",
     "lint-staged": "^13.2.0",
