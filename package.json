@@ -13,10 +13,10 @@
     "@vercel/speed-insights": "^1.0.12",
     "bootstrap-icons": "^1.9.1",
     "framer-motion": "^12.19.1",
-    "next": "15.5.18",
+    "next": "15.5.22",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "sharp": "^0.32.6"
+    "sharp": "^0.35.0"
   },
   "devDependencies": {
     "@types/node": "^25.9.1",
