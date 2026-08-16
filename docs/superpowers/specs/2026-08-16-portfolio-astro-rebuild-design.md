@@ -43,8 +43,49 @@ replacement, not a migration. No code carries over.
 | prettier                        | 3.9.6          | + `prettier-plugin-astro`, `prettier-plugin-tailwindcss`     |
 | eslint                          | 10.8.1         | + `eslint-plugin-astro`, `typescript-eslint`                 |
 | husky / lint-staged             | 9.1.7 / 17.3.0 |                                                              |
+| pnpm                            | 11.22.0        | package manager; see §2.1                                    |
 
 No UI framework. No `@astrojs/vercel` adapter — static output deploys to Vercel as-is.
+
+### 2.1 Package manager: pnpm 11
+
+The project converts from npm to pnpm. `package-lock.json` (396KB) is deleted and replaced by
+`pnpm-lock.yaml`.
+
+**pnpm 11 must be pinned explicitly, because Vercel would otherwise build with pnpm 10.** Vercel's
+natively supported pnpm range is 6–10, and it infers the version from the lockfile: pnpm 11 writes
+`lockfileVersion: '9.0'` (verified locally), which Vercel maps to "pnpm 9 or 10". The lockfile itself
+is compatible, but the _configuration_ is not — pnpm 11 consolidated `onlyBuiltDependencies`,
+`neverBuiltDependencies` and `ignoredBuiltDependencies` into a single `allowBuilds` map, which pnpm
+10 does not recognise. Combined with `strictDepBuilds` defaulting to `true`, that mismatch fails the
+install rather than warning.
+
+Resolution — same pnpm in all three environments:
+
+- `"packageManager": "pnpm@11.22.0"` in `package.json`.
+- `ENABLE_EXPERIMENTAL_COREPACK=1` as a Vercel project environment variable. Vercel then honours
+  `packageManager` instead of inferring from the lockfile. (Vercel labels Corepack experimental; the
+  label is inherited from Node's stability index.)
+- CI uses `pnpm/action-setup`, which reads the same `packageManager` field.
+- Locally, the globally installed pnpm 11 is used directly. Corepack is no longer bundled with Node
+  (absent on the Node 26 dev machine), so `packageManager` is inert metadata locally — which is fine,
+  since the global version already matches.
+
+**`pnpm-workspace.yaml`** is required even though this is a single package, because pnpm 11 moved
+most settings out of `.npmrc`:
+
+```yaml
+allowBuilds:
+  esbuild: true
+  sharp: true
+```
+
+Astro depends on `sharp ^0.34 || ^0.35` for image processing, and Vite pulls in `esbuild`. Without
+these entries, `strictDepBuilds` fails the install. Add further entries only when an install actually
+reports an unreviewed build script — do not reach for `dangerouslyAllowAllBuilds`.
+
+Scripts and hooks use `pnpm` / `pnpm exec` rather than `npm` / `npx`, including the husky pre-commit
+hook and every command in the README and CI workflow.
 
 **TypeScript is pinned to 6.0.3, not the latest 7.0.2.** `@astrojs/check@0.9.10` declares
 `peerDependencies.typescript: "^5.0.0 || ^6.0.0"`, so TS 7 would cost us type-checking of `.astro`
@@ -334,16 +375,22 @@ canvas dark — as an SVG plus a small ICO fallback.
 Branch `astro-rebuild` off `master`. One PR, reviewed against Vercel's preview URL before merge.
 
 **Removed:** `app/`, `data/`, `lib/` (empty), `next.config.js`, `next-env.d.ts`, `eslint.config.mjs`,
-most of `public/`.
+`package-lock.json`, most of `public/`.
+**Added:** `pnpm-lock.yaml`, `pnpm-workspace.yaml`, `vercel.json`, `.nvmrc`.
 **Kept:** git history, `license.md`.
-**Rewritten:** `package.json` (v4.0.0), `README.md` — the current one claims Next 13, an Apps
-directory and Firebase, none of which are true.
+**Rewritten:** `package.json` (v4.0.0, with `packageManager`), `README.md` — the current one claims
+Next 13, an Apps directory and Firebase, none of which are true.
 
-CI via GitHub Actions on every PR: `astro check`, ESLint, Vitest, Playwright, build.
-Node pinned to >= 22.12 via `engines` and `.nvmrc`.
+CI via GitHub Actions on every PR: `pnpm/action-setup`, then `astro check`, ESLint, Vitest,
+Playwright and build. Node pinned to >= 22.12 via `engines` and `.nvmrc`.
 
-**Manual step, outside the repo:** the Vercel project's framework preset must change from Next.js to
-Astro. DNS and the Cloudflare proxy stay untouched.
+**Manual steps, outside the repo.** Both are required before the PR merges:
+
+1. Change the Vercel project's framework preset from Next.js to Astro.
+2. Add `ENABLE_EXPERIMENTAL_COREPACK=1` to the Vercel project's environment variables, so builds use
+   pnpm 11 rather than falling back to pnpm 10.
+
+DNS and the Cloudflare proxy stay untouched.
 
 ## 13. Content decisions
 
@@ -358,10 +405,12 @@ Astro. DNS and the Cloudflare proxy stay untouched.
 
 ## 14. Risks
 
-| risk                                                      | mitigation                                              |
-| --------------------------------------------------------- | ------------------------------------------------------- |
-| `compressHTML: 'jsx'` mangles `·`-separated inline labels | Verify early; set `compressHTML: true` if so            |
-| Sätteri renders prose differently to remark               | Prose is trivial; Playwright asserts panel copy         |
-| One coordinate set proves insufficient on some viewport   | `posMobile` already carries the design's nine overrides |
-| TS 6 pin drifts from ecosystem                            | Bump when `@astrojs/check` accepts TS 7                 |
-| Vercel preset change forgotten                            | Called out as an explicit pre-merge step                |
+| risk                                                        | mitigation                                                         |
+| ----------------------------------------------------------- | ------------------------------------------------------------------ |
+| `compressHTML: 'jsx'` mangles `·`-separated inline labels   | Verify early; set `compressHTML: true` if so                       |
+| Sätteri renders prose differently to remark                 | Prose is trivial; Playwright asserts panel copy                    |
+| One coordinate set proves insufficient on some viewport     | `posMobile` already carries the design's nine overrides            |
+| TS 6 pin drifts from ecosystem                              | Bump when `@astrojs/check` accepts TS 7                            |
+| Vercel preset change forgotten                              | Called out as an explicit pre-merge step                           |
+| Corepack env var missed → Vercel silently builds on pnpm 10 | Pre-merge step; first preview deploy confirms from build logs      |
+| An unlisted dependency needs a build script                 | Install fails loudly under `strictDepBuilds`; add to `allowBuilds` |
