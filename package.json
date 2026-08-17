@@ -1,41 +1,25 @@
 {
   "name": "project-narcissism",
-  "version": "3.2.0",
+  "version": "4.0.0",
   "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.22.0",
+  "engines": { "node": ">=22.12" },
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint .",
-    "prepare": "husky install"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "@vercel/speed-insights": "^1.0.12",
-    "bootstrap-icons": "^1.9.1",
-    "framer-motion": "^12.19.1",
-    "next": "15.5.22",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "sharp": "^0.35.0"
+    "astro": "7.2.2"
   },
   "devDependencies": {
-    "@types/node": "^25.9.1",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6",
-    "eslint": "^9",
-    "eslint-config-next": "^15.5.15",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.2.0",
-    "prettier": "^2.8.4",
-    "typescript": "^5.8.3"
-  },
-  "lint-staged": {
-    "*.{js,ts}": "eslint --cache --fix",
-    "*.{js,ts,css,md}": "prettier --write"
-  },
-  "overrides": {
-    "postcss": "8.5.10",
-    "@types/react": "19.1.8",
-    "@types/react-dom": "19.1.6"
+    "@astrojs/check": "0.9.10",
+    "typescript": "6.0.3"
   }
 }
