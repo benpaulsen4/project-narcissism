@@ -8,7 +8,7 @@ pos: { x: 0.5, y: 0.5 }
 wiredTo: [frontend, backend, platform, product, qut]
 stats:
   - { value: "%CAREER_YEARS% yrs", label: SHIPPING SOFTWARE }
-  - { value: "2", label: DEGREES, DISTINCTION }
+  - { value: "2", label: "DEGREES, DISTINCTION" }
   - { value: "4", label: PROJECTS ON THIS MAP }
   - { value: "3", label: COMPANIES SO FAR }
 links:
