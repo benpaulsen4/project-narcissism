@@ -1,0 +1,45 @@
+---
+import type { SiteNode } from "../lib/nodes";
+
+interface Props {
+  node: SiteNode;
+  variant: "desktop" | "mobile";
+  active: boolean;
+}
+
+const { node, variant, active } = Astro.props;
+const pos = variant === "mobile" ? (node.posMobile ?? node.pos) : node.pos;
+const href = node.id === "ben" ? "/" : `/${node.id}`;
+
+const dotClass = {
+  core: "bg-accent",
+  capability: "bg-cap",
+  project: "bg-accent",
+  job: "bg-job",
+  education: "bg-edu",
+}[node.kind];
+---
+
+<a
+  href={href}
+  data-node={node.id}
+  data-kind={node.kind}
+  data-active={active ? "" : null}
+  class="group absolute z-3 block -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/13 bg-chip/96 no-underline transition-[transform,border-color,opacity] duration-300 data-active:border-accent data-dimmed:opacity-32 hover:scale-105 data-[kind=core]:border-accent/50 data-[kind=core]:bg-chip"
+  class:list={[variant === "mobile" ? "px-3 py-2" : "px-4 py-3"]}
+  style={`left:${pos.x * 100}%;top:${pos.y * 100}%`}
+>
+  <span class="flex items-center gap-2">
+    <span class={`block size-1.5 shrink-0 rounded-full ${dotClass}`}></span>
+    <span
+      class="font-display font-semibold tracking-tight"
+      class:list={[variant === "mobile" ? "text-[11.5px]" : "text-[15px]"]}
+      >{node.label}</span
+    >
+  </span>
+  <span
+    class="mt-1 block font-mono font-medium tracking-[0.14em] text-ink/38"
+    class:list={[variant === "mobile" ? "text-[7.5px]" : "text-[9.5px]"]}
+    >{node.meta}</span
+  >
+</a>

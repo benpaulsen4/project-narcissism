@@ -1,10 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
+import Map from "../components/Map.astro";
+import { loadNodes } from "../lib/nodes";
+
+const nodes = await loadNodes();
 ---
 
-<Base title="ben.paulsen" description="scaffold check" canonicalPath="/">
-  <p class="font-mono text-accent">accent</p>
-  <p class="font-mono text-job">job</p>
-  <p class="font-mono text-edu">edu</p>
-  <p class="font-display text-ink">display</p>
+<Base
+  title="Ben Paulsen — Software Developer, Brisbane"
+  description="Software developer in Brisbane, Australia."
+  canonicalPath="/"
+>
+  <main class="h-screen">
+    <Map nodes={nodes} activeId="ben" variant="desktop" />
+  </main>
 </Base>

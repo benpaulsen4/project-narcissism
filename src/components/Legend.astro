@@ -1,0 +1,27 @@
+---
+interface Props {
+  variant: "desktop" | "mobile";
+}
+const { variant } = Astro.props;
+
+const items = [
+  { label: "CAPABILITY", dot: "bg-cap" },
+  { label: "PROJECT", dot: "bg-accent" },
+  { label: "JOB", dot: "bg-job" },
+  { label: variant === "mobile" ? "EDU" : "EDUCATION", dot: "bg-edu" },
+];
+---
+
+<div
+  class="flex items-center font-mono font-medium tracking-[0.1em] text-ink/42"
+  class:list={[variant === "mobile" ? "gap-3 text-[8.5px]" : "gap-[18px] text-[10.5px]"]}
+>
+  {
+    items.map((item) => (
+      <span class="flex items-center gap-[7px]">
+        <span class={`block size-1.5 rounded-full ${item.dot}`} />
+        {item.label}
+      </span>
+    ))
+  }
+</div>
