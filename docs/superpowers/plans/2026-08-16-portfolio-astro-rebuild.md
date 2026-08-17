@@ -1043,7 +1043,7 @@ export function buildEdges(nodes: GraphNode[]): Edge[] {
     for (const target of node.wiredTo) {
       // Undirected: canonicalise the pair so a→b and b→a collapse to one edge.
       const [a, b] = [node.id, target].sort();
-      const key = `${a} ${b}`;
+      const key = `${a} ${b}`;
       if (seen.has(key)) continue;
       seen.add(key);
       edges.push({ a: node.id, b: target });
