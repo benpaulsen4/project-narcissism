@@ -1,0 +1,37 @@
+---
+const links = [
+  { label: "email", href: "mailto:ben.paulsen4@gmail.com" },
+  { label: "github", href: "https://github.com/benpaulsen4" },
+  { label: "linkedin", href: "https://www.linkedin.com/in/ben-paulsen-26979b237/" },
+];
+---
+
+<header
+  class="flex h-16 flex-none items-center justify-between border-b border-white/7 px-7 max-md:h-auto max-md:flex-col max-md:items-start max-md:gap-2 max-md:px-5 max-md:pt-4 max-md:pb-3"
+>
+  <div class="flex items-center gap-3.5 max-md:flex-col max-md:items-start max-md:gap-0.5">
+    <a href="/" class="font-display text-base font-bold tracking-[-0.02em] text-ink no-underline"
+      >ben.paulsen</a
+    >
+    <span class="font-mono text-[10.5px] font-medium tracking-[0.14em] text-ink/38">
+      SOFTWARE DEVELOPER · BRISBANE AU
+    </span>
+  </div>
+  <div class="flex items-center gap-[22px] max-md:w-full max-md:justify-between">
+    <span class="font-mono text-[11px] font-medium tracking-[0.12em] text-accent">
+      OPEN TO INTERESTING WORK
+    </span>
+    <nav class="flex gap-4 font-mono text-[12px] font-medium" aria-label="Contact">
+      {
+        links.map((link) => (
+          <a
+            href={link.href}
+            class="text-ink/72 underline decoration-ink/35 underline-offset-[3px]"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</header>

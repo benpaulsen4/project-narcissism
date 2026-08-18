@@ -1,0 +1,29 @@
+---
+import type { GetStaticPaths } from "astro";
+import Base from "../layouts/Base.astro";
+import Screen from "../components/Screen.astro";
+import { loadNodes } from "../lib/nodes";
+
+export const getStaticPaths = (async () => {
+  const nodes = await loadNodes();
+  return nodes
+    .filter((node) => node.id !== "ben")
+    .map((node) => ({
+      params: { node: node.id },
+      props: { activeId: node.id },
+    }));
+}) satisfies GetStaticPaths;
+
+const { activeId } = Astro.props;
+const nodes = await loadNodes();
+const active = nodes.find((n) => n.id === activeId)!;
+---
+
+<Base
+  title={active.seo.title}
+  description={active.seo.description}
+  canonicalPath={`/${active.id}`}
+  ogImage={`/og/${active.id}.png`}
+>
+  <Screen nodes={nodes} activeId={activeId} />
+</Base>

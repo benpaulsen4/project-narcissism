@@ -1,23 +1,17 @@
 ---
 import Base from "../layouts/Base.astro";
-import Map from "../components/Map.astro";
-import Panel from "../components/Panel.astro";
+import Screen from "../components/Screen.astro";
 import { loadNodes } from "../lib/nodes";
 
 const nodes = await loadNodes();
+const ben = nodes.find((n) => n.id === "ben")!;
 ---
 
 <Base
-  title="Ben Paulsen — Software Developer, Brisbane"
-  description="Software developer in Brisbane, Australia."
+  title={ben.seo.title}
+  description={ben.seo.description}
   canonicalPath="/"
+  ogImage="/og/ben.png"
 >
-  <main class="grid h-screen grid-cols-[1fr_440px]">
-    <Map nodes={nodes} activeId="ben" variant="desktop" />
-    <div class="relative min-h-0 border-l border-white/8 bg-panel">
-      {nodes.map((node) => (
-        <Panel node={node} nodes={nodes} active={node.id === "ben"} />
-      ))}
-    </div>
-  </main>
+  <Screen nodes={nodes} activeId="ben" />
 </Base>

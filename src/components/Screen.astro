@@ -1,0 +1,36 @@
+---
+import Header from "./Header.astro";
+import Map from "./Map.astro";
+import Panel from "./Panel.astro";
+import type { SiteNode } from "../lib/nodes";
+
+interface Props {
+  nodes: SiteNode[];
+  activeId: string;
+}
+
+const { nodes, activeId } = Astro.props;
+---
+
+<div class="flex h-dvh flex-col overflow-hidden">
+  <Header />
+
+  <div class="grid min-h-0 flex-1 grid-cols-[1fr_440px] max-md:flex max-md:flex-col">
+    <nav class="relative max-md:flex-none" aria-label="System map">
+      <div class="h-full max-md:hidden">
+        <Map nodes={nodes} activeId={activeId} variant="desktop" />
+      </div>
+      <div class="hidden max-md:block">
+        <Map nodes={nodes} activeId={activeId} variant="mobile" />
+      </div>
+    </nav>
+
+    <div class="relative min-h-0 border-l border-white/8 bg-panel max-md:flex-1 max-md:border-l-0 max-md:border-t">
+      {
+        nodes.map((node) => (
+          <Panel node={node} nodes={nodes} active={node.id === activeId} />
+        ))
+      }
+    </div>
+  </div>
+</div>
