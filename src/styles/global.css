@@ -66,3 +66,53 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+@layer components {
+  /* Edge and node trace states. The island sets only these attributes. */
+  [data-edge][data-traced] {
+    stroke: var(--color-accent);
+    stroke-width: 2;
+    opacity: 1;
+  }
+  [data-edge][data-dimmed] {
+    opacity: 0.22;
+  }
+  [data-node][data-dimmed] {
+    opacity: 0.32;
+  }
+
+  /* Pulsing ring on the core node. */
+  [data-node][data-kind="core"]::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0.9rem;
+    width: 7px;
+    height: 7px;
+    margin-top: -0.55rem;
+    border-radius: 9999px;
+    background: var(--color-accent);
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    [data-node][data-kind="core"]::after {
+      animation: bpPulse 2.6s ease-out infinite;
+    }
+  }
+
+  /* The ben panel's contact links are pills, not underlined text. */
+  [data-panel="ben"] a[href^="mailto:"] {
+    border-radius: 9999px;
+    background: var(--color-accent);
+    padding: 0.625rem 1.0625rem;
+    color: var(--color-canvas);
+    text-decoration: none;
+  }
+  [data-panel="ben"] a:not([href^="mailto:"]) {
+    border-radius: 9999px;
+    border: 1px solid rgb(255 255 255 / 0.18);
+    padding: 0.625rem 1.0625rem;
+    color: var(--color-ink);
+    text-decoration: none;
+  }
+}

@@ -1,5 +1,6 @@
 ---
 import type { SiteNode } from "../lib/nodes";
+import { statusWord } from "../lib/dates";
 
 interface Props {
   node: SiteNode;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const { node, variant, active } = Astro.props;
+const status = statusWord();
 const pos = variant === "mobile" ? (node.posMobile ?? node.pos) : node.pos;
 const href = node.id === "ben" ? "/" : `/${node.id}`;
 
@@ -37,9 +39,24 @@ const dotClass = {
       >{node.label}</span
     >
   </span>
-  <span
-    class="mt-1 block font-mono font-medium tracking-[0.14em] text-ink/38"
-    class:list={[variant === "mobile" ? "text-[7.5px]" : "text-[9.5px]"]}
-    >{node.meta}</span
-  >
+  {
+    node.kind === "core" ? (
+      <span
+        data-status={variant === "mobile" ? "short" : ""}
+        class="mt-1.5 block font-mono text-ink/45"
+        class:list={[variant === "mobile" ? "text-[8.5px]" : "text-[11.5px]"]}
+      >
+        {variant === "mobile"
+          ? `currently ${status}`
+          : `brisbane · currently ${status}`}
+      </span>
+    ) : (
+      <span
+        class="mt-1 block font-mono font-medium tracking-[0.14em] text-ink/38"
+        class:list={[variant === "mobile" ? "text-[7.5px]" : "text-[9.5px]"]}
+      >
+        {node.meta}
+      </span>
+    )
+  }
 </a>

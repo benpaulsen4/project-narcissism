@@ -34,3 +34,11 @@ const { nodes, activeId } = Astro.props;
     </div>
   </div>
 </div>
+
+<script>
+  import { initMap } from "../scripts/map";
+  import { initStatus } from "../scripts/status";
+
+  initMap();
+  initStatus();
+</script>
