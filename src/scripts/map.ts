@@ -103,6 +103,16 @@ export function initMap(): Cleanup {
 
   const onLeave = (event: PointerEvent) => {
     if (event.pointerType !== "mouse") return;
+
+    const node = (event.target as Element | null)?.closest<HTMLElement>(
+      NODE_SELECTOR
+    );
+    if (!node) return;
+
+    // Ignore boundary crossings within the same chip (e.g. span -> a).
+    const related = event.relatedTarget as Element | null;
+    if (related && node.contains(related)) return;
+
     trace(current === "ben" ? null : current);
   };
 
