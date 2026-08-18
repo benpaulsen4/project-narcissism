@@ -33,7 +33,12 @@ const VH = 1000;
   class="relative overflow-hidden bg-[radial-gradient(rgba(255,255,255,.05)_1px,transparent_1px)]"
   class:list={[mobile ? "h-[392px] bg-[size:28px_28px] touch-none" : "h-full bg-[size:34px_34px]"]}
 >
-  <div id={mobile ? "bpGMinner" : undefined} data-map-inner class="absolute inset-0 origin-center">
+  <div
+    id={mobile ? "bpGMinner" : undefined}
+    data-map-inner
+    class="absolute inset-0 origin-center"
+    style={mobile ? "transform:scale(0.82)" : undefined}
+  >
     <svg
       viewBox={`0 0 ${VW} ${VH}`}
       preserveAspectRatio="none"
@@ -84,6 +89,42 @@ const VH = 1000;
           {nodes.length} nodes · {edges.length} edges · uptime <span data-career-years>{careerYears()}</span>
           yrs
         </p>
+      </>
+    )
+  }
+
+  {
+    mobile && (
+      <>
+        <p class="pointer-events-none absolute top-2.5 left-4 z-6 m-0 font-mono text-[8.5px] font-medium tracking-[0.12em] text-ink/30">
+          DRAG TO PAN · PINCH TO ZOOM
+        </p>
+        <div class="absolute right-3 bottom-2.5 z-6 flex gap-1.5">
+          <button
+            type="button"
+            data-zoom="out"
+            aria-label="Zoom out"
+            class="size-[30px] rounded-lg border border-white/16 bg-canvas/82 font-mono text-[15px] font-medium text-ink"
+          >
+            −
+          </button>
+          <button
+            type="button"
+            data-zoom="reset"
+            aria-label="Fit map"
+            class="h-[30px] rounded-lg border border-white/16 bg-canvas/82 px-2.5 font-mono text-[9px] font-medium tracking-[0.1em] text-ink"
+          >
+            FIT
+          </button>
+          <button
+            type="button"
+            data-zoom="in"
+            aria-label="Zoom in"
+            class="size-[30px] rounded-lg border border-white/16 bg-canvas/82 font-mono text-[15px] font-medium text-ink"
+          >
+            +
+          </button>
+        </div>
       </>
     )
   }

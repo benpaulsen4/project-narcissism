@@ -1,5 +1,6 @@
 ---
 import Header from "./Header.astro";
+import Legend from "./Legend.astro";
 import Map from "./Map.astro";
 import Panel from "./Panel.astro";
 import type { SiteNode } from "../lib/nodes";
@@ -25,6 +26,10 @@ const { nodes, activeId } = Astro.props;
       </div>
     </nav>
 
+    <div class="hidden border-y border-white/7 px-5 py-2.5 max-md:block">
+      <Legend variant="mobile" />
+    </div>
+
     <div class="relative min-h-0 border-l border-white/8 bg-panel max-md:flex-1 max-md:border-l-0 max-md:border-t">
       {
         nodes.map((node) => (
@@ -37,8 +42,10 @@ const { nodes, activeId } = Astro.props;
 
 <script>
   import { initMap } from "../scripts/map";
+  import { initPanZoom } from "../scripts/panzoom";
   import { initStatus } from "../scripts/status";
 
   initMap();
+  initPanZoom();
   initStatus();
 </script>
