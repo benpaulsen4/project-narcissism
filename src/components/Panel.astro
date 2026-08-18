@@ -1,0 +1,172 @@
+---
+import { render } from "astro:content";
+import { Image } from "astro:assets";
+import { wiredToLabel, type GraphNode } from "../lib/graph";
+import { careerYears } from "../lib/dates";
+import type { SiteNode } from "../lib/nodes";
+
+interface Props {
+  node: SiteNode;
+  nodes: SiteNode[];
+  active: boolean;
+}
+
+const { node, nodes, active } = Astro.props;
+const { Content } = await render(node.entry);
+
+const wired = wiredToLabel(nodes as GraphNode[], node.id);
+const years = careerYears();
+
+const eyebrowColour = {
+  core: "text-accent",
+  capability: "text-ink/45",
+  project: "text-accent",
+  job: "text-job",
+  education: "text-edu",
+}[node.kind];
+
+const stats = node.stats?.map((s) => ({
+  ...s,
+  value: s.value.replace("%CAREER_YEARS%", String(years)),
+}));
+---
+
+<article
+  data-panel={node.id}
+  data-active={active ? "" : null}
+  inert={active ? undefined : true}
+  class="absolute inset-0 overflow-auto px-5 pt-[18px] pb-[26px] opacity-0 transition-[opacity,transform] duration-[380ms] translate-y-2.5 data-active:translate-y-0 data-active:opacity-100 md:px-[30px] md:pt-0 md:pb-6"
+>
+  <h1 class="m-0 font-display text-[21px] font-bold tracking-[-0.03em] md:text-[30px]">
+    {node.label}
+  </h1>
+  <p
+    class={`mt-[7px] mb-0 font-mono text-[10px] font-medium tracking-[0.12em] md:text-[11.5px] ${eyebrowColour}`}
+  >
+    {node.eyebrow}
+  </p>
+
+  {
+    node.screenshot && (
+      <Image
+        src={node.screenshot}
+        alt={`${node.label} screenshot`}
+        widths={[400, 800]}
+        sizes="(max-width: 900px) 90vw, 380px"
+        class="mt-[18px] h-[132px] w-full rounded-[10px] border border-white/9 object-cover md:h-[158px]"
+      />
+    )
+  }
+
+  <div class="prose-panel mt-5 font-display text-[14px]/[1.6] text-ink/70 md:text-[15px]/[1.62]">
+    <Content />
+  </div>
+
+  {
+    stats && (
+      <div class="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[10px] border border-white/8 bg-white/8">
+        {stats.map((s) => (
+          <div class="bg-panel px-4 py-[14px]">
+            <p class="m-0 font-display text-[20px] font-bold">{s.value}</p>
+            <p class="m-0 mt-1 font-mono text-[10px] font-medium tracking-[0.13em] text-ink/40">
+              {s.label}
+            </p>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    node.tags && (
+      <div class="mt-5 flex flex-wrap gap-2 font-mono text-[12px] font-medium text-ink/80">
+        {node.tags.map((tag) => (
+          <span class="rounded-lg border border-white/13 px-3 py-[7px]">{tag}</span>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    node.highlights && (
+      <div class="mt-[22px] flex flex-col gap-[14px]">
+        {node.highlights.map((h) => (
+          <div>
+            <p class="m-0 font-mono text-[10.5px] font-medium tracking-[0.13em] text-accent">
+              {h.label}
+            </p>
+            <p class="mt-1.5 mb-0 font-display text-[14px]/[1.6] text-ink/62">{h.body}</p>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  {
+    node.previous && (
+      <>
+        <p class="mt-6 mb-0 font-mono text-[10.5px] font-medium tracking-[0.14em] text-ink/35">
+          BEFORE THIS
+        </p>
+        <div class="mt-3 flex flex-col gap-px overflow-hidden rounded-[10px] border border-white/8 bg-white/8">
+          {node.previous.map((p) => (
+            <div class="bg-panel px-4 py-[13px]">
+              <p class="m-0 font-display text-[14.5px] font-semibold">{p.name}</p>
+              <p class="m-0 mt-[3px] font-mono text-[12px] text-ink/42">{p.role}</p>
+            </div>
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  {
+    node.stack && (
+      <p class="mt-[18px] mb-0 font-mono text-[11.5px] font-medium tracking-[0.1em] text-ink/45">
+        {node.stack}
+      </p>
+    )
+  }
+
+  {
+    node.links.length > 0 && (
+      <div class="mt-[18px] flex flex-wrap gap-[18px] font-mono text-[12.5px] font-medium">
+        {node.links.map((link) =>
+          link.href ? (
+            <a
+              href={link.href}
+              class={
+                link.accent
+                  ? "text-accent underline underline-offset-[3px]"
+                  : "text-ink/60 underline underline-offset-[3px]"
+              }
+            >
+              {link.label}
+            </a>
+          ) : (
+            <span class="text-ink/40">{link.label}</span>
+          ),
+        )}
+      </div>
+    )
+  }
+
+  {
+    wired && (
+      <p class="mt-[22px] mb-0 font-mono text-[12.5px] text-ink/40">wired to → {wired}</p>
+    )
+  }
+</article>
+
+<style>
+  .prose-panel :global(p) {
+    margin: 0 0 0.875rem;
+    text-wrap: pretty;
+  }
+  .prose-panel :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .prose-panel :global(p + p) {
+    color: color-mix(in oklab, var(--color-ink) 50%, transparent);
+  }
+</style>
