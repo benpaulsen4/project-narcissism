@@ -1,5 +1,6 @@
 ---
 import { buildEdges, edgeKey, type GraphNode } from "../lib/graph";
+import { careerYears } from "../lib/dates";
 import type { SiteNode } from "../lib/nodes";
 import Legend from "./Legend.astro";
 import NodeChip from "./NodeChip.astro";
@@ -80,7 +81,7 @@ const VH = 1000;
           <Legend variant="desktop" />
         </div>
         <p class="absolute right-[26px] bottom-[22px] z-4 m-0 font-mono text-[10.5px] text-ink/28">
-          {nodes.length} nodes · {edges.length} edges · uptime <span data-career-years />
+          {nodes.length} nodes · {edges.length} edges · uptime <span data-career-years>{careerYears()}</span>
           yrs
         </p>
       </>
