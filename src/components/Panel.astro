@@ -152,7 +152,7 @@ const stats = node.stats?.map((s) => ({
   }
 
   {
-    wired && (
+    node.kind !== "core" && wired && (
       <p class="mt-[22px] mb-0 font-mono text-[12.5px] text-ink/40">wired to → {wired}</p>
     )
   }
