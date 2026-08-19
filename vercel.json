@@ -1,0 +1,8 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/projects", "destination": "/deckos", "permanent": true },
+    { "source": "/skills", "destination": "/frontend", "permanent": true },
+    { "source": "/experience", "destination": "/gruntify", "permanent": true }
+  ]
+}
