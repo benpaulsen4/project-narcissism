@@ -35,9 +35,23 @@ export const getStaticPaths = (async () => {
 // (RIGHTWARDS ARROW) — Gruntify's eyebrow ("JOB · 2022 → NOW · PLATFORM
 // LEAD") is the only field the OG generator reads that contains one.
 // Without a fallback font, satori/opentype.js render the arrow as a
-// notdef box. This substitution is scoped to the rasterised image only;
-// the site copy itself (rendered by the browser, which has font fallback)
-// is untouched.
+// notdef box.
+//
+// Two fallback fonts already in this project were checked and rejected
+// (see task-12-report.md "Fix report" for the full trace):
+//   - @fontsource-variable/jetbrains-mono ships only .woff2, which
+//     satori's bundled font parser (@shuding/opentype.js) cannot read at
+//     all — it throws "Unsupported OpenType signature wOF2" before any
+//     glyph lookup happens.
+//   - @fontsource/jetbrains-mono (static, .woff) parses fine, but its
+//     cmap lacks U+2192 in every locale subset (latin, latin-ext,
+//     cyrillic, cyrillic-ext, greek, vietnamese) — same Google Fonts
+//     Arrows-block exclusion as Space Grotesk.
+// Pulling in a new typeface family solely to cover one glyph was judged
+// out of scope; this is a known, reported limitation, not a silent
+// workaround. The substitution is scoped to the rasterised image only —
+// the site copy itself (rendered by the browser, which has real font
+// fallback) is untouched.
 const rasterSafe = (text: string) => text.replace(/→/g, "->");
 
 export const GET: APIRoute = async ({ props }) => {

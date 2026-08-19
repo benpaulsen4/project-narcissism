@@ -79,4 +79,8 @@ const payload = {
 };
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(payload)} is:inline />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(payload).replace(/</g, "\\u003c")}
+  is:inline
+/>
