@@ -47,14 +47,35 @@ const EYEBROW_FONT_SIZE = 26;
 // trees directly, so this sidesteps font coverage entirely.
 //
 // Sized off EYEBROW_FONT_SIZE (not a hardcoded pixel value) so it tracks
-// the eyebrow text size if that ever changes. The viewBox is cropped
-// tightly to the ink itself (no padding above/below the stroke), so
-// aligning the row with `alignItems: "baseline"` — which, for a
-// non-text element, aligns its bottom edge to the text baseline — seats
-// the arrow's lowest point right on the baseline, the same way a
-// glyph's flat-bottomed strokes (e.g. a capital letter) sit on it.
+// the eyebrow text size if that ever changes.
 const ARROW_HEIGHT = Math.round(EYEBROW_FONT_SIZE * 0.5);
 const ARROW_WIDTH = Math.round(ARROW_HEIGHT * (16 / 12));
+
+// The eyebrow is an all-caps line, so the arrow needs to sit centred on
+// the cap-height band (level with the "·" separators), not resting on
+// the alphabetic baseline — that reads as a subscript against all-caps
+// text. These are Space Grotesk 700's real font metrics, extracted
+// directly from the woff file with @shuding/opentype.js (satori's own
+// font-parsing dependency — the same tool used elsewhere in this file's
+// investigation history):
+//   unitsPerEm 1000, hhea.ascender 984, os2.sCapHeight 700
+// The eyebrow row uses `alignItems: "flex-start"`, so every child's box
+// top sits at the row's top edge. A line of text's baseline then sits
+// ASCENDER_PX below that top edge (the font's ascent), and the cap-height
+// band — where capital letters actually sit — spans from
+// (ASCENDER_PX - CAP_HEIGHT_PX) to ASCENDER_PX, centred at
+// ASCENDER_PX - CAP_HEIGHT_PX / 2. The icon needs a top margin that
+// lands its own centre (ARROW_HEIGHT / 2 down from its top-aligned
+// position) on that same point. All of this is computed from
+// EYEBROW_FONT_SIZE and ARROW_HEIGHT, so it stays correct if either
+// changes — nothing here is a hardcoded pixel offset.
+const FONT_UNITS_PER_EM = 1000;
+const FONT_CAP_HEIGHT_UNITS = 700;
+const FONT_ASCENDER_UNITS = 984;
+
+const CAP_HEIGHT_PX = (FONT_CAP_HEIGHT_UNITS / FONT_UNITS_PER_EM) * EYEBROW_FONT_SIZE;
+const ASCENDER_PX = (FONT_ASCENDER_UNITS / FONT_UNITS_PER_EM) * EYEBROW_FONT_SIZE;
+const ARROW_MARGIN_TOP = ASCENDER_PX - CAP_HEIGHT_PX / 2 - ARROW_HEIGHT / 2;
 
 const arrowIcon = (color: string) => ({
   type: "svg",
@@ -62,7 +83,7 @@ const arrowIcon = (color: string) => ({
     viewBox: "0 0 16 12",
     width: ARROW_WIDTH,
     height: ARROW_HEIGHT,
-    style: { flexShrink: 0 },
+    style: { flexShrink: 0, marginTop: ARROW_MARGIN_TOP },
     children: {
       type: "path",
       props: {
@@ -121,7 +142,7 @@ export const GET: APIRoute = async ({ props }) => {
               style: {
                 display: "flex",
                 flexDirection: "row",
-                alignItems: "baseline",
+                alignItems: "flex-start",
                 gap: 10,
                 fontSize: EYEBROW_FONT_SIZE,
                 letterSpacing: 4,
