@@ -31,28 +31,64 @@ export const getStaticPaths = (async () => {
   }));
 }) satisfies GetStaticPaths;
 
+const EYEBROW_FONT_SIZE = 26;
+
 // The Space Grotesk latin-700 webfont subset has no glyph for U+2192
 // (RIGHTWARDS ARROW) — Gruntify's eyebrow ("JOB · 2022 → NOW · PLATFORM
-// LEAD") is the only field the OG generator reads that contains one.
-// Without a fallback font, satori/opentype.js render the arrow as a
-// notdef box.
+// LEAD") is the only field the OG generator reads that contains one, and
+// no installed fallback font covers it either (checked both
+// @fontsource-variable/jetbrains-mono, which ships only .woff2 that
+// satori's bundled font parser cannot read at all, and the static
+// @fontsource/jetbrains-mono, whose cmap lacks U+2192 in every locale
+// subset — same Google Fonts Arrows-block exclusion as Space Grotesk).
+// Rather than substitute a lookalike character or pull in a new typeface
+// family for one glyph, the arrow is drawn as a small inline SVG instead
+// of relying on the font at all — satori renders nested SVG element
+// trees directly, so this sidesteps font coverage entirely.
 //
-// Two fallback fonts already in this project were checked and rejected
-// (see task-12-report.md "Fix report" for the full trace):
-//   - @fontsource-variable/jetbrains-mono ships only .woff2, which
-//     satori's bundled font parser (@shuding/opentype.js) cannot read at
-//     all — it throws "Unsupported OpenType signature wOF2" before any
-//     glyph lookup happens.
-//   - @fontsource/jetbrains-mono (static, .woff) parses fine, but its
-//     cmap lacks U+2192 in every locale subset (latin, latin-ext,
-//     cyrillic, cyrillic-ext, greek, vietnamese) — same Google Fonts
-//     Arrows-block exclusion as Space Grotesk.
-// Pulling in a new typeface family solely to cover one glyph was judged
-// out of scope; this is a known, reported limitation, not a silent
-// workaround. The substitution is scoped to the rasterised image only —
-// the site copy itself (rendered by the browser, which has real font
-// fallback) is untouched.
-const rasterSafe = (text: string) => text.replace(/→/g, "->");
+// Sized off EYEBROW_FONT_SIZE (not a hardcoded pixel value) so it tracks
+// the eyebrow text size if that ever changes. The viewBox is cropped
+// tightly to the ink itself (no padding above/below the stroke), so
+// aligning the row with `alignItems: "baseline"` — which, for a
+// non-text element, aligns its bottom edge to the text baseline — seats
+// the arrow's lowest point right on the baseline, the same way a
+// glyph's flat-bottomed strokes (e.g. a capital letter) sit on it.
+const ARROW_HEIGHT = Math.round(EYEBROW_FONT_SIZE * 0.5);
+const ARROW_WIDTH = Math.round(ARROW_HEIGHT * (16 / 12));
+
+const arrowIcon = (color: string) => ({
+  type: "svg",
+  props: {
+    viewBox: "0 0 16 12",
+    width: ARROW_WIDTH,
+    height: ARROW_HEIGHT,
+    style: { flexShrink: 0 },
+    children: {
+      type: "path",
+      props: {
+        d: "M0 6H11M7 0L13 6L7 12",
+        stroke: color,
+        strokeWidth: 2,
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        fill: "none",
+      },
+    },
+  },
+});
+
+// Splits eyebrow text on "→" and interleaves the SVG arrow between the
+// surrounding text runs, general enough that any future node whose
+// eyebrow contains an arrow renders correctly without another fix.
+const eyebrowChildren = (eyebrow: string, color: string) => {
+  const parts = eyebrow.split("→").map((part) => part.trim());
+  const children: unknown[] = [];
+  parts.forEach((part, i) => {
+    if (part) children.push(part);
+    if (i < parts.length - 1) children.push(arrowIcon(color));
+  });
+  return children;
+};
 
 export const GET: APIRoute = async ({ props }) => {
   const { label, eyebrow, kind } = props as {
@@ -83,11 +119,15 @@ export const GET: APIRoute = async ({ props }) => {
             type: "div",
             props: {
               style: {
-                fontSize: 26,
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "baseline",
+                gap: 10,
+                fontSize: EYEBROW_FONT_SIZE,
                 letterSpacing: 4,
                 color: KIND_COLOUR[kind],
               },
-              children: rasterSafe(eyebrow),
+              children: eyebrowChildren(eyebrow, KIND_COLOUR[kind]),
             },
           },
           {
