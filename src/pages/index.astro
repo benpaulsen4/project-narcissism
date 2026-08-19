@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
 import Screen from "../components/Screen.astro";
+import StructuredData from "../components/StructuredData.astro";
 import { loadNodes } from "../lib/nodes";
 
 const nodes = await loadNodes();
@@ -13,5 +14,6 @@ const ben = nodes.find((n) => n.id === "ben")!;
   canonicalPath="/"
   ogImage="/og/ben.png"
 >
+  <StructuredData slot="head" nodes={nodes} activeId="ben" />
   <Screen nodes={nodes} activeId="ben" />
 </Base>

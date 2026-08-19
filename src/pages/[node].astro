@@ -2,6 +2,7 @@
 import type { GetStaticPaths } from "astro";
 import Base from "../layouts/Base.astro";
 import Screen from "../components/Screen.astro";
+import StructuredData from "../components/StructuredData.astro";
 import { loadNodes } from "../lib/nodes";
 
 export const getStaticPaths = (async () => {
@@ -25,5 +26,6 @@ const active = nodes.find((n) => n.id === activeId)!;
   canonicalPath={`/${active.id}`}
   ogImage={`/og/${active.id}.png`}
 >
+  <StructuredData slot="head" nodes={nodes} activeId={activeId} />
   <Screen nodes={nodes} activeId={activeId} />
 </Base>

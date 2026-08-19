@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://benpaulsen.tech/sitemap-index.xml

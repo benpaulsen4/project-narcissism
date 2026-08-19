@@ -1,0 +1,82 @@
+---
+import type { SiteNode } from "../lib/nodes";
+
+interface Props {
+  nodes: SiteNode[];
+  activeId: string;
+}
+
+const { nodes, activeId } = Astro.props;
+const site = (Astro.site ?? new URL("https://benpaulsen.tech")).origin;
+
+const personId = `${site}/#ben`;
+const urlFor = (id: string) => (id === "ben" ? `${site}/` : `${site}/${id}`);
+
+const projects = nodes.filter((n) => n.kind === "project");
+const capabilities = nodes.filter((n) => n.kind === "capability");
+const job = nodes.find((n) => n.id === "gruntify");
+const education = nodes.find((n) => n.id === "qut");
+
+const graph: Record<string, unknown>[] = [
+  {
+    "@type": "Person",
+    "@id": personId,
+    name: "Ben Paulsen",
+    jobTitle: "Software Developer",
+    url: `${site}/`,
+    email: "mailto:ben.paulsen4@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Brisbane",
+      addressRegion: "QLD",
+      addressCountry: "AU",
+    },
+    knowsAbout: capabilities.map((c) => c.label),
+    sameAs: [
+      "https://github.com/benpaulsen4",
+      "https://www.linkedin.com/in/ben-paulsen-26979b237/",
+    ],
+    ...(job ? { worksFor: { "@type": "Organization", name: job.label } } : {}),
+    ...(education
+      ? {
+          alumniOf: {
+            "@type": "CollegeOrUniversity",
+            name: "Queensland University of Technology",
+          },
+        }
+      : {}),
+  },
+  ...projects.map((project) => ({
+    "@type": "SoftwareApplication",
+    "@id": `${urlFor(project.id)}#app`,
+    name: project.label,
+    url: urlFor(project.id),
+    description: project.seo.description,
+    applicationCategory: "WebApplication",
+    author: { "@id": personId },
+  })),
+];
+
+const active = nodes.find((n) => n.id === activeId);
+const mainEntity =
+  active && active.kind === "project"
+    ? `${urlFor(active.id)}#app`
+    : personId;
+
+const payload = {
+  "@context": "https://schema.org",
+  "@graph": [
+    ...graph,
+    {
+      "@type": "WebPage",
+      "@id": `${urlFor(activeId)}#page`,
+      url: urlFor(activeId),
+      name: active?.seo.title,
+      description: active?.seo.description,
+      mainEntity: { "@id": mainEntity },
+    },
+  ],
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(payload)} is:inline />

@@ -18,6 +18,7 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@astrojs/sitemap": "3.7.3",
     "@fontsource-variable/jetbrains-mono": "5.3.0",
     "@fontsource-variable/space-grotesk": "5.3.0",
     "@tailwindcss/vite": "4.3.3",
@@ -27,6 +28,8 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@fontsource/space-grotesk": "5.3.0",
+    "satori": "0.29.0",
     "typescript": "6.0.3",
     "vitest": "4.1.10"
   }
