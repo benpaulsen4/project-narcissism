@@ -78,8 +78,15 @@ export function initPanZoom(): void {
 
   const endPointer = (event: PointerEvent) => {
     points.delete(event.pointerId);
+
     if (points.size === 0) {
       panBase = null;
+      pinchBase = null;
+    } else if (points.size === 1) {
+      // A pinch just dropped to one finger — rebase panning from wherever
+      // that finger currently is so the map doesn't jump on the transition.
+      const [remaining] = [...points.values()];
+      panBase = { x: remaining.x, y: remaining.y, tx, ty };
       pinchBase = null;
     }
 
@@ -115,7 +122,7 @@ export function initPanZoom(): void {
         apply();
       } else {
         zoomAt(
-          kind === "in" ? 1.2 : 0.83,
+          kind === "in" ? 1.2 : 1 / 1.2,
           rect.left + rect.width / 2,
           rect.top + rect.height / 2
         );
