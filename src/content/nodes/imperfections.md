@@ -7,6 +7,7 @@ eyebrow: PROJECT · DECEMBER 2023 · TWO DAYS
 pos: { x: 0.302, y: 0.873 }
 posMobile: { x: 0.289, y: 0.918 }
 wiredTo: [frontend]
+screenshot: ../../assets/projects/imperfections.png
 stack: TS · ANGULAR · RAILWAY · CADDY
 links:
   - {

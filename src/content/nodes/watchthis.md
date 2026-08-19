@@ -7,6 +7,7 @@ eyebrow: PROJECT · NOVEMBER 2025 · SOCIAL
 pos: { x: 0.878, y: 0.65 }
 posMobile: { x: 0.856, y: 0.745 }
 wiredTo: [frontend, backend]
+screenshot: ../../assets/projects/watchthis.png
 stack: TS · NEXT.JS · DRIZZLE · POSTGRES
 links:
   - {

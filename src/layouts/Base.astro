@@ -28,6 +28,8 @@ const og = new URL(ogImage ?? "/og/ben.png", site).href;
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={og} />
     <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.png" sizes="32x32" />
     <slot name="head" />
   </head>
   <body class="bg-canvas text-ink font-display">

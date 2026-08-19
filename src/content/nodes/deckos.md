@@ -7,6 +7,7 @@ eyebrow: PROJECT · APRIL 2026 · SELF-HOSTED
 pos: { x: 0.853, y: 0.195 }
 posMobile: { x: 0.833, y: 0.122 }
 wiredTo: [frontend, backend, platform]
+screenshot: ../../assets/projects/deckos.png
 stack: TS · REACT · HONO · DOCKER
 links:
   - { label: live demo (soon), accent: true }

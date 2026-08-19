@@ -7,6 +7,7 @@ eyebrow: PROJECT · JUNE 2025 · SCHEMA EDITOR
 pos: { x: 0.711, y: 0.877 }
 posMobile: { x: 0.644, y: 0.923 }
 wiredTo: [frontend, platform]
+screenshot: ../../assets/projects/api-workshop.png
 stack: TS · ANGULAR · RXDB · RAILWAY
 links:
   - {
