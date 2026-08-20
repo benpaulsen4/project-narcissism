@@ -60,6 +60,21 @@ test("every panel's copy is in the DOM on every route", async ({ page }) => {
   ).toHaveCount(1);
 });
 
+// Static output serves 404.html at /404 with a 200, so the route is
+// crawlable however the host handles unmatched paths. It must therefore
+// withdraw itself: noindex, and no canonical claiming /404 as a real URL.
+test("the 404 page is noindex and claims no canonical URL", async ({
+  page,
+}) => {
+  await page.goto("/404");
+  await expect(
+    page.locator('head meta[name="robots"][content="noindex"]'),
+  ).toHaveCount(1);
+  await expect(page.locator('head link[rel="canonical"]')).toHaveCount(0);
+  // The copy and its single way back are unchanged.
+  await expect(page.locator('main a[href="/"]')).toHaveCount(1);
+});
+
 test("node chips are real links without JavaScript", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator('[data-node="deckos"]').first()).toHaveAttribute(

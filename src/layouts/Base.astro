@@ -4,13 +4,19 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description: string;
-  canonicalPath: string;
+  /**
+   * Omit for a page that should not be a canonical URL of its own. Static
+   * output serves `404.html` at `/404` with a 200, so a self-canonical there
+   * is an active invitation to index it — a stronger signal than leaving it
+   * out of the sitemap is at withdrawing one.
+   */
+  canonicalPath?: string;
   ogImage?: string;
 }
 
 const { title, description, canonicalPath, ogImage } = Astro.props;
 const site = Astro.site ?? new URL("https://benpaulsen.tech");
-const canonical = new URL(canonicalPath, site).href;
+const canonical = canonicalPath ? new URL(canonicalPath, site).href : undefined;
 const og = new URL(ogImage ?? "/og/ben.png", site).href;
 ---
 
@@ -21,11 +27,11 @@ const og = new URL(ogImage ?? "/og/ben.png", site).href;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={canonical} />
+    {canonical && <link rel="canonical" href={canonical} />}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonical} />
+    {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={og} />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
