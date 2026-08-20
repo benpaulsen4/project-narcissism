@@ -81,15 +81,18 @@
     opacity: 0.32;
   }
 
-  /* Pulsing ring on the core node. */
+  /* Pulsing ring on the core node. It has to track the chip it sits inside,
+     so it is measured in the same `--chip` scale unit the desktop chip uses
+     (see NodeChip.astro). The 1px fallback is the mobile chip, whose metrics
+     are fixed — at that value these are the design's 0.9rem/7px/-0.55rem. */
   [data-node][data-kind="core"]::after {
     content: "";
     position: absolute;
     top: 50%;
-    left: 0.9rem;
-    width: 7px;
-    height: 7px;
-    margin-top: -0.55rem;
+    left: calc(14.4 * var(--chip, 1px));
+    width: calc(7 * var(--chip, 1px));
+    height: calc(7 * var(--chip, 1px));
+    margin-top: calc(-8.8 * var(--chip, 1px));
     border-radius: 9999px;
     background: var(--color-accent);
     pointer-events: none;

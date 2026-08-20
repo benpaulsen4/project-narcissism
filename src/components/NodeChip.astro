@@ -9,8 +9,9 @@ interface Props {
 }
 
 const { node, variant, active } = Astro.props;
+const mobile = variant === "mobile";
 const status = statusWord();
-const pos = variant === "mobile" ? (node.posMobile ?? node.pos) : node.pos;
+const pos = mobile ? (node.posMobile ?? node.pos) : node.pos;
 const href = node.id === "ben" ? "/" : `/${node.id}`;
 
 const dotClass = {
@@ -20,6 +21,28 @@ const dotClass = {
   job: "bg-job",
   education: "bg-edu",
 }[node.kind];
+
+// The mobile chip keeps fixed pixel metrics — its map is full-bleed and has
+// pan/zoom, so it never has to survive a narrowing column. The desktop chip
+// does, so its metrics come from the `chip*` rules below, which scale with
+// the map. See the <style> block for why.
+const box = mobile
+  ? {
+      root: "rounded-xl px-3 py-2",
+      row: "gap-2",
+      dot: "size-1.5",
+      label: "text-[11.5px]",
+      status: "mt-1.5 text-[8.5px]",
+      meta: "mt-1 text-[7.5px]",
+    }
+  : {
+      root: "chip",
+      row: "chip-row",
+      dot: "chip-dot",
+      label: "chip-label",
+      status: "chip-status",
+      meta: "chip-meta",
+    };
 ---
 
 <a
@@ -27,36 +50,80 @@ const dotClass = {
   data-node={node.id}
   data-kind={node.kind}
   data-active={active ? "" : null}
-  class="group absolute z-3 block -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/13 bg-chip/96 no-underline transition-[transform,border-color,opacity] duration-300 data-active:border-accent data-dimmed:opacity-32 hover:scale-105 data-[kind=core]:border-accent/50 data-[kind=core]:bg-chip"
-  class:list={[variant === "mobile" ? "px-3 py-2" : "px-4 py-3"]}
+  class="group bg-chip/96 data-active:border-accent data-[kind=core]:border-accent/50 data-[kind=core]:bg-chip absolute z-3 block -translate-x-1/2 -translate-y-1/2 border border-white/13 no-underline transition-[transform,border-color,opacity] duration-300 hover:scale-105 data-dimmed:opacity-32"
+  class:list={[box.root]}
   style={`left:${pos.x * 100}%;top:${pos.y * 100}%`}
 >
-  <span class="flex items-center gap-2">
-    <span class={`block size-1.5 shrink-0 rounded-full ${dotClass}`}></span>
+  <span class="flex items-center" class:list={[box.row]}>
+    <span class:list={["block shrink-0 rounded-full", dotClass, box.dot]}
+    ></span>
     <span
       class="font-display font-semibold tracking-tight"
-      class:list={[variant === "mobile" ? "text-[11.5px]" : "text-[15px]"]}
-      >{node.label}</span
+      class:list={[box.label]}>{node.label}</span
     >
   </span>
   {
     node.kind === "core" ? (
       <span
-        data-status={variant === "mobile" ? "short" : ""}
-        class="mt-1.5 block font-mono text-ink/45"
-        class:list={[variant === "mobile" ? "text-[8.5px]" : "text-[11.5px]"]}
+        data-status={mobile ? "short" : ""}
+        class="text-ink/45 block font-mono"
+        class:list={[box.status]}
       >
-        {variant === "mobile"
-          ? `currently ${status}`
-          : `brisbane · currently ${status}`}
+        {mobile ? `currently ${status}` : `brisbane · currently ${status}`}
       </span>
     ) : (
       <span
-        class="mt-1 block font-mono font-medium tracking-[0.14em] text-ink/38"
-        class:list={[variant === "mobile" ? "text-[7.5px]" : "text-[9.5px]"]}
+        class="text-ink/38 block font-mono font-medium tracking-[0.14em]"
+        class:list={[box.meta]}
       >
         {node.meta}
       </span>
     )
   }
 </a>
+
+<style>
+  /*
+   * Every chip's position is a fraction of the map, but the desktop chips
+   * were fixed pixel boxes — and their map is the `1fr` column beside a
+   * fixed 440px panel, so it narrows with the viewport while the chips did
+   * not. Between the `md` breakpoint and ~1152px they collided with each
+   * other and spilled past the map's `overflow-hidden` edge.
+   *
+   * `--chip` is a scale unit: exactly 1px at and above the map width the
+   * design was drawn for (712px, i.e. a 1152px viewport) and proportionally
+   * smaller below it. Because every metric here is a multiple of it, and
+   * every chip centre is already a fraction of the same width, the whole
+   * desktop chip layer becomes a uniform scale of the approved rendering —
+   * so >= 1152px is byte-identical and narrower viewports shrink rather
+   * than overlap.
+   *
+   * A container query on the map rather than `vw` maths keeps the map's own
+   * width the single source of truth: the 440px panel is not restated here,
+   * so the two cannot drift apart.
+   */
+  .chip {
+    --chip: min(1px, 100cqw / 712);
+
+    border-radius: calc(12 * var(--chip));
+    padding: calc(12 * var(--chip)) calc(16 * var(--chip));
+  }
+  .chip-row {
+    gap: calc(8 * var(--chip));
+  }
+  .chip-dot {
+    width: calc(6 * var(--chip));
+    height: calc(6 * var(--chip));
+  }
+  .chip-label {
+    font-size: calc(15 * var(--chip));
+  }
+  .chip-status {
+    margin-top: calc(6 * var(--chip));
+    font-size: calc(11.5 * var(--chip));
+  }
+  .chip-meta {
+    margin-top: calc(4 * var(--chip));
+    font-size: calc(9.5 * var(--chip));
+  }
+</style>

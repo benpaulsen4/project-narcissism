@@ -16,7 +16,9 @@ const { nodes, activeId } = Astro.props;
 <div class="flex h-dvh flex-col overflow-hidden">
   <Header />
 
-  <div class="grid min-h-0 flex-1 grid-cols-[1fr_440px] max-md:flex max-md:flex-col">
+  <div
+    class="grid min-h-0 flex-1 grid-cols-[1fr_440px] max-md:flex max-md:flex-col"
+  >
     <nav class="relative max-md:flex-none" aria-label="System map">
       <div class="h-full max-md:hidden">
         <Map nodes={nodes} activeId={activeId} variant="desktop" />
@@ -30,7 +32,13 @@ const { nodes, activeId } = Astro.props;
       <Legend variant="mobile" />
     </div>
 
-    <div class="relative min-h-0 border-l border-white/8 bg-panel max-md:flex-1 max-md:border-l-0 max-md:border-t">
+    <!-- The floor matters only on the narrow column, where the panel is the
+         flexible item: it guarantees the panel keeps a readable, scrollable
+         height even if the fixed pieces above it grow (a wrapped header, a
+         taller legend) on a very short viewport. -->
+    <div
+      class="bg-panel relative min-h-0 border-l border-white/8 max-md:min-h-[120px] max-md:flex-1 max-md:border-t max-md:border-l-0"
+    >
       {
         nodes.map((node) => (
           <Panel node={node} nodes={nodes} active={node.id === activeId} />

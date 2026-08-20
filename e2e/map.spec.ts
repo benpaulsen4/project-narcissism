@@ -34,7 +34,7 @@ test.describe("map navigation", () => {
       await expect(page).toHaveURL(`/${id}`);
       await expect(page.locator(`[data-panel="${id}"]`)).toHaveAttribute(
         "data-active",
-        ""
+        "",
       );
     });
   }
@@ -49,7 +49,7 @@ test.describe("map navigation", () => {
     await expect(page).toHaveURL("/watchthis");
 
     const kept = await page.evaluate(
-      () => (window as unknown as { __kept?: boolean }).__kept === true
+      () => (window as unknown as { __kept?: boolean }).__kept === true,
     );
     expect(kept).toBe(true);
   });
@@ -62,13 +62,13 @@ test.describe("map navigation", () => {
     await page.goBack();
     await expect(page.locator('[data-panel="ben"]')).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
 
     await page.goForward();
     await expect(page.locator('[data-panel="deckos"]')).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
   });
 
@@ -158,13 +158,17 @@ test.describe("map navigation", () => {
     await expect(panels).toHaveCount(11);
     await expect(page.locator("[data-panel][data-active]")).toHaveCount(1);
     await expect(page.locator("[data-panel]:not([data-active])")).toHaveCount(
-      10
+      10,
     );
-    for (const el of await page.locator("[data-panel]:not([data-active])").all()) {
+    for (const el of await page
+      .locator("[data-panel]:not([data-active])")
+      .all()) {
       await expect(el).toHaveAttribute("inert", "");
     }
     expect(
-      await page.locator('[data-panel="ben"]').evaluate((el) => el.hasAttribute("inert"))
+      await page
+        .locator('[data-panel="ben"]')
+        .evaluate((el) => el.hasAttribute("inert")),
     ).toBe(false);
 
     await page.locator('[data-node="qut"]').first().click();
@@ -172,15 +176,143 @@ test.describe("map navigation", () => {
 
     await expect(page.locator("[data-panel][data-active]")).toHaveCount(1);
     await expect(page.locator("[data-panel]:not([data-active])")).toHaveCount(
-      10
+      10,
     );
     expect(
-      await page.locator('[data-panel="qut"]').evaluate((el) => el.hasAttribute("inert"))
+      await page
+        .locator('[data-panel="qut"]')
+        .evaluate((el) => el.hasAttribute("inert")),
     ).toBe(false);
     for (const el of await page
       .locator("[data-panel]:not([data-active])")
       .all()) {
       await expect(el).toHaveAttribute("inert", "");
     }
+  });
+});
+
+// The rest of the suite runs at exactly two viewports — devices["Desktop
+// Chrome"] (1280x720) and devices["iPhone 14 Pro"] (393x659). Every chip
+// position is a fraction of the map, but the chips themselves were fixed
+// pixel boxes in a `1fr` column beside a fixed 440px panel, so between the
+// `md` breakpoint and ~1152px the map narrowed while the chips did not and
+// they collided; and on a short landscape phone the fixed-height mobile map
+// squeezed the panel out of the viewport entirely. Both failures are
+// invisible to markup assertions — the HTML is identical at every width —
+// so these tests measure rendered geometry instead.
+test.describe("map geometry away from the two default viewports", () => {
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop");
+  });
+
+  /** Rounded-to-the-pixel overlap and clipping report for the desktop chips. */
+  async function desktopChipGeometry(page: import("@playwright/test").Page) {
+    return page.evaluate(() => {
+      const box = (el: Element) => el.getBoundingClientRect();
+      const map = box(document.querySelector("#bpG")!);
+      const chips = [...document.querySelectorAll("#bpG [data-node]")].map(
+        (el) => ({ id: (el as HTMLElement).dataset.node!, rect: box(el) }),
+      );
+
+      // Sub-pixel slack: touching edges are fine, a real collision is not.
+      const SLACK = 0.5;
+
+      const overlaps: string[] = [];
+      for (let i = 0; i < chips.length; i += 1) {
+        for (let j = i + 1; j < chips.length; j += 1) {
+          const a = chips[i].rect;
+          const b = chips[j].rect;
+          const w = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+          const h = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+          if (w > SLACK && h > SLACK) {
+            overlaps.push(
+              `${chips[i].id}/${chips[j].id} overlap ${Math.round(w)}x${Math.round(h)}`,
+            );
+          }
+        }
+      }
+
+      const escapes: string[] = [];
+      for (const chip of chips) {
+        const out = Math.max(
+          map.left - chip.rect.left,
+          chip.rect.right - map.right,
+          map.top - chip.rect.top,
+          chip.rect.bottom - map.bottom,
+        );
+        if (out > SLACK) {
+          escapes.push(`${chip.id} clipped ${Math.round(out)}px by the map`);
+        }
+      }
+
+      return { overlaps, escapes };
+    });
+  }
+
+  for (const size of [
+    { width: 800, height: 800 },
+    { width: 1000, height: 800 },
+  ]) {
+    test(`no chip collides or escapes the map at ${size.width}x${size.height}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize(size);
+      await page.goto("/");
+      await expect(page.locator("#bpG")).toBeVisible();
+
+      const { overlaps, escapes } = await desktopChipGeometry(page);
+      expect(
+        overlaps,
+        `chip collisions at ${size.width}x${size.height}`,
+      ).toEqual([]);
+      expect(escapes, `chips clipped at ${size.width}x${size.height}`).toEqual(
+        [],
+      );
+    });
+  }
+
+  // The other half of the contract: the chips shrink *below* the width the
+  // design was drawn for and are pinned to the design's own metrics at and
+  // above it. Without this, "make the chips fit" could be satisfied by
+  // shrinking them everywhere, or by letting them grow on a 4K monitor.
+  test("desktop chip metrics are capped at the design size from 1152px up", async ({
+    page,
+  }) => {
+    const widthOfBenChip = async (width: number) => {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/");
+      return page
+        .locator('#bpG [data-node="ben"]')
+        .evaluate((el) => el.getBoundingClientRect().width);
+    };
+
+    const atDesign = await widthOfBenChip(1152);
+    expect(await widthOfBenChip(1280)).toBeCloseTo(atDesign, 1);
+    expect(await widthOfBenChip(1920)).toBeCloseTo(atDesign, 1);
+    expect(await widthOfBenChip(1000)).toBeLessThan(atDesign);
+    expect(await widthOfBenChip(800)).toBeLessThan(atDesign);
+  });
+
+  test("the panel is reachable on a short landscape phone (640x360)", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 640, height: 360 });
+    await page.goto("/");
+
+    const measured = await page.evaluate(() => {
+      const panel = document.querySelector("[data-panel][data-active]")!;
+      const host = panel.parentElement!;
+      return {
+        hostHeight: host.getBoundingClientRect().height,
+        panelTop: panel.getBoundingClientRect().top,
+        viewportHeight: window.innerHeight,
+      };
+    });
+
+    expect(measured.hostHeight, "panel host height").toBeGreaterThan(120);
+    expect(measured.panelTop, "active panel top").toBeLessThan(
+      measured.viewportHeight,
+    );
+    expect(measured.panelTop, "active panel top").toBeGreaterThanOrEqual(0);
   });
 });

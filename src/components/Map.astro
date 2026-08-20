@@ -31,7 +31,19 @@ const VH = 1000;
   id={mobile ? "bpGM" : "bpG"}
   data-map
   class="relative overflow-hidden bg-[radial-gradient(rgba(255,255,255,.05)_1px,transparent_1px)]"
-  class:list={[mobile ? "h-[392px] bg-[size:28px_28px] touch-none" : "h-full bg-[size:34px_34px]"]}
+  class:list={[
+    mobile
+      ? // 392px is the design's height, but it is a ceiling rather than a
+        // constant: a short landscape phone has to leave room for the header,
+        // the legend row and the panel, and this column is inside an
+        // `h-dvh` / `overflow-hidden` shell, so an over-tall map used to push
+        // the panel clean off the bottom of the screen. 260px is the budget
+        // the rest of the column needs (header + legend + a usable panel).
+        "h-[min(392px,100dvh_-_260px)] touch-none bg-[size:28px_28px]"
+      : // The desktop chips size themselves off this element's width — see
+        // the scale unit in NodeChip.astro.
+        "[container-type:inline-size] h-full bg-[size:34px_34px]",
+  ]}
 >
   <div
     id={mobile ? "bpGMinner" : undefined}
@@ -79,14 +91,15 @@ const VH = 1000;
   {
     !mobile && (
       <>
-        <p class="absolute top-[22px] left-[26px] z-4 m-0 font-mono text-[11px] font-medium tracking-[0.16em] text-ink/34">
+        <p class="text-ink/34 absolute top-[22px] left-[26px] z-4 m-0 font-mono text-[11px] font-medium tracking-[0.16em]">
           SYSTEM MAP · HOVER TO TRACE · CLICK TO OPEN
         </p>
         <div class="absolute bottom-[22px] left-[26px] z-4">
           <Legend variant="desktop" />
         </div>
-        <p class="absolute right-[26px] bottom-[22px] z-4 m-0 font-mono text-[10.5px] text-ink/28">
-          {nodes.length} nodes · {edges.length} edges · uptime <span data-career-years>{careerYears()}</span>
+        <p class="text-ink/28 absolute right-[26px] bottom-[22px] z-4 m-0 font-mono text-[10.5px]">
+          {nodes.length} nodes · {edges.length} edges · uptime{" "}
+          <span data-career-years>{careerYears()}</span>
           yrs
         </p>
       </>
@@ -96,7 +109,7 @@ const VH = 1000;
   {
     mobile && (
       <>
-        <p class="pointer-events-none absolute top-2.5 left-4 z-6 m-0 font-mono text-[8.5px] font-medium tracking-[0.12em] text-ink/30">
+        <p class="text-ink/30 pointer-events-none absolute top-2.5 left-4 z-6 m-0 font-mono text-[8.5px] font-medium tracking-[0.12em]">
           DRAG TO PAN · PINCH TO ZOOM
         </p>
         <div class="absolute right-3 bottom-2.5 z-6 flex gap-1.5">
@@ -104,7 +117,7 @@ const VH = 1000;
             type="button"
             data-zoom="out"
             aria-label="Zoom out"
-            class="size-[30px] rounded-lg border border-white/16 bg-canvas/82 font-mono text-[15px] font-medium text-ink"
+            class="bg-canvas/82 text-ink size-[30px] rounded-lg border border-white/16 font-mono text-[15px] font-medium"
           >
             −
           </button>
@@ -112,7 +125,7 @@ const VH = 1000;
             type="button"
             data-zoom="reset"
             aria-label="Fit map"
-            class="h-[30px] rounded-lg border border-white/16 bg-canvas/82 px-2.5 font-mono text-[9px] font-medium tracking-[0.1em] text-ink"
+            class="bg-canvas/82 text-ink h-[30px] rounded-lg border border-white/16 px-2.5 font-mono text-[9px] font-medium tracking-[0.1em]"
           >
             FIT
           </button>
@@ -120,7 +133,7 @@ const VH = 1000;
             type="button"
             data-zoom="in"
             aria-label="Zoom in"
-            class="size-[30px] rounded-lg border border-white/16 bg-canvas/82 font-mono text-[15px] font-medium text-ink"
+            class="bg-canvas/82 text-ink size-[30px] rounded-lg border border-white/16 font-mono text-[15px] font-medium"
           >
             +
           </button>
