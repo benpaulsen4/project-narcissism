@@ -6,9 +6,25 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   use: { baseURL: "http://localhost:4321", trace: "on-first-retry" },
+  // Each spec targets one device profile, so scope the projects to the specs
+  // that belong to them. Without this every desktop spec is *reported* as
+  // skipped during the mobile pass and vice versa — same coverage, but a
+  // third of the run shows up as skipped, which is indistinguishable at a
+  // glance from tests silently disabled to keep the suite green. The
+  // per-file `test.skip(testInfo.project.name !== ...)` guards inside the
+  // specs stay as a safety net: if these globs ever drift, the guard skips
+  // the mismatched spec instead of running it against the wrong viewport.
   projects: [
-    { name: "desktop", use: { ...devices["Desktop Chrome"] } },
-    { name: "mobile", use: { ...devices["iPhone 14 Pro"] } },
+    {
+      name: "desktop",
+      testMatch: ["map.spec.ts", "no-js.spec.ts"],
+      use: { ...devices["Desktop Chrome"] },
+    },
+    {
+      name: "mobile",
+      testMatch: ["mobile.spec.ts", "no-js.spec.ts"],
+      use: { ...devices["iPhone 14 Pro"] },
+    },
   ],
   webServer: {
     command: "pnpm build && pnpm preview",
