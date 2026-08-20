@@ -12,10 +12,15 @@ const site = (Astro.site ?? new URL("https://benpaulsen.tech")).origin;
 const personId = `${site}/#ben`;
 const urlFor = (id: string) => (id === "ben" ? `${site}/` : `${site}/${id}`);
 
+// Selected by kind like everything else on this page. Picking them out by
+// the literal ids "gruntify" and "qut" meant renaming a content file, or
+// adding a second job, would silently drop worksFor/alumniOf from the
+// JSON-LD with no build error — a derivation-chain break in the one place a
+// break is invisible.
 const projects = nodes.filter((n) => n.kind === "project");
 const capabilities = nodes.filter((n) => n.kind === "capability");
-const job = nodes.find((n) => n.id === "gruntify");
-const education = nodes.find((n) => n.id === "qut");
+const job = nodes.find((n) => n.kind === "job");
+const education = nodes.find((n) => n.kind === "education");
 
 const graph: Record<string, unknown>[] = [
   {
@@ -41,6 +46,9 @@ const graph: Record<string, unknown>[] = [
       ? {
           alumniOf: {
             "@type": "CollegeOrUniversity",
+            // The education node's own label is the abbreviation "QUT" and
+            // the schema carries no field for an institution's full legal
+            // name, so this one string stays written out here.
             name: "Queensland University of Technology",
           },
         }
@@ -59,9 +67,7 @@ const graph: Record<string, unknown>[] = [
 
 const active = nodes.find((n) => n.id === activeId);
 const mainEntity =
-  active && active.kind === "project"
-    ? `${urlFor(active.id)}#app`
-    : personId;
+  active && active.kind === "project" ? `${urlFor(active.id)}#app` : personId;
 
 const payload = {
   "@context": "https://schema.org",
