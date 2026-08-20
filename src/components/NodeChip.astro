@@ -1,17 +1,17 @@
 ---
-import type { SiteNode } from "../lib/nodes";
+import { posFor, type MapVariant, type SiteNode } from "../lib/nodes";
 import { statusWord } from "../lib/dates";
 
 interface Props {
   node: SiteNode;
-  variant: "desktop" | "mobile";
+  variant: MapVariant;
   active: boolean;
 }
 
 const { node, variant, active } = Astro.props;
 const mobile = variant === "mobile";
 const status = statusWord();
-const pos = mobile ? (node.posMobile ?? node.pos) : node.pos;
+const pos = posFor(node, variant);
 const href = node.id === "ben" ? "/" : `/${node.id}`;
 
 const dotClass = {

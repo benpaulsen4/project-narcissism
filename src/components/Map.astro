@@ -1,14 +1,14 @@
 ---
 import { buildEdges, edgeKey, type GraphNode } from "../lib/graph";
 import { careerYears } from "../lib/dates";
-import type { SiteNode } from "../lib/nodes";
+import { posFor, type MapVariant, type SiteNode } from "../lib/nodes";
 import Legend from "./Legend.astro";
 import NodeChip from "./NodeChip.astro";
 
 interface Props {
   nodes: SiteNode[];
   activeId: string;
-  variant: "desktop" | "mobile";
+  variant: MapVariant;
 }
 
 const { nodes, activeId, variant } = Astro.props;
@@ -16,10 +16,7 @@ const mobile = variant === "mobile";
 
 const edges = buildEdges(nodes as GraphNode[]);
 const byId = new Map(nodes.map((n) => [n.id, n]));
-const posOf = (id: string) => {
-  const n = byId.get(id)!;
-  return mobile ? (n.posMobile ?? n.pos) : n.pos;
-};
+const posOf = (id: string) => posFor(byId.get(id)!, variant);
 
 // The SVG stretches to its container (preserveAspectRatio="none"), so viewBox
 // units and the chips' percentage offsets stay aligned at any size.
