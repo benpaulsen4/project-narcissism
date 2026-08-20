@@ -95,19 +95,22 @@ test.describe("map navigation", () => {
     // watchthis is wired to [frontend, backend] only, so gruntify (wired to
     // frontend/backend/platform/product, but not directly to watchthis) is
     // guaranteed unrelated and must dim.
+    //
+    // NodeChip carries `transition-[...,opacity] duration-300`, so the
+    // dimmed opacity is reached asynchronously over 300ms after
+    // data-dimmed flips — a synchronous getComputedStyle() read right
+    // after hover() can still catch the pre-transition value. toHaveCSS
+    // is Playwright's auto-retrying assertion: it polls the computed style
+    // until it matches or the assertion timeout elapses, so it waits out
+    // the transition instead of racing it (no fixed sleep, which would
+    // rot the moment the duration token changes).
     const dimmed = page.locator('[data-node="gruntify"]').first();
     await expect(dimmed).toHaveAttribute("data-dimmed", "");
-    const opacity = await dimmed.evaluate((el) =>
-      Number(getComputedStyle(el).opacity)
-    );
-    expect(opacity).toBeLessThan(1);
+    await expect(dimmed).toHaveCSS("opacity", "0.32");
 
     // The hovered node itself and a real neighbour must stay at full opacity.
     const related = page.locator('[data-node="frontend"]').first();
-    const relatedOpacity = await related.evaluate((el) =>
-      Number(getComputedStyle(el).opacity)
-    );
-    expect(relatedOpacity).toBe(1);
+    await expect(related).toHaveCSS("opacity", "1");
   });
 
   test("the footer counts are derived, not hardcoded", async ({ page }) => {
