@@ -31,7 +31,7 @@ export function careerYears(now: Date = new Date()): number {
     new Intl.DateTimeFormat("en-AU", {
       timeZone: BRISBANE,
       year: "numeric",
-    }).format(now)
+    }).format(now),
   );
   return year - CAREER_START;
 }

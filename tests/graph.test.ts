@@ -120,19 +120,19 @@ describe("neighbourIds", () => {
 describe("wiredToLabel", () => {
   it("matches the design for a capability — job first, then projects newest to oldest, core excluded", () => {
     expect(wiredToLabel(nodes, "frontend")).toBe(
-      "Gruntify · DeckOS · WatchThis · API Workshop · Imperfections"
+      "Gruntify · DeckOS · WatchThis · API Workshop · Imperfections",
     );
   });
 
   it("matches the design for backend", () => {
     expect(wiredToLabel(nodes, "backend")).toBe(
-      "Gruntify · DeckOS · WatchThis"
+      "Gruntify · DeckOS · WatchThis",
     );
   });
 
   it("matches the design for platform", () => {
     expect(wiredToLabel(nodes, "platform")).toBe(
-      "Gruntify · DeckOS · API Workshop"
+      "Gruntify · DeckOS · API Workshop",
     );
   });
 
@@ -146,7 +146,7 @@ describe("wiredToLabel", () => {
 
   it("matches the design for the job", () => {
     expect(wiredToLabel(nodes, "gruntify")).toBe(
-      "frontend · backend · platform · product"
+      "frontend · backend · platform · product",
     );
   });
 

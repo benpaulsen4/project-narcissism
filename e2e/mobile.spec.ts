@@ -36,7 +36,7 @@ test.describe("mobile map", () => {
     await page.goto("/");
     const inner = page.locator("#bpGMinner");
     const transform = await inner.evaluate(
-      (el) => getComputedStyle(el).transform
+      (el) => getComputedStyle(el).transform,
     );
     expect(scaleOf(transform)).toBeCloseTo(0.82, 2);
   });
@@ -67,26 +67,26 @@ test.describe("mobile map", () => {
     const inner = page.locator("#bpGMinner");
 
     const start = scaleOf(
-      await inner.evaluate((el) => getComputedStyle(el).transform)
+      await inner.evaluate((el) => getComputedStyle(el).transform),
     );
     expect(start).toBeCloseTo(0.82, 2);
 
     await page.locator('[data-zoom="in"]').click();
     const zoomedIn = scaleOf(
-      await inner.evaluate((el) => getComputedStyle(el).transform)
+      await inner.evaluate((el) => getComputedStyle(el).transform),
     );
     expect(zoomedIn).toBeGreaterThan(start);
 
     await page.locator('[data-zoom="out"]').click();
     await page.locator('[data-zoom="out"]').click();
     const zoomedOut = scaleOf(
-      await inner.evaluate((el) => getComputedStyle(el).transform)
+      await inner.evaluate((el) => getComputedStyle(el).transform),
     );
     expect(zoomedOut).toBeLessThan(start);
 
     await page.locator('[data-zoom="reset"]').click();
     const fitted = scaleOf(
-      await inner.evaluate((el) => getComputedStyle(el).transform)
+      await inner.evaluate((el) => getComputedStyle(el).transform),
     );
     expect(fitted).toBeCloseTo(0.82, 2);
   });
@@ -97,15 +97,15 @@ test.describe("mobile map", () => {
     await page.goto("/");
     await expect(page.locator('[data-zoom="out"]')).toHaveAttribute(
       "aria-label",
-      "Zoom out"
+      "Zoom out",
     );
     await expect(page.locator('[data-zoom="reset"]')).toHaveAttribute(
       "aria-label",
-      "Fit map"
+      "Fit map",
     );
     await expect(page.locator('[data-zoom="in"]')).toHaveAttribute(
       "aria-label",
-      "Zoom in"
+      "Zoom in",
     );
   });
 
@@ -115,7 +115,7 @@ test.describe("mobile map", () => {
     await expect(page).toHaveURL("/gruntify");
     await expect(page.locator('[data-panel="gruntify"]')).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
   });
 
@@ -131,7 +131,7 @@ test.describe("mobile map", () => {
       box.y + box.height / 2 + 40,
       {
         steps: 10,
-      }
+      },
     );
     await page.mouse.up();
 

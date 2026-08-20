@@ -14,7 +14,7 @@ export function initStatus(): void {
   };
 
   for (const el of document.querySelectorAll<HTMLElement>(
-    "[data-career-years]"
+    "[data-career-years]",
   )) {
     el.textContent = String(careerYears());
   }

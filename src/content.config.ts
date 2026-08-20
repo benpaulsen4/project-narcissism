@@ -31,7 +31,7 @@ const nodes = defineCollection({
             label: z.string(),
             href: z.string().optional(),
             accent: z.boolean().default(false),
-          })
+          }),
         )
         .default([]),
       screenshot: image().optional(),

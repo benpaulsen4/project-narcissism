@@ -20,7 +20,7 @@ export function initMap(): Cleanup {
   if (nodes.length === 0 || panels.length === 0) return () => {};
 
   const edgePairs = new Map(
-    edges.map((edge) => [edge, (edge.dataset.edge ?? "").split(" ")])
+    edges.map((edge) => [edge, (edge.dataset.edge ?? "").split(" ")]),
   );
 
   let current = idFor(window.location.pathname);
@@ -78,7 +78,7 @@ export function initMap(): Cleanup {
       return;
 
     const node = (event.target as Element | null)?.closest<HTMLElement>(
-      NODE_SELECTOR
+      NODE_SELECTOR,
     );
     if (!node) return;
 
@@ -95,17 +95,17 @@ export function initMap(): Cleanup {
 
   const onEnter = (event: PointerEvent) => {
     const node = (event.target as Element | null)?.closest<HTMLElement>(
-      NODE_SELECTOR
+      NODE_SELECTOR,
     );
     if (!node || event.pointerType !== "mouse") return;
-    trace(node.dataset.node === "ben" ? null : node.dataset.node ?? null);
+    trace(node.dataset.node === "ben" ? null : (node.dataset.node ?? null));
   };
 
   const onLeave = (event: PointerEvent) => {
     if (event.pointerType !== "mouse") return;
 
     const node = (event.target as Element | null)?.closest<HTMLElement>(
-      NODE_SELECTOR
+      NODE_SELECTOR,
     );
     if (!node) return;
 

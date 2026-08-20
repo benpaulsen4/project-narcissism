@@ -191,6 +191,7 @@ playwright-report/
 
 ```astro
 ---
+
 ---
 
 <html lang="en">
@@ -391,9 +392,9 @@ import Base from "../layouts/Base.astro";
 ---
 
 <Base title="ben.paulsen" description="scaffold check" canonicalPath="/">
-  <p class="font-mono text-accent">accent</p>
-  <p class="font-mono text-job">job</p>
-  <p class="font-mono text-edu">edu</p>
+  <p class="text-accent font-mono">accent</p>
+  <p class="text-job font-mono">job</p>
+  <p class="text-edu font-mono">edu</p>
   <p class="font-display text-ink">display</p>
 </Base>
 ```
@@ -469,7 +470,7 @@ const nodes = defineCollection({
             label: z.string(),
             href: z.string().optional(),
             accent: z.boolean().default(false),
-          })
+          }),
         )
         .default([]),
       screenshot: image().optional(),
@@ -950,19 +951,19 @@ describe("neighbourIds", () => {
 describe("wiredToLabel", () => {
   it("matches the design for a capability — job first, then projects newest to oldest, core excluded", () => {
     expect(wiredToLabel(nodes, "frontend")).toBe(
-      "Gruntify · DeckOS · WatchThis · API Workshop · Imperfections"
+      "Gruntify · DeckOS · WatchThis · API Workshop · Imperfections",
     );
   });
 
   it("matches the design for backend", () => {
     expect(wiredToLabel(nodes, "backend")).toBe(
-      "Gruntify · DeckOS · WatchThis"
+      "Gruntify · DeckOS · WatchThis",
     );
   });
 
   it("matches the design for platform", () => {
     expect(wiredToLabel(nodes, "platform")).toBe(
-      "Gruntify · DeckOS · API Workshop"
+      "Gruntify · DeckOS · API Workshop",
     );
   });
 
@@ -976,7 +977,7 @@ describe("wiredToLabel", () => {
 
   it("matches the design for the job", () => {
     expect(wiredToLabel(nodes, "gruntify")).toBe(
-      "frontend · backend · platform · product"
+      "frontend · backend · platform · product",
     );
   });
 
@@ -1080,7 +1081,7 @@ export function wiredToLabel(nodes: GraphNode[], id: string): string {
     .sort(
       (x, y) =>
         KIND_ORDER.indexOf(x.kind) - KIND_ORDER.indexOf(y.kind) ||
-        x.order - y.order
+        x.order - y.order,
     )
     .map((n) => n.label)
     .join(" · ");
@@ -1092,7 +1093,7 @@ export function assertGraphIntegrity(nodes: GraphNode[]): void {
     for (const target of node.wiredTo) {
       if (!ids.has(target)) {
         throw new Error(
-          `Node "${node.id}" is wired to "${target}", which does not exist.`
+          `Node "${node.id}" is wired to "${target}", which does not exist.`,
         );
       }
       if (target === node.id) {
@@ -1189,7 +1190,7 @@ describe("statusWord", () => {
 
   it("fiddles with the homelab after 10pm", () => {
     expect(statusWord(bris("2026-08-17T23:00:00"))).toBe(
-      "fiddling with the homelab"
+      "fiddling with the homelab",
     );
   });
 
@@ -1244,7 +1245,7 @@ export function careerYears(now: Date = new Date()): number {
     new Intl.DateTimeFormat("en-AU", {
       timeZone: BRISBANE,
       year: "numeric",
-    }).format(now)
+    }).format(now),
   );
   return year - CAREER_START;
 }
@@ -1326,7 +1327,7 @@ export async function loadNodes() {
     education: 4,
   };
   nodes.sort(
-    (a, b) => KIND_RANK[a.kind] - KIND_RANK[b.kind] || a.order - b.order
+    (a, b) => KIND_RANK[a.kind] - KIND_RANK[b.kind] || a.order - b.order,
   );
 
   assertGraphIntegrity(nodes as GraphNode[]);
@@ -1368,7 +1369,7 @@ const dotClass = {
   data-node={node.id}
   data-kind={node.kind}
   data-active={active ? "" : null}
-  class="group absolute z-3 block -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/13 bg-chip/96 no-underline transition-[transform,border-color,opacity] duration-300 data-active:border-accent data-dimmed:opacity-32 hover:scale-105 data-[kind=core]:border-accent/50 data-[kind=core]:bg-chip"
+  class="group bg-chip/96 data-active:border-accent data-[kind=core]:border-accent/50 data-[kind=core]:bg-chip absolute z-3 block -translate-x-1/2 -translate-y-1/2 rounded-xl border border-white/13 no-underline transition-[transform,border-color,opacity] duration-300 hover:scale-105 data-dimmed:opacity-32"
   class:list={[variant === "mobile" ? "px-3 py-2" : "px-4 py-3"]}
   style={`left:${pos.x * 100}%;top:${pos.y * 100}%`}
 >
@@ -1381,7 +1382,7 @@ const dotClass = {
     >
   </span>
   <span
-    class="mt-1 block font-mono font-medium tracking-[0.14em] text-ink/38"
+    class="text-ink/38 mt-1 block font-mono font-medium tracking-[0.14em]"
     class:list={[variant === "mobile" ? "text-[7.5px]" : "text-[9.5px]"]}
     >{node.meta}</span
   >
@@ -1408,8 +1409,10 @@ const items = [
 ---
 
 <div
-  class="flex items-center font-mono font-medium tracking-[0.1em] text-ink/42"
-  class:list={[variant === "mobile" ? "gap-3 text-[8.5px]" : "gap-[18px] text-[10.5px]"]}
+  class="text-ink/42 flex items-center font-mono font-medium tracking-[0.1em]"
+  class:list={[
+    variant === "mobile" ? "gap-3 text-[8.5px]" : "gap-[18px] text-[10.5px]",
+  ]}
 >
   {
     items.map((item) => (
@@ -1457,9 +1460,15 @@ const VH = 1000;
   id={mobile ? "bpGM" : "bpG"}
   data-map
   class="relative overflow-hidden bg-[radial-gradient(rgba(255,255,255,.05)_1px,transparent_1px)]"
-  class:list={[mobile ? "h-[392px] bg-[size:28px_28px] touch-none" : "bg-[size:34px_34px]"]}
+  class:list={[
+    mobile ? "h-[392px] touch-none bg-[size:28px_28px]" : "bg-[size:34px_34px]",
+  ]}
 >
-  <div id={mobile ? "bpGMinner" : undefined} data-map-inner class="absolute inset-0 origin-center">
+  <div
+    id={mobile ? "bpGMinner" : undefined}
+    data-map-inner
+    class="absolute inset-0 origin-center"
+  >
     <svg
       viewBox={`0 0 ${VW} ${VH}`}
       preserveAspectRatio="none"
@@ -1500,14 +1509,15 @@ const VH = 1000;
   {
     !mobile && (
       <>
-        <p class="absolute top-[22px] left-[26px] z-4 m-0 font-mono text-[11px] font-medium tracking-[0.16em] text-ink/34">
+        <p class="text-ink/34 absolute top-[22px] left-[26px] z-4 m-0 font-mono text-[11px] font-medium tracking-[0.16em]">
           SYSTEM MAP · HOVER TO TRACE · CLICK TO OPEN
         </p>
         <div class="absolute bottom-[22px] left-[26px] z-4">
           <Legend variant="desktop" />
         </div>
-        <p class="absolute right-[26px] bottom-[22px] z-4 m-0 font-mono text-[10.5px] text-ink/28">
-          {nodes.length} nodes · {edges.length} edges · uptime <span data-career-years />
+        <p class="text-ink/28 absolute right-[26px] bottom-[22px] z-4 m-0 font-mono text-[10.5px]">
+          {nodes.length} nodes · {edges.length} edges · uptime{" "}
+          <span data-career-years />
           yrs
         </p>
       </>
@@ -1628,9 +1638,11 @@ const stats = node.stats?.map((s) => ({
   data-panel={node.id}
   data-active={active ? "" : null}
   inert={active ? undefined : true}
-  class="absolute inset-0 overflow-auto px-5 pt-[18px] pb-[26px] opacity-0 transition-[opacity,transform] duration-[380ms] translate-y-2.5 data-active:translate-y-0 data-active:opacity-100 md:px-[30px] md:pt-0 md:pb-6"
+  class="absolute inset-0 translate-y-2.5 overflow-auto px-5 pt-[18px] pb-[26px] opacity-0 transition-[opacity,transform] duration-[380ms] data-active:translate-y-0 data-active:opacity-100 md:px-[30px] md:pt-0 md:pb-6"
 >
-  <h1 class="m-0 font-display text-[21px] font-bold tracking-[-0.03em] md:text-[30px]">
+  <h1
+    class="font-display m-0 text-[21px] font-bold tracking-[-0.03em] md:text-[30px]"
+  >
     {node.label}
   </h1>
   <p
@@ -1651,7 +1663,9 @@ const stats = node.stats?.map((s) => ({
     )
   }
 
-  <div class="prose-panel mt-5 font-display text-[14px]/[1.6] text-ink/70 md:text-[15px]/[1.62]">
+  <div
+    class="prose-panel font-display text-ink/70 mt-5 text-[14px]/[1.6] md:text-[15px]/[1.62]"
+  >
     <Content />
   </div>
 
@@ -1660,8 +1674,8 @@ const stats = node.stats?.map((s) => ({
       <div class="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-[10px] border border-white/8 bg-white/8">
         {stats.map((s) => (
           <div class="bg-panel px-4 py-[14px]">
-            <p class="m-0 font-display text-[20px] font-bold">{s.value}</p>
-            <p class="m-0 mt-1 font-mono text-[10px] font-medium tracking-[0.13em] text-ink/40">
+            <p class="font-display m-0 text-[20px] font-bold">{s.value}</p>
+            <p class="text-ink/40 m-0 mt-1 font-mono text-[10px] font-medium tracking-[0.13em]">
               {s.label}
             </p>
           </div>
@@ -1672,9 +1686,11 @@ const stats = node.stats?.map((s) => ({
 
   {
     node.tags && (
-      <div class="mt-5 flex flex-wrap gap-2 font-mono text-[12px] font-medium text-ink/80">
+      <div class="text-ink/80 mt-5 flex flex-wrap gap-2 font-mono text-[12px] font-medium">
         {node.tags.map((tag) => (
-          <span class="rounded-lg border border-white/13 px-3 py-[7px]">{tag}</span>
+          <span class="rounded-lg border border-white/13 px-3 py-[7px]">
+            {tag}
+          </span>
         ))}
       </div>
     )
@@ -1685,10 +1701,12 @@ const stats = node.stats?.map((s) => ({
       <div class="mt-[22px] flex flex-col gap-[14px]">
         {node.highlights.map((h) => (
           <div>
-            <p class="m-0 font-mono text-[10.5px] font-medium tracking-[0.13em] text-accent">
+            <p class="text-accent m-0 font-mono text-[10.5px] font-medium tracking-[0.13em]">
               {h.label}
             </p>
-            <p class="mt-1.5 mb-0 font-display text-[14px]/[1.6] text-ink/62">{h.body}</p>
+            <p class="font-display text-ink/62 mt-1.5 mb-0 text-[14px]/[1.6]">
+              {h.body}
+            </p>
           </div>
         ))}
       </div>
@@ -1698,14 +1716,18 @@ const stats = node.stats?.map((s) => ({
   {
     node.previous && (
       <>
-        <p class="mt-6 mb-0 font-mono text-[10.5px] font-medium tracking-[0.14em] text-ink/35">
+        <p class="text-ink/35 mt-6 mb-0 font-mono text-[10.5px] font-medium tracking-[0.14em]">
           BEFORE THIS
         </p>
         <div class="mt-3 flex flex-col gap-px overflow-hidden rounded-[10px] border border-white/8 bg-white/8">
           {node.previous.map((p) => (
             <div class="bg-panel px-4 py-[13px]">
-              <p class="m-0 font-display text-[14.5px] font-semibold">{p.name}</p>
-              <p class="m-0 mt-[3px] font-mono text-[12px] text-ink/42">{p.role}</p>
+              <p class="font-display m-0 text-[14.5px] font-semibold">
+                {p.name}
+              </p>
+              <p class="text-ink/42 m-0 mt-[3px] font-mono text-[12px]">
+                {p.role}
+              </p>
             </div>
           ))}
         </div>
@@ -1715,7 +1737,7 @@ const stats = node.stats?.map((s) => ({
 
   {
     node.stack && (
-      <p class="mt-[18px] mb-0 font-mono text-[11.5px] font-medium tracking-[0.1em] text-ink/45">
+      <p class="text-ink/45 mt-[18px] mb-0 font-mono text-[11.5px] font-medium tracking-[0.1em]">
         {node.stack}
       </p>
     )
@@ -1746,7 +1768,9 @@ const stats = node.stats?.map((s) => ({
 
   {
     wired && (
-      <p class="mt-[22px] mb-0 font-mono text-[12.5px] text-ink/40">wired to → {wired}</p>
+      <p class="text-ink/40 mt-[22px] mb-0 font-mono text-[12.5px]">
+        wired to → {wired}
+      </p>
     )
   }
 </article>
@@ -1788,10 +1812,12 @@ const nodes = await loadNodes();
 >
   <main class="grid h-screen grid-cols-[1fr_440px]">
     <Map nodes={nodes} activeId="ben" variant="desktop" />
-    <div class="relative min-h-0 border-l border-white/8 bg-panel">
-      {nodes.map((node) => (
-        <Panel node={node} nodes={nodes} active={node.id === "ben"} />
-      ))}
+    <div class="bg-panel relative min-h-0 border-l border-white/8">
+      {
+        nodes.map((node) => (
+          <Panel node={node} nodes={nodes} active={node.id === "ben"} />
+        ))
+      }
     </div>
   </main>
 </Base>
@@ -1841,31 +1867,47 @@ git commit -m "feat: render all eleven detail panels as static HTML"
 const links = [
   { label: "email", href: "mailto:ben.paulsen4@gmail.com" },
   { label: "github", href: "https://github.com/benpaulsen4" },
-  { label: "linkedin", href: "https://www.linkedin.com/in/ben-paulsen-26979b237/" },
+  {
+    label: "linkedin",
+    href: "https://www.linkedin.com/in/ben-paulsen-26979b237/",
+  },
 ];
 ---
 
 <header
   class="flex h-16 flex-none items-center justify-between border-b border-white/7 px-7 max-md:h-auto max-md:flex-col max-md:items-start max-md:gap-2 max-md:px-5 max-md:pt-4 max-md:pb-3"
 >
-  <div class="flex items-center gap-3.5 max-md:flex-col max-md:items-start max-md:gap-0.5">
-    <a href="/" class="font-display text-base font-bold tracking-[-0.02em] text-ink no-underline"
+  <div
+    class="flex items-center gap-3.5 max-md:flex-col max-md:items-start max-md:gap-0.5"
+  >
+    <a
+      href="/"
+      class="font-display text-ink text-base font-bold tracking-[-0.02em] no-underline"
       >ben.paulsen</a
     >
-    <span class="font-mono text-[10.5px] font-medium tracking-[0.14em] text-ink/38">
+    <span
+      class="text-ink/38 font-mono text-[10.5px] font-medium tracking-[0.14em]"
+    >
       SOFTWARE DEVELOPER · BRISBANE AU
     </span>
   </div>
-  <div class="flex items-center gap-[22px] max-md:w-full max-md:justify-between">
-    <span class="font-mono text-[11px] font-medium tracking-[0.12em] text-accent">
+  <div
+    class="flex items-center gap-[22px] max-md:w-full max-md:justify-between"
+  >
+    <span
+      class="text-accent font-mono text-[11px] font-medium tracking-[0.12em]"
+    >
       OPEN TO INTERESTING WORK
     </span>
-    <nav class="flex gap-4 font-mono text-[12px] font-medium" aria-label="Contact">
+    <nav
+      class="flex gap-4 font-mono text-[12px] font-medium"
+      aria-label="Contact"
+    >
       {
         links.map((link) => (
           <a
             href={link.href}
-            class="text-ink/72 underline decoration-ink/35 underline-offset-[3px]"
+            class="text-ink/72 decoration-ink/35 underline underline-offset-[3px]"
           >
             {link.label}
           </a>
@@ -1898,7 +1940,9 @@ const { nodes, activeId } = Astro.props;
 <div class="flex h-dvh flex-col overflow-hidden">
   <Header />
 
-  <div class="grid min-h-0 flex-1 grid-cols-[1fr_440px] max-md:flex max-md:flex-col">
+  <div
+    class="grid min-h-0 flex-1 grid-cols-[1fr_440px] max-md:flex max-md:flex-col"
+  >
     <nav class="relative max-md:flex-none" aria-label="System map">
       <div class="h-full max-md:hidden">
         <Map nodes={nodes} activeId={activeId} variant="desktop" />
@@ -1908,7 +1952,9 @@ const { nodes, activeId } = Astro.props;
       </div>
     </nav>
 
-    <div class="relative min-h-0 border-l border-white/8 bg-panel max-md:flex-1 max-md:border-l-0 max-md:border-t">
+    <div
+      class="bg-panel relative min-h-0 border-l border-white/8 max-md:flex-1 max-md:border-t max-md:border-l-0"
+    >
       {
         nodes.map((node) => (
           <Panel node={node} nodes={nodes} active={node.id === activeId} />
@@ -2098,7 +2144,7 @@ export function initStatus(): void {
   };
 
   for (const el of document.querySelectorAll<HTMLElement>(
-    "[data-career-years]"
+    "[data-career-years]",
   )) {
     el.textContent = String(careerYears());
   }
@@ -2133,7 +2179,7 @@ export function initMap(): Cleanup {
   if (nodes.length === 0 || panels.length === 0) return () => {};
 
   const edgePairs = new Map(
-    edges.map((edge) => [edge, (edge.dataset.edge ?? "").split(" ")])
+    edges.map((edge) => [edge, (edge.dataset.edge ?? "").split(" ")]),
   );
 
   let current = idFor(window.location.pathname);
@@ -2191,7 +2237,7 @@ export function initMap(): Cleanup {
       return;
 
     const node = (event.target as Element | null)?.closest<HTMLElement>(
-      NODE_SELECTOR
+      NODE_SELECTOR,
     );
     if (!node) return;
 
@@ -2208,10 +2254,10 @@ export function initMap(): Cleanup {
 
   const onEnter = (event: PointerEvent) => {
     const node = (event.target as Element | null)?.closest<HTMLElement>(
-      NODE_SELECTOR
+      NODE_SELECTOR,
     );
     if (!node || event.pointerType !== "mouse") return;
-    trace(node.dataset.node === "ben" ? null : node.dataset.node ?? null);
+    trace(node.dataset.node === "ben" ? null : (node.dataset.node ?? null));
   };
 
   const onLeave = (event: PointerEvent) => {
@@ -2260,24 +2306,26 @@ Astro bundles and hashes this automatically; no `is:inline`, and no `client:*` d
 In `src/components/NodeChip.astro`, replace the `node.meta` span for the core node only. Change the meta block to:
 
 ```astro
-  {
-    node.kind === "core" ? (
-      <span
-        data-status={variant === "mobile" ? "short" : ""}
-        class="mt-1.5 block font-mono text-ink/45"
-        class:list={[variant === "mobile" ? "text-[8.5px]" : "text-[11.5px]"]}
-      >
-        {variant === "mobile" ? "currently working" : "brisbane · currently working"}
-      </span>
-    ) : (
-      <span
-        class="mt-1 block font-mono font-medium tracking-[0.14em] text-ink/38"
-        class:list={[variant === "mobile" ? "text-[7.5px]" : "text-[9.5px]"]}
-      >
-        {node.meta}
-      </span>
-    )
-  }
+{
+  node.kind === "core" ? (
+    <span
+      data-status={variant === "mobile" ? "short" : ""}
+      class="text-ink/45 mt-1.5 block font-mono"
+      class:list={[variant === "mobile" ? "text-[8.5px]" : "text-[11.5px]"]}
+    >
+      {variant === "mobile"
+        ? "currently working"
+        : "brisbane · currently working"}
+    </span>
+  ) : (
+    <span
+      class="text-ink/38 mt-1 block font-mono font-medium tracking-[0.14em]"
+      class:list={[variant === "mobile" ? "text-[7.5px]" : "text-[9.5px]"]}
+    >
+      {node.meta}
+    </span>
+  )
+}
 ```
 
 The server-rendered fallback text means the line is never empty before the island runs.
@@ -2330,41 +2378,41 @@ git commit -m "feat: add map interaction island with history routing and status 
 Inside the map container, in the `mobile` branch (add an `{ mobile && (...) }` block mirroring the desktop one):
 
 ```astro
-  {
-    mobile && (
-      <>
-        <p class="pointer-events-none absolute top-2.5 left-4 z-6 m-0 font-mono text-[8.5px] font-medium tracking-[0.12em] text-ink/30">
-          DRAG TO PAN · PINCH TO ZOOM
-        </p>
-        <div class="absolute right-3 bottom-2.5 z-6 flex gap-1.5">
-          <button
-            type="button"
-            data-zoom="out"
-            aria-label="Zoom out"
-            class="size-[30px] rounded-lg border border-white/16 bg-canvas/82 font-mono text-[15px] font-medium text-ink"
-          >
-            −
-          </button>
-          <button
-            type="button"
-            data-zoom="reset"
-            aria-label="Fit map"
-            class="h-[30px] rounded-lg border border-white/16 bg-canvas/82 px-2.5 font-mono text-[9px] font-medium tracking-[0.1em] text-ink"
-          >
-            FIT
-          </button>
-          <button
-            type="button"
-            data-zoom="in"
-            aria-label="Zoom in"
-            class="size-[30px] rounded-lg border border-white/16 bg-canvas/82 font-mono text-[15px] font-medium text-ink"
-          >
-            +
-          </button>
-        </div>
-      </>
-    )
-  }
+{
+  mobile && (
+    <>
+      <p class="text-ink/30 pointer-events-none absolute top-2.5 left-4 z-6 m-0 font-mono text-[8.5px] font-medium tracking-[0.12em]">
+        DRAG TO PAN · PINCH TO ZOOM
+      </p>
+      <div class="absolute right-3 bottom-2.5 z-6 flex gap-1.5">
+        <button
+          type="button"
+          data-zoom="out"
+          aria-label="Zoom out"
+          class="bg-canvas/82 text-ink size-[30px] rounded-lg border border-white/16 font-mono text-[15px] font-medium"
+        >
+          −
+        </button>
+        <button
+          type="button"
+          data-zoom="reset"
+          aria-label="Fit map"
+          class="bg-canvas/82 text-ink h-[30px] rounded-lg border border-white/16 px-2.5 font-mono text-[9px] font-medium tracking-[0.1em]"
+        >
+          FIT
+        </button>
+        <button
+          type="button"
+          data-zoom="in"
+          aria-label="Zoom in"
+          class="bg-canvas/82 text-ink size-[30px] rounded-lg border border-white/16 font-mono text-[15px] font-medium"
+        >
+          +
+        </button>
+      </div>
+    </>
+  )
+}
 ```
 
 Also set the initial transform on the mobile inner element so the map starts fitted — add `style={mobile ? "transform:scale(0.82)" : undefined}` to the `[data-map-inner]` div.
@@ -2473,7 +2521,7 @@ export function initPanZoom(): void {
       event.preventDefault();
       zoomAt(event.deltaY < 0 ? 1.12 : 0.89, event.clientX, event.clientY);
     },
-    { passive: false }
+    { passive: false },
   );
 
   for (const button of host.querySelectorAll<HTMLElement>("[data-zoom]")) {
@@ -2491,7 +2539,7 @@ export function initPanZoom(): void {
         zoomAt(
           kind === "in" ? 1.2 : 0.83,
           rect.left + rect.width / 2,
-          rect.top + rect.height / 2
+          rect.top + rect.height / 2,
         );
       }
     });
@@ -2534,9 +2582,9 @@ In devtools, switch to an iPhone-sized viewport (393×852) and reload. Check:
 Between the mobile map and the panel container:
 
 ```astro
-      <div class="hidden border-y border-white/7 px-5 py-2.5 max-md:block">
-        <Legend variant="mobile" />
-      </div>
+<div class="hidden border-y border-white/7 px-5 py-2.5 max-md:block">
+  <Legend variant="mobile" />
+</div>
 ```
 
 Import `Legend` at the top of `Screen.astro`.
@@ -2625,8 +2673,8 @@ If `sharp-cli` is awkward, any 32×32 PNG export of the SVG is fine — commit i
 Add inside `<head>`:
 
 ```astro
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="icon" href="/favicon.png" sizes="32x32" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon.png" sizes="32x32" />
 ```
 
 - [ ] **Step 7: Verify the images are optimised**
@@ -2771,9 +2819,7 @@ const graph: Record<string, unknown>[] = [
 
 const active = nodes.find((n) => n.id === activeId);
 const mainEntity =
-  active && active.kind === "project"
-    ? `${urlFor(active.id)}#app`
-    : personId;
+  active && active.kind === "project" ? `${urlFor(active.id)}#app` : personId;
 
 const payload = {
   "@context": "https://schema.org",
@@ -2791,7 +2837,11 @@ const payload = {
 };
 ---
 
-<script type="application/ld+json" set:html={JSON.stringify(payload)} is:inline />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify(payload)}
+  is:inline
+/>
 ```
 
 - [ ] **Step 4: Slot it into both page routes**
@@ -2799,7 +2849,7 @@ const payload = {
 In `src/pages/index.astro` and `src/pages/[node].astro`, add inside `<Base>`:
 
 ```astro
-  <StructuredData slot="head" nodes={nodes} activeId={/* "ben" or activeId */} />
+<StructuredData slot="head" nodes={nodes} activeId={/* "ben" or activeId */} />
 ```
 
 Import `StructuredData` in both files. `Base.astro` already has a `<slot name="head" />`.
@@ -2846,7 +2896,7 @@ export const GET: APIRoute = async ({ props }) => {
   };
 
   const fontData = await readFile(
-    "node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff"
+    "node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff",
   );
 
   const svg = await satori(
@@ -2903,7 +2953,7 @@ export const GET: APIRoute = async ({ props }) => {
       fonts: [
         { name: "Space Grotesk", data: fontData, weight: 700, style: "normal" },
       ],
-    }
+    },
   );
 
   const png = await sharp(Buffer.from(svg)).png().toBuffer();
@@ -2990,16 +3040,20 @@ import Base from "../layouts/Base.astro";
   description="That page does not exist."
   canonicalPath="/404"
 >
-  <main class="flex h-dvh flex-col items-center justify-center gap-4 px-6 text-center">
-    <p class="m-0 font-mono text-[11px] font-medium tracking-[0.2em] text-ink/38">
+  <main
+    class="flex h-dvh flex-col items-center justify-center gap-4 px-6 text-center"
+  >
+    <p
+      class="text-ink/38 m-0 font-mono text-[11px] font-medium tracking-[0.2em]"
+    >
       404 · NODE NOT FOUND
     </p>
-    <h1 class="m-0 font-display text-[34px] font-bold tracking-[-0.03em]">
+    <h1 class="font-display m-0 text-[34px] font-bold tracking-[-0.03em]">
       Nothing is wired to this address.
     </h1>
     <a
       href="/"
-      class="mt-2 rounded-full bg-accent px-[17px] py-2.5 font-mono text-[12px] font-medium text-canvas no-underline"
+      class="bg-accent text-canvas mt-2 rounded-full px-[17px] py-2.5 font-mono text-[12px] font-medium no-underline"
     >
       back to the map
     </a>
@@ -3098,7 +3152,7 @@ test.describe("map navigation", () => {
       await expect(page).toHaveURL(`/${id}`);
       await expect(page.locator(`[data-panel="${id}"]`)).toHaveAttribute(
         "data-active",
-        ""
+        "",
       );
     });
   }
@@ -3113,7 +3167,7 @@ test.describe("map navigation", () => {
     await expect(page).toHaveURL("/watchthis");
 
     const kept = await page.evaluate(
-      () => (window as unknown as { __kept?: boolean }).__kept === true
+      () => (window as unknown as { __kept?: boolean }).__kept === true,
     );
     expect(kept).toBe(true);
   });
@@ -3126,13 +3180,13 @@ test.describe("map navigation", () => {
     await page.goBack();
     await expect(page.locator('[data-panel="ben"]')).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
 
     await page.goForward();
     await expect(page.locator('[data-panel="deckos"]')).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
   });
 
@@ -3140,7 +3194,7 @@ test.describe("map navigation", () => {
     await page.goto("/");
     await page.locator('[data-node="watchthis"]').first().hover();
     await expect(
-      page.locator("[data-edge][data-traced]").first()
+      page.locator("[data-edge][data-traced]").first(),
     ).toBeVisible();
   });
 
@@ -3173,7 +3227,7 @@ for (const [path, id] of ROUTES) {
     await page.goto(path);
     await expect(page.locator(`[data-panel="${id}"]`)).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
   });
 }
@@ -3184,7 +3238,7 @@ test("every panel's copy is in the DOM on every route", async ({ page }) => {
   await expect(
     page.locator('[data-panel="watchthis"]', {
       hasText: "TMDB data underneath",
-    })
+    }),
   ).toHaveCount(1);
 });
 
@@ -3192,7 +3246,7 @@ test("node chips are real links without JavaScript", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator('[data-node="deckos"]').first()).toHaveAttribute(
     "href",
-    "/deckos"
+    "/deckos",
   );
 });
 ```
@@ -3225,7 +3279,7 @@ test.describe("mobile map", () => {
     await expect(page).toHaveURL("/gruntify");
     await expect(page.locator('[data-panel="gruntify"]')).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
   });
 
@@ -3241,7 +3295,7 @@ test.describe("mobile map", () => {
       box.y + box.height / 2 + 40,
       {
         steps: 10,
-      }
+      },
     );
     await page.mouse.up();
 
@@ -3318,7 +3372,7 @@ export default tseslint.config(
     rules: {
       "no-console": ["warn", { allow: ["warn", "error"] }],
     },
-  }
+  },
 );
 ```
 

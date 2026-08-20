@@ -13,8 +13,10 @@ const items = [
 ---
 
 <div
-  class="flex items-center font-mono font-medium tracking-[0.1em] text-ink/42"
-  class:list={[variant === "mobile" ? "gap-3 text-[8.5px]" : "gap-[18px] text-[10.5px]"]}
+  class="text-ink/42 flex items-center font-mono font-medium tracking-[0.1em]"
+  class:list={[
+    variant === "mobile" ? "gap-3 text-[8.5px]" : "gap-[18px] text-[10.5px]",
+  ]}
 >
   {
     items.map((item) => (

@@ -68,7 +68,7 @@ export function wiredToLabel(nodes: GraphNode[], id: string): string {
     .sort(
       (x, y) =>
         KIND_ORDER.indexOf(x.kind) - KIND_ORDER.indexOf(y.kind) ||
-        x.order - y.order
+        x.order - y.order,
     )
     .map((n) => n.label)
     .join(" · ");
@@ -80,7 +80,7 @@ export function assertGraphIntegrity(nodes: GraphNode[]): void {
     for (const target of node.wiredTo) {
       if (!ids.has(target)) {
         throw new Error(
-          `Node "${node.id}" is wired to "${target}", which does not exist.`
+          `Node "${node.id}" is wired to "${target}", which does not exist.`,
         );
       }
       if (target === node.id) {

@@ -73,8 +73,10 @@ const FONT_UNITS_PER_EM = 1000;
 const FONT_CAP_HEIGHT_UNITS = 700;
 const FONT_ASCENDER_UNITS = 984;
 
-const CAP_HEIGHT_PX = (FONT_CAP_HEIGHT_UNITS / FONT_UNITS_PER_EM) * EYEBROW_FONT_SIZE;
-const ASCENDER_PX = (FONT_ASCENDER_UNITS / FONT_UNITS_PER_EM) * EYEBROW_FONT_SIZE;
+const CAP_HEIGHT_PX =
+  (FONT_CAP_HEIGHT_UNITS / FONT_UNITS_PER_EM) * EYEBROW_FONT_SIZE;
+const ASCENDER_PX =
+  (FONT_ASCENDER_UNITS / FONT_UNITS_PER_EM) * EYEBROW_FONT_SIZE;
 const ARROW_MARGIN_TOP = ASCENDER_PX - CAP_HEIGHT_PX / 2 - ARROW_HEIGHT / 2;
 
 const arrowIcon = (color: string) => ({
@@ -119,7 +121,7 @@ export const GET: APIRoute = async ({ props }) => {
   };
 
   const fontData = await readFile(
-    "node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff"
+    "node_modules/@fontsource/space-grotesk/files/space-grotesk-latin-700-normal.woff",
   );
 
   const svg = await satori(
@@ -180,7 +182,7 @@ export const GET: APIRoute = async ({ props }) => {
       fonts: [
         { name: "Space Grotesk", data: fontData, weight: 700, style: "normal" },
       ],
-    }
+    },
   );
 
   const png = await sharp(Buffer.from(svg)).png().toBuffer();

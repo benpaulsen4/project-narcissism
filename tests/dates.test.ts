@@ -22,11 +22,11 @@ describe("careerYears", () => {
   it("derives the year in Brisbane, not in UTC", () => {
     // 20:00 UTC on Dec 31 is 06:00 Brisbane on Jan 1 -> already the new year.
     expect(careerYears(new Date("2026-12-31T20:00:00Z"))).toBe(
-      2027 - CAREER_START
+      2027 - CAREER_START,
     );
     // 13:00 UTC on Dec 31 is 23:00 Brisbane on Dec 31 -> still the old year.
     expect(careerYears(new Date("2026-12-31T13:00:00Z"))).toBe(
-      2026 - CAREER_START
+      2026 - CAREER_START,
     );
   });
 });
@@ -118,16 +118,16 @@ describe("statusWord", () => {
   describe("fiddling with the homelab (hour >= 22, any day)", () => {
     it("starts fiddling at 10pm, the start of the band, on any day", () => {
       expect(statusWord(bris("2026-08-17T22:00:00"))).toBe(
-        "fiddling with the homelab"
+        "fiddling with the homelab",
       );
       expect(statusWord(bris("2026-08-15T22:00:00"))).toBe(
-        "fiddling with the homelab"
+        "fiddling with the homelab",
       );
     });
 
     it("fiddles with the homelab after 10pm", () => {
       expect(statusWord(bris("2026-08-17T23:00:00"))).toBe(
-        "fiddling with the homelab"
+        "fiddling with the homelab",
       );
     });
   });
