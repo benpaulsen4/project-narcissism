@@ -29,10 +29,26 @@ for (const [path, id] of ROUTES) {
     expect(response?.status()).toBe(200);
     await expect(page.locator(`[data-panel="${id}"]`)).toHaveAttribute(
       "data-active",
-      ""
+      "",
     );
   });
 }
+
+// Shipping all eleven panels on all eleven routes is deliberate, but it must
+// not also ship eleven <h1>s: the served document is what a crawler reads, and
+// this whole rebuild is justified by indexing better than the four-route app
+// it replaced. Exactly one <h1>, and it must be the route's own panel.
+test("every route serves exactly one h1, on its own panel", async ({
+  page,
+}) => {
+  for (const [path, id] of ROUTES) {
+    await page.goto(path);
+    await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.locator(`[data-panel="${id}"] h1`)).toHaveCount(1);
+    // The other ten are demoted, not dropped — the copy still ships.
+    await expect(page.locator("[data-panel] h2")).toHaveCount(10);
+  }
+});
 
 test("every panel's copy is in the DOM on every route", async ({ page }) => {
   await page.goto("/qut");
@@ -40,7 +56,7 @@ test("every panel's copy is in the DOM on every route", async ({ page }) => {
   await expect(
     page.locator('[data-panel="watchthis"]', {
       hasText: "TMDB data underneath",
-    })
+    }),
   ).toHaveCount(1);
 });
 
@@ -48,7 +64,7 @@ test("node chips are real links without JavaScript", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator('[data-node="deckos"]').first()).toHaveAttribute(
     "href",
-    "/deckos"
+    "/deckos",
   );
 });
 
@@ -72,7 +88,7 @@ test("clicking a node chip with JavaScript off performs a real navigation", asyn
   await expect(page).toHaveURL("/gruntify");
   await expect(page.locator('[data-panel="gruntify"]')).toHaveAttribute(
     "data-active",
-    ""
+    "",
   );
 });
 
@@ -88,7 +104,7 @@ test("the career-years figure is server-rendered and non-empty", async ({
   // project's viewport. Assert it where it is actually meant to render.
   test.skip(
     testInfo.project.name !== "desktop",
-    "the uptime footer line only renders visibly on the desktop map"
+    "the uptime footer line only renders visibly on the desktop map",
   );
 
   await page.goto("/");
