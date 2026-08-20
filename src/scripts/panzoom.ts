@@ -1,4 +1,12 @@
-const FIT_SCALE = 0.82;
+/**
+ * The scale the mobile map opens at, and the one the "FIT" button returns to.
+ * Map.astro renders it as the initial inline transform so the map is already
+ * fitted before this module runs; exported so the two cannot drift. (The e2e
+ * suite reads the transform after apply() has run, so it would only ever have
+ * pinned this copy — a drift in the markup would have shipped a flash of the
+ * wrong scale with a green suite.)
+ */
+export const FIT_SCALE = 0.82;
 const MIN_SCALE = 0.5;
 const MAX_SCALE = 2.4;
 const DRAG_THRESHOLD_PX = 6;
@@ -106,7 +114,7 @@ export function initPanZoom(): void {
       event.preventDefault();
       zoomAt(event.deltaY < 0 ? 1.12 : 0.89, event.clientX, event.clientY);
     },
-    { passive: false }
+    { passive: false },
   );
 
   for (const button of host.querySelectorAll<HTMLElement>("[data-zoom]")) {
@@ -124,7 +132,7 @@ export function initPanZoom(): void {
         zoomAt(
           kind === "in" ? 1.2 : 1 / 1.2,
           rect.left + rect.width / 2,
-          rect.top + rect.height / 2
+          rect.top + rect.height / 2,
         );
       }
     });

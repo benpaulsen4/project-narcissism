@@ -2,6 +2,7 @@
 import { buildEdges, edgeKey, type GraphNode } from "../lib/graph";
 import { careerYears } from "../lib/dates";
 import { posFor, type MapVariant, type SiteNode } from "../lib/nodes";
+import { FIT_SCALE } from "../scripts/panzoom";
 import Legend from "./Legend.astro";
 import NodeChip from "./NodeChip.astro";
 
@@ -46,7 +47,7 @@ const VH = 1000;
     id={mobile ? "bpGMinner" : undefined}
     data-map-inner
     class="absolute inset-0 origin-center"
-    style={mobile ? "transform:scale(0.82)" : undefined}
+    style={mobile ? `transform:scale(${FIT_SCALE})` : undefined}
   >
     <svg
       viewBox={`0 0 ${VW} ${VH}`}
