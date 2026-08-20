@@ -23,6 +23,6 @@ seo:
   description: Software developer in Brisbane, Australia. Platform lead at Gruntify, building with .NET, Angular, React and Azure. Explore my work as a system map.
 ---
 
-Six years in, with a computer science degree and a business one that I end up using in the same meeting. I build the parts of a system other people have to live in: ideally boring to maintain, and genuinely good to use.
+Far enough in to have opinions, with a computer science degree and a business one that I end up using in the same meeting. I build the parts of a system other people have to live in: ideally boring to maintain, and genuinely good to use.
 
 Platform lead at Gruntify by day, building homelab and TV-tracking tools by night. Everything on this map is wired to something I have actually shipped, so start anywhere.
