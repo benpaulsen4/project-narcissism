@@ -193,26 +193,55 @@ test.describe("map navigation", () => {
 
 // The rest of the suite runs at exactly two viewports — devices["Desktop
 // Chrome"] (1280x720) and devices["iPhone 14 Pro"] (393x659). Every chip
-// position is a fraction of the map, but the chips themselves were fixed
-// pixel boxes in a `1fr` column beside a fixed 440px panel, so between the
-// `md` breakpoint and ~1152px the map narrowed while the chips did not and
-// they collided; and on a short landscape phone the fixed-height mobile map
-// squeezed the panel out of the viewport entirely. Both failures are
-// invisible to markup assertions — the HTML is identical at every width —
-// so these tests measure rendered geometry instead.
+// position is a fraction of the map, but the desktop chips were fixed pixel
+// boxes in a `1fr` column beside a fixed 440px panel, so between the old
+// `md` breakpoint (768px) and ~1152px the map narrowed while the chips did
+// not and they collided; and on a short landscape phone the fixed-height
+// mobile map squeezed the panel out of the viewport entirely. Both failures
+// are invisible to markup assertions — the HTML is identical at every width
+// — so these tests measure rendered geometry instead.
+//
+// The fix moved the rendition switch itself, from `md` (768px) to
+// `desktop:` (1152px — see `--breakpoint-desktop` in global.css): below
+// that width the mobile rendition (full-width map, pan/zoom, panel below)
+// is what's on screen, not the desktop one whose fixed-size chips used to
+// collide there. So "which rendition is actually visible" is now part of
+// what these tests assert, rather than an assumption baked into `#bpG`
+// selectors — a test that kept assuming #bpG below 1152px would measure a
+// hidden, zero-sized element and pass vacuously, which is exactly the kind
+// of false green this whole fix exists to close off.
 test.describe("map geometry away from the two default viewports", () => {
   test.beforeEach(async ({}, testInfo) => {
     test.skip(testInfo.project.name !== "desktop");
   });
 
-  /** Rounded-to-the-pixel overlap and clipping report for the desktop chips. */
-  async function desktopChipGeometry(page: import("@playwright/test").Page) {
+  /**
+   * Finds whichever map rendition is actually rendered on screen — #bpG
+   * (desktop) or #bpGM (mobile), per Screen.astro's `desktop:`/
+   * `max-desktop:` classes — and reports its overlap/clipping geometry.
+   */
+  async function visibleMapGeometry(page: import("@playwright/test").Page) {
     return page.evaluate(() => {
       const box = (el: Element) => el.getBoundingClientRect();
-      const map = box(document.querySelector("#bpG")!);
-      const chips = [...document.querySelectorAll("#bpG [data-node]")].map(
-        (el) => ({ id: (el as HTMLElement).dataset.node!, rect: box(el) }),
-      );
+      const isVisible = (el: Element | null) =>
+        !!el &&
+        getComputedStyle(el).display !== "none" &&
+        box(el).width > 0 &&
+        box(el).height > 0;
+
+      const desktopMap = document.querySelector("#bpG");
+      const mobileMap = document.querySelector("#bpGM");
+      const rendition = isVisible(desktopMap)
+        ? "desktop"
+        : isVisible(mobileMap)
+          ? "mobile"
+          : "neither";
+      const mapEl = (rendition === "desktop" ? desktopMap : mobileMap)!;
+      const map = box(mapEl);
+      const chips = [...mapEl.querySelectorAll("[data-node]")].map((el) => ({
+        id: (el as HTMLElement).dataset.node!,
+        rect: box(el),
+      }));
 
       // Sub-pixel slack: touching edges are fine, a real collision is not.
       const SLACK = 0.5;
@@ -245,37 +274,52 @@ test.describe("map geometry away from the two default viewports", () => {
         }
       }
 
-      return { overlaps, escapes };
+      return { rendition, overlaps, escapes };
     });
   }
 
-  for (const size of [
-    { width: 800, height: 800 },
-    { width: 1000, height: 800 },
-  ]) {
-    test(`no chip collides or escapes the map at ${size.width}x${size.height}`, async ({
+  // Sweeps the whole band this fix touches: the mobile rendition now covers
+  // 768–1100px (where the desktop chips used to collide), and the desktop
+  // rendition only ever appears from 1152px up. Every width must show the
+  // rendition the breakpoint promises, with zero collisions and zero
+  // clipping — this is what guards the 768–1152 band the two default
+  // viewports never exercise.
+  const WIDTHS_AND_RENDITIONS: Array<[number, "desktop" | "mobile"]> = [
+    [768, "mobile"],
+    [800, "mobile"],
+    [900, "mobile"],
+    [1000, "mobile"],
+    [1100, "mobile"],
+    [1152, "desktop"],
+    [1280, "desktop"],
+    [1440, "desktop"],
+    [1920, "desktop"],
+  ];
+
+  for (const [width, expected] of WIDTHS_AND_RENDITIONS) {
+    test(`the ${expected} rendition is visible with no collisions or clipping at ${width}px`, async ({
       page,
     }) => {
-      await page.setViewportSize(size);
+      await page.setViewportSize({ width, height: 800 });
       await page.goto("/");
-      await expect(page.locator("#bpG")).toBeVisible();
 
-      const { overlaps, escapes } = await desktopChipGeometry(page);
-      expect(
-        overlaps,
-        `chip collisions at ${size.width}x${size.height}`,
-      ).toEqual([]);
-      expect(escapes, `chips clipped at ${size.width}x${size.height}`).toEqual(
-        [],
-      );
+      const { rendition, overlaps, escapes } = await visibleMapGeometry(page);
+
+      expect(rendition, `visible rendition at ${width}px`).toBe(expected);
+      expect(overlaps, `chip collisions at ${width}px`).toEqual([]);
+      expect(escapes, `chips clipped at ${width}px`).toEqual([]);
     });
   }
 
-  // The other half of the contract: the chips shrink *below* the width the
-  // design was drawn for and are pinned to the design's own metrics at and
-  // above it. Without this, "make the chips fit" could be satisfied by
-  // shrinking them everywhere, or by letting them grow on a 4K monitor.
-  test("desktop chip metrics are capped at the design size from 1152px up", async ({
+  // The other half of the contract: the desktop chips shrink *below* the
+  // map width the design was drawn for (840px, i.e. the 1280px approved
+  // view) and are pinned to the design's own metrics at and above it.
+  // Without this, "make the chips fit" could be satisfied by shrinking them
+  // everywhere, or by letting them grow on a 4K monitor. The desktop
+  // rendition only exists from 1152px up now (map=712px), so that — not the
+  // old `md` breakpoint — is the shrunk end of the range, and 1280px
+  // (map=840px) is where the cap now bites instead of 1152px.
+  test("desktop chip metrics are capped at the design size from 1280px up, and scale down between 1152 and 1280", async ({
     page,
   }) => {
     const widthOfBenChip = async (width: number) => {
@@ -286,11 +330,13 @@ test.describe("map geometry away from the two default viewports", () => {
         .evaluate((el) => el.getBoundingClientRect().width);
     };
 
-    const atDesign = await widthOfBenChip(1152);
-    expect(await widthOfBenChip(1280)).toBeCloseTo(atDesign, 1);
+    const atDesign = await widthOfBenChip(1280);
     expect(await widthOfBenChip(1920)).toBeCloseTo(atDesign, 1);
-    expect(await widthOfBenChip(1000)).toBeLessThan(atDesign);
-    expect(await widthOfBenChip(800)).toBeLessThan(atDesign);
+
+    const at1200 = await widthOfBenChip(1200);
+    const at1152 = await widthOfBenChip(1152);
+    expect(at1200).toBeLessThan(atDesign);
+    expect(at1152).toBeLessThan(at1200);
   });
 
   test("the panel is reachable on a short landscape phone (640x360)", async ({
@@ -314,5 +360,88 @@ test.describe("map geometry away from the two default viewports", () => {
       measured.viewportHeight,
     );
     expect(measured.panelTop, "active panel top").toBeGreaterThanOrEqual(0);
+  });
+
+  // 1000px used to render the (broken) desktop rendition — it is now
+  // squarely inside the band the mobile rendition took over. mobile.spec.ts
+  // exercises the same pan/zoom/tap-vs-pan contract at the "mobile" project's
+  // fixed 393px, touch-emulated viewport; this repeats it at a width that
+  // project never covers, using mouse events instead of touch since the
+  // "desktop" project here has no touch emulation — proving the contract
+  // holds on the pointer-event code path a mouse-and-narrow-window visitor
+  // would actually hit, not just on a touch device.
+  test.describe("mobile rendition at a width the mobile project never covers (1000px)", () => {
+    test.beforeEach(async ({ page }) => {
+      await page.setViewportSize({ width: 1000, height: 800 });
+      await page.goto("/");
+      await expect(page.locator("#bpGM")).toBeVisible();
+      await expect(page.locator("#bpG")).toBeHidden();
+    });
+
+    test("zoom buttons carry their labels and change the map transform", async ({
+      page,
+    }) => {
+      await expect(page.locator('[data-zoom="out"]')).toHaveAttribute(
+        "aria-label",
+        "Zoom out",
+      );
+      await expect(page.locator('[data-zoom="reset"]')).toHaveAttribute(
+        "aria-label",
+        "Fit map",
+      );
+      await expect(page.locator('[data-zoom="in"]')).toHaveAttribute(
+        "aria-label",
+        "Zoom in",
+      );
+
+      const inner = page.locator("#bpGMinner");
+      const before = await inner.evaluate(
+        (el) => getComputedStyle(el).transform,
+      );
+      await page.locator('[data-zoom="in"]').click();
+      const after = await inner.evaluate(
+        (el) => getComputedStyle(el).transform,
+      );
+      expect(after).not.toBe(before);
+    });
+
+    test("dragging the map pans it and the tap-vs-pan guard blocks the trailing click", async ({
+      page,
+    }) => {
+      const inner = page.locator("#bpGMinner");
+      const before = await inner.evaluate(
+        (el) => getComputedStyle(el).transform,
+      );
+
+      const node = page.locator("#bpGM [data-node='deckos']");
+      const box = (await node.boundingBox())!;
+
+      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.down();
+      await page.mouse.move(
+        box.x + box.width / 2 - 90,
+        box.y + box.height / 2 + 40,
+        { steps: 10 },
+      );
+      await page.mouse.up();
+
+      const after = await inner.evaluate(
+        (el) => getComputedStyle(el).transform,
+      );
+      expect(after, "pan moved the map transform").not.toBe(before);
+      // The drag must not have been read as a click on the node it started on.
+      await expect(page).toHaveURL("/");
+    });
+
+    test("a plain click (no drag) on a node opens its panel", async ({
+      page,
+    }) => {
+      await page.locator("#bpGM [data-node='gruntify']").click();
+      await expect(page).toHaveURL("/gruntify");
+      await expect(page.locator('[data-panel="gruntify"]')).toHaveAttribute(
+        "data-active",
+        "",
+      );
+    });
   });
 });
