@@ -339,6 +339,98 @@ test.describe("map geometry away from the two default viewports", () => {
     expect(at1152).toBeLessThan(at1200);
   });
 
+  // Regression coverage for the clipping fix: FIT_SCALE (0.82) was a
+  // hardcoded constant, so a short landscape phone — where the map's own
+  // height budget compresses to ~100px (see Map.astro's `h-[min(392px,...)]`
+  // comment) — clipped chips at the fitted view. panzoom.ts now derives the
+  // fit scale from the real content/host boxes and never exceeds 0.82, so
+  // the approved 768-1100px band must stay clipped-free exactly as before,
+  // and 640x360 (the case that used to clip) must be clipped-free too.
+  const MOBILE_BAND_FIT_VIEWPORTS: Array<[number, number]> = [
+    [393, 659],
+    [640, 360],
+    [768, 900],
+    [1000, 800],
+    [1100, 700],
+  ];
+
+  for (const [width, height] of MOBILE_BAND_FIT_VIEWPORTS) {
+    test(`the fitted mobile view has zero clipped chips at ${width}x${height}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto("/");
+
+      const { rendition, escapes } = await visibleMapGeometry(page);
+      expect(rendition, `visible rendition at ${width}x${height}`).toBe(
+        "mobile",
+      );
+      expect(escapes, `chips clipped at ${width}x${height}`).toEqual([]);
+    });
+  }
+
+  // Regression coverage for the pan-clamp fix: translation used to be
+  // unbounded, so an aggressive drag could push the entire map out of the
+  // host box with no way back except the "Fit map" button. Dragging far
+  // beyond the content in every direction must never fully strand it —
+  // some part of the content must always still overlap the host box.
+  test("dragging far beyond the content cannot strand it off-screen", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 640, height: 360 });
+    await page.goto("/");
+
+    const host = page.locator("#bpGM");
+    const box = (await host.boundingBox())!;
+    const cx = box.x + box.width / 2;
+    const cy = box.y + box.height / 2;
+
+    for (const [dx, dy] of [
+      [-4000, 0],
+      [4000, 0],
+      [0, -4000],
+      [0, 4000],
+    ]) {
+      await page.mouse.move(cx, cy);
+      await page.mouse.down();
+      await page.mouse.move(cx + dx, cy + dy, { steps: 10 });
+      await page.mouse.up();
+
+      const overlap = await page.evaluate(() => {
+        const hostEl = document.querySelector("#bpGM")!;
+        const hostRect = hostEl.getBoundingClientRect();
+        const nodeEls = [
+          ...document.querySelectorAll("#bpGMinner [data-node]"),
+        ];
+        let left = Infinity,
+          top = Infinity,
+          right = -Infinity,
+          bottom = -Infinity;
+        for (const el of nodeEls) {
+          const r = el.getBoundingClientRect();
+          left = Math.min(left, r.left);
+          top = Math.min(top, r.top);
+          right = Math.max(right, r.right);
+          bottom = Math.max(bottom, r.bottom);
+        }
+        const overlapW =
+          Math.min(right, hostRect.right) - Math.max(left, hostRect.left);
+        const overlapH =
+          Math.min(bottom, hostRect.bottom) - Math.max(top, hostRect.top);
+        return { w: overlapW, h: overlapH };
+      });
+
+      expect(
+        overlap.w,
+        "content still overlaps the host box horizontally",
+      ).toBeGreaterThan(0);
+      expect(
+        overlap.h,
+        "content still overlaps the host box vertically",
+      ).toBeGreaterThan(0);
+    }
+  });
+
   test("the panel is reachable on a short landscape phone (640x360)", async ({
     page,
   }) => {
@@ -408,28 +500,49 @@ test.describe("map geometry away from the two default viewports", () => {
     test("dragging the map pans it and the tap-vs-pan guard blocks the trailing click", async ({
       page,
     }) => {
+      // At 1000x800 the fitted content (0.82 scale) is fully contained by
+      // the host box on both axes — the pan clamp added for the clipping
+      // fix correctly locks a fully-visible map centred rather than letting
+      // it drift (there is nothing to pan to), so a drag right at the
+      // fitted scale is a legitimate no-op for the transform. Zooming in
+      // first gives the content real room to pan, which is also the
+      // realistic sequence (a user zooms before panning), while still
+      // exercising the same pointer-drag / tap-vs-pan-guard code path this
+      // test targets. Three steps (1.2x each, from 0.82) clears both the
+      // host's width and height at this content size, so there is real
+      // room to pan on either axis.
+      for (let i = 0; i < 3; i += 1) {
+        await page.locator('[data-zoom="in"]').click();
+      }
+
       const inner = page.locator("#bpGMinner");
       const before = await inner.evaluate(
         (el) => getComputedStyle(el).transform,
       );
 
-      const node = page.locator("#bpGM [data-node='deckos']");
-      const box = (await node.boundingBox())!;
+      // Drag from the host's own centre rather than a specific chip's
+      // position: after zooming, a given chip can already sit flush against
+      // the pan clamp's boundary in the drag's direction (a legitimate
+      // clamped state, not a bug), which would make this drag a false-
+      // negative no-op. The centre always has room to move in a large,
+      // single, well-clear-of-any-edge direction once content exceeds the
+      // host on both axes. The tap-vs-pan guard is global (it flips
+      // data-dragged on the shared inner element), so it does not matter
+      // that the drag doesn't start on a specific node.
+      const hostBox = (await page.locator("#bpGM").boundingBox())!;
+      const cx = hostBox.x + hostBox.width / 2;
+      const cy = hostBox.y + hostBox.height / 2;
 
-      await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+      await page.mouse.move(cx, cy);
       await page.mouse.down();
-      await page.mouse.move(
-        box.x + box.width / 2 - 90,
-        box.y + box.height / 2 + 40,
-        { steps: 10 },
-      );
+      await page.mouse.move(cx - 300, cy + 150, { steps: 10 });
       await page.mouse.up();
 
       const after = await inner.evaluate(
         (el) => getComputedStyle(el).transform,
       );
       expect(after, "pan moved the map transform").not.toBe(before);
-      // The drag must not have been read as a click on the node it started on.
+      // The drag must not have been read as a click on whatever it landed on.
       await expect(page).toHaveURL("/");
     });
 
