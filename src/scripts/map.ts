@@ -77,9 +77,22 @@ export function initMap(): Cleanup {
     )
       return;
 
-    const node = (event.target as Element | null)?.closest<HTMLElement>(
-      NODE_SELECTOR,
-    );
+    // The mobile map's pan/zoom (panzoom.ts) calls setPointerCapture on
+    // every pointerdown, including a plain tap/click that never turns into
+    // a drag. For a *mouse*-originated click (not a touch tap — those are
+    // unaffected), Chromium retargets the compatibility `click` event's
+    // `target` to the capturing element itself rather than wherever the
+    // pointer actually released, so `event.target.closest(...)` misses the
+    // node entirely and the click silently does nothing. Falling back to a
+    // hit-test at the real coordinates recovers the actual target; the
+    // data-dragged guard right below still runs on whatever node this
+    // finds, so a genuine drag stays blocked either way.
+    const node =
+      (event.target as Element | null)?.closest<HTMLElement>(NODE_SELECTOR) ??
+      document
+        .elementFromPoint(event.clientX, event.clientY)
+        ?.closest<HTMLElement>(NODE_SELECTOR) ??
+      null;
     if (!node) return;
 
     // A pan gesture on mobile ends in a click; ignore it.

@@ -14,6 +14,18 @@
 
   --font-display: "Space Grotesk Variable", system-ui, sans-serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  /* The width at which the map/panel switch from the mobile rendition
+     (full-width pan/zoom map, panel below) to the desktop one (map beside a
+     fixed 440px panel). Below this the desktop chips' fixed metrics collide
+     with each other in the narrowing map column, so the mobile rendition
+     covers that band instead — it was built for constrained space and
+     already works down to a much narrower viewport. This is the single
+     source of truth for that width: Screen.astro, Panel.astro and the
+     `--chip` reference in NodeChip.astro all key off `desktop:`/
+     `max-desktop:` generated from this value, so none of them can drift
+     from another. */
+  --breakpoint-desktop: 1152px;
 }
 
 @layer base {

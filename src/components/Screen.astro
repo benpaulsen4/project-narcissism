@@ -17,18 +17,18 @@ const { nodes, activeId } = Astro.props;
   <Header />
 
   <div
-    class="grid min-h-0 flex-1 grid-cols-[1fr_440px] max-md:flex max-md:flex-col"
+    class="max-desktop:flex max-desktop:flex-col grid min-h-0 flex-1 grid-cols-[1fr_440px]"
   >
-    <nav class="relative max-md:flex-none" aria-label="System map">
-      <div class="h-full max-md:hidden">
+    <nav class="max-desktop:flex-none relative" aria-label="System map">
+      <div class="max-desktop:hidden h-full">
         <Map nodes={nodes} activeId={activeId} variant="desktop" />
       </div>
-      <div class="hidden max-md:block">
+      <div class="max-desktop:block hidden">
         <Map nodes={nodes} activeId={activeId} variant="mobile" />
       </div>
     </nav>
 
-    <div class="hidden border-y border-white/7 px-5 py-2.5 max-md:block">
+    <div class="max-desktop:block hidden border-y border-white/7 px-5 py-2.5">
       <Legend variant="mobile" />
     </div>
 
@@ -37,7 +37,7 @@ const { nodes, activeId } = Astro.props;
          height even if the fixed pieces above it grow (a wrapped header, a
          taller legend) on a very short viewport. -->
     <div
-      class="bg-panel relative min-h-0 border-l border-white/8 max-md:min-h-[120px] max-md:flex-1 max-md:border-t max-md:border-l-0"
+      class="bg-panel max-desktop:min-h-[120px] max-desktop:flex-1 max-desktop:border-t max-desktop:border-l-0 relative min-h-0 border-l border-white/8"
     >
       {
         nodes.map((node) => (

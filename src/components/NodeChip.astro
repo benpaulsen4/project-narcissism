@@ -87,23 +87,33 @@ const box = mobile
    * Every chip's position is a fraction of the map, but the desktop chips
    * were fixed pixel boxes — and their map is the `1fr` column beside a
    * fixed 440px panel, so it narrows with the viewport while the chips did
-   * not. Between the `md` breakpoint and ~1152px they collided with each
-   * other and spilled past the map's `overflow-hidden` edge.
+   * not. Scaling the chips down with `min(1px, 100cqw / 712)` could not fix
+   * this on its own: 712 is the map width at the *old* `md` (768px)
+   * breakpoint, but the layout was actually composed at a map width of 840
+   * (the 1280px approved desktop view). At map=712 the chip was already at
+   * its 1px cap, and 351/712 is a far tighter fit than the 351/840 the
+   * design was drawn for — so the chips collided at every width in that
+   * band regardless of scale, and only stopped once the map outgrew the
+   * chips' cap at >=1280px.
    *
-   * `--chip` is a scale unit: exactly 1px at and above the map width the
-   * design was drawn for (712px, i.e. a 1152px viewport) and proportionally
-   * smaller below it. Because every metric here is a multiple of it, and
-   * every chip centre is already a fraction of the same width, the whole
-   * desktop chip layer becomes a uniform scale of the approved rendering —
-   * so >= 1152px is byte-identical and narrower viewports shrink rather
-   * than overlap.
+   * The real fix is structural: the desktop rendition (and this scale unit)
+   * now only ever appears at `desktop:` (>=1152px, see the
+   * `--breakpoint-desktop` in global.css) — the whole collision-prone band
+   * below that shows the mobile rendition instead, which was built for
+   * constrained space. That leaves one residual zone: between 1152px and
+   * 1280px the map is still only 712–840px wide, so a design-size chip can
+   * still collide there. `--chip` stays to cover it, now referenced against
+   * the design's own 840 rather than the old breakpoint's 712 — so it is
+   * exactly 1px (unscaled) at and above 840, matching the approved 1280px
+   * view byte-for-byte, and shrinks smoothly from 840 down to the 712px
+   * floor at 1152px instead of sitting pinned at full size the whole way.
    *
    * A container query on the map rather than `vw` maths keeps the map's own
    * width the single source of truth: the 440px panel is not restated here,
    * so the two cannot drift apart.
    */
   .chip {
-    --chip: min(1px, 100cqw / 712);
+    --chip: min(1px, 100cqw / 840);
 
     border-radius: calc(12 * var(--chip));
     padding: calc(12 * var(--chip)) calc(16 * var(--chip));
