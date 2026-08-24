@@ -9,28 +9,39 @@ const links = [
 ];
 ---
 
+<!-- One row at every width. The narrow layout used to stack into three rows,
+     which cost ~50px of vertical space on exactly the viewports that have the
+     least of it — and that column is `h-dvh`/`overflow-hidden`, so every pixel
+     the header takes comes straight off the map and the panel below it. The
+     two supporting lines are the ones that go: the wordmark already says who
+     this is and the contact links are the only thing here anyone acts on, so
+     the strapline and the availability note are dropped rather than wrapped.
+     Both restate copy that the ben panel carries in full, so nothing is only
+     available in the header.
+
+     They come back at `lg`, not at `md`, because with all four pieces visible
+     the row measures 807px against `md`'s 768 and overflowed — every piece is
+     `whitespace-nowrap`, so a flex row that is too narrow spills rather than
+     compressing. 1024 leaves ~217px of slack, which is enough that the row
+     cannot be tipped over by a font fallback. -->
 <header
-  class="flex h-16 flex-none items-center justify-between border-b border-white/7 px-7 max-md:h-auto max-md:flex-col max-md:items-start max-md:gap-2 max-md:px-5 max-md:pt-4 max-md:pb-3"
+  class="flex h-16 flex-none items-center justify-between gap-4 border-b border-white/7 px-7 max-md:h-14 max-md:px-5"
 >
-  <div
-    class="flex items-center gap-3.5 max-md:flex-col max-md:items-start max-md:gap-0.5"
-  >
+  <div class="flex items-center gap-3.5">
     <a
       href="/"
-      class="font-display text-ink text-base font-bold tracking-[-0.02em] no-underline"
+      class="font-display text-ink text-base font-bold tracking-[-0.02em] whitespace-nowrap no-underline"
       >ben.paulsen</a
     >
     <span
-      class="text-ink/38 font-mono text-[10.5px] font-medium tracking-[0.14em]"
+      class="text-ink/38 font-mono text-[10.5px] font-medium tracking-[0.14em] whitespace-nowrap max-lg:hidden"
     >
       SOFTWARE DEVELOPER · BRISBANE AU
     </span>
   </div>
-  <div
-    class="flex items-center gap-[22px] max-md:w-full max-md:justify-between"
-  >
+  <div class="flex items-center gap-[22px]">
     <span
-      class="text-accent font-mono text-[11px] font-medium tracking-[0.12em]"
+      class="text-accent font-mono text-[11px] font-medium tracking-[0.12em] whitespace-nowrap max-lg:hidden"
     >
       OPEN TO INTERESTING WORK
     </span>
