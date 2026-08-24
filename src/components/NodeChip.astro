@@ -55,8 +55,9 @@ const box = mobile
   style={`left:${pos.x * 100}%;top:${pos.y * 100}%`}
 >
   <span class="flex items-center" class:list={[box.row]}>
-    <span class:list={["block shrink-0 rounded-full", dotClass, box.dot]}
-    ></span>
+    <span
+      data-dot
+      class:list={["block shrink-0 rounded-full", dotClass, box.dot]}></span>
     <span
       class="font-display font-semibold tracking-tight"
       class:list={[box.label]}>{node.label}</span

@@ -93,24 +93,30 @@
     opacity: 0.32;
   }
 
-  /* Pulsing ring on the core node. It has to track the chip it sits inside,
-     so it is measured in the same `--chip` scale unit the desktop chip uses
-     (see NodeChip.astro). The 1px fallback is the mobile chip, whose metrics
-     are fixed — at that value these are the design's 0.9rem/7px/-0.55rem. */
-  [data-node][data-kind="core"]::after {
+  /* Pulsing ring on the core node. It hangs off the node's own dot rather
+     than off the chip, so it is centred on that dot by construction at both
+     renditions and at any `--chip` scale. It used to be positioned against
+     the chip box with hand-tuned offsets in `--chip` units, which put it
+     ~2px right and ~4-5px below the dot's true centre — small at rest, then
+     multiplied into a visibly lopsided halo by the 3.6x pulse.
+
+     The dot is 6px and the ring is 7px, so the ring is inset by half a
+     pixel on each side: -0.5/6 of the dot's box. Expressing that as a
+     percentage rather than a length is what keeps it correct on desktop,
+     where the dot is itself scaled by `--chip`. */
+  [data-node][data-kind="core"] [data-dot] {
+    position: relative;
+  }
+  [data-node][data-kind="core"] [data-dot]::after {
     content: "";
     position: absolute;
-    top: 50%;
-    left: calc(14.4 * var(--chip, 1px));
-    width: calc(7 * var(--chip, 1px));
-    height: calc(7 * var(--chip, 1px));
-    margin-top: calc(-8.8 * var(--chip, 1px));
+    inset: -8.333%;
     border-radius: 9999px;
     background: var(--color-accent);
     pointer-events: none;
   }
   @media (prefers-reduced-motion: no-preference) {
-    [data-node][data-kind="core"]::after {
+    [data-node][data-kind="core"] [data-dot]::after {
       animation: bpPulse 2.6s ease-out infinite;
     }
   }
