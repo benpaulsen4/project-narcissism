@@ -119,6 +119,86 @@ test.describe("mobile map", () => {
     );
   });
 
+  /**
+   * Panning to a limit must stop short of the map's edges, so the outermost
+   * chips keep breathing room instead of coming to rest flush against the
+   * border — and, at the bottom, underneath the zoom/fit controls.
+   *
+   * The insets are deliberately uneven: EDGE_PADDING in panzoom.ts gives the
+   * top and bottom more room than the sides because that is where the map's
+   * overlay UI lives (the caption top-left, the controls bottom-right). This
+   * asserts the actual numbers rather than "greater than zero", because the
+   * failure being guarded against is the bottom inset silently shrinking back
+   * to the side inset and putting chips under the controls again.
+   */
+  const EDGE_PADDING = { top: 24, right: 16, bottom: 44, left: 16 };
+
+  for (const [edge, dx, dy] of [
+    ["left", 900, 0],
+    ["right", -900, 0],
+    ["top", 0, 900],
+    ["bottom", 0, -900],
+  ] as const) {
+    test(`panning to the ${edge} stops short of the map edge`, async ({
+      page,
+    }) => {
+      await page.goto("/");
+      const box = (await page.locator("#bpGM").boundingBox())!;
+      const cx = box.x + box.width / 2;
+      const cy = box.y + box.height / 2;
+
+      // Zoom in first. Fitted content is smaller than the map, so it is
+      // locked centred and a drag is a correct no-op with no limit to hit.
+      await page.locator('[data-zoom="in"]').click();
+      await page.locator('[data-zoom="in"]').click();
+
+      await page.mouse.move(cx, cy);
+      await page.mouse.down();
+      await page.mouse.move(cx + dx, cy + dy, { steps: 12 });
+      await page.mouse.up();
+
+      const inset = await page.evaluate(() => {
+        const host = document.querySelector("#bpGM")!;
+        const h = host.getBoundingClientRect();
+        const chips = [
+          ...host.querySelectorAll("[data-map-inner] [data-node]"),
+        ].map((el) => el.getBoundingClientRect());
+        const content = {
+          left: Math.min(...chips.map((r) => r.left)),
+          right: Math.max(...chips.map((r) => r.right)),
+          top: Math.min(...chips.map((r) => r.top)),
+          bottom: Math.max(...chips.map((r) => r.bottom)),
+        };
+        return {
+          left: content.left - h.left,
+          right: h.right - content.right,
+          top: content.top - h.top,
+          bottom: h.bottom - content.bottom,
+          overflowsX: content.right - content.left > h.width,
+          overflowsY: content.bottom - content.top > h.height,
+        };
+      });
+
+      // The clamp only applies once the content is bigger than the box; if
+      // the zoom above ever stopped overflowing it, this test would pass
+      // without exercising anything.
+      const overflows =
+        edge === "left" || edge === "right"
+          ? inset.overflowsX
+          : inset.overflowsY;
+      expect(overflows, `content overflows the map on the ${edge} axis`).toBe(
+        true,
+      );
+
+      expect(inset[edge], `${edge} inset at the pan limit`).toBeGreaterThan(
+        EDGE_PADDING[edge] - 2,
+      );
+      expect(inset[edge], `${edge} inset at the pan limit`).toBeLessThan(
+        EDGE_PADDING[edge] + 2,
+      );
+    });
+  }
+
   test("dragging the map does not open a node", async ({ page }) => {
     await page.goto("/");
     const node = page.locator("#bpGM [data-node='deckos']");

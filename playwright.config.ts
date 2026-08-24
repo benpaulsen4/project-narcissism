@@ -20,7 +20,7 @@ export default defineConfig({
   projects: [
     {
       name: "desktop",
-      testMatch: ["map.spec.ts", "no-js.spec.ts"],
+      testMatch: ["map.spec.ts", "layout.spec.ts", "no-js.spec.ts"],
       use: { ...devices["Desktop Chrome"] },
     },
     {
