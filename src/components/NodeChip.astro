@@ -32,7 +32,7 @@ const box = mobile
       row: "gap-2",
       dot: "size-1.5",
       label: "text-[11.5px]",
-      status: "mt-1.5 text-[8.5px]",
+      status: "mt-1.5 max-w-[20ch] text-[8.5px]",
       meta: "mt-1 text-[7.5px]",
     }
   : {
@@ -74,7 +74,7 @@ const box = mobile
       </span>
     ) : (
       <span
-        class="text-ink/38 block font-mono font-medium tracking-[0.14em]"
+        class="text-ink/38 block font-mono font-medium tracking-[0.14em] whitespace-nowrap"
         class:list={[box.meta]}
       >
         {node.meta}
@@ -131,10 +131,34 @@ const box = mobile
   }
   .chip-status {
     margin-top: calc(6 * var(--chip));
+    /* See the note above .chip-meta for why this is capped, and why in `ch`.
+       31ch is "brisbane · currently projecting"; the mobile chip drops the
+       "brisbane · " prefix so it caps at 20ch instead, in `box.status`. */
+    max-width: 31ch;
     font-size: calc(11.5 * var(--chip));
   }
   .chip-meta {
     margin-top: calc(4 * var(--chip));
     font-size: calc(9.5 * var(--chip));
   }
+
+  /*
+   * (Applies to .chip-status above and to the mobile `max-w-[20ch]`.)
+   * The core node's status line is the one piece of chip text whose length is
+   * not fixed: statusWord() returns "working", "cooking", "projecting" and so
+   * on, but between 22:00 and 23:59 Brisbane it returns "fiddling with the
+   * homelab" — half as long again as anything else. A chip is an absolutely
+   * positioned shrink-to-fit box, so that one string silently made the core
+   * chip ~40% wider for two hours a night, on a node that sits dead centre
+   * with a neighbour either side. The map's spacing is solved against a fixed
+   * set of chip sizes (see posFor in lib/nodes.ts), so a chip that resizes on
+   * a clock is a chip that collides on a clock.
+   *
+   * Capping the line makes the long status wrap to a second line instead of
+   * widening the chip: the box grows in the axis with room to spare rather
+   * than the one that is solved tight. The cap is in `ch` rather than px
+   * because this text is monospace, so 31ch is exactly "brisbane · currently
+   * projecting" — the longest status the chip is designed around — and it
+   * keeps tracking the font size at any `--chip` scale.
+   */
 </style>
