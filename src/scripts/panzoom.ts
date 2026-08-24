@@ -19,10 +19,50 @@ const MIN_SCALE = 0.5;
 const MAX_SCALE = 2.4;
 const DRAG_THRESHOLD_PX = 6;
 
-// How much breathing room the fitted view leaves around the content, as a
-// fraction of the host box's shorter side. Only ever shrinks the computed
-// fit further below FIT_SCALE — see computeFitScale.
-const FIT_PADDING_RATIO = 0.04;
+/**
+ * Fixed breathing room, in CSS px, between the outermost node chips and each
+ * edge of the map. It applies to the fitted view AND to the limits of a pan,
+ * which is the case that matters: without it a chip dragged to the edge sat
+ * flush against the border, and against the map's own overlay UI.
+ *
+ * The insets are per-edge because that UI is not evenly distributed. The
+ * "DRAG TO PAN - PINCH TO ZOOM" caption sits at the top-left and the
+ * zoom/fit buttons at the bottom-right (30px tall, 10px up from the bottom),
+ * so top and bottom need more clearance than the sides. Keep these in step
+ * with the overlay offsets in Map.astro.
+ */
+const EDGE_PADDING = { top: 24, right: 16, bottom: 44, left: 16 };
+
+/**
+ * The most of one axis the padding may consume, as a fraction. A landscape
+ * phone gives this map barely 100px of height, where a flat 68px of vertical
+ * padding would leave less room for content than for breathing room and
+ * crush the fit scale. Past this share both insets on the axis are scaled
+ * down together, so their ratio - and with it the asymmetry that clears the
+ * overlay UI - survives.
+ */
+const MAX_PADDING_SHARE = 0.3;
+
+interface EdgePadding {
+  top: number;
+  right: number;
+  bottom: number;
+  left: number;
+}
+
+/** EDGE_PADDING, reduced on either axis that cannot afford it in full. */
+function paddingFor(hostW: number, hostH: number): EdgePadding {
+  const fit = (start: number, end: number, host: number): [number, number] => {
+    const budget = host * MAX_PADDING_SHARE;
+    const total = start + end;
+    if (total <= budget) return [start, end];
+    const k = budget / total;
+    return [start * k, end * k];
+  };
+  const [top, bottom] = fit(EDGE_PADDING.top, EDGE_PADDING.bottom, hostH);
+  const [left, right] = fit(EDGE_PADDING.left, EDGE_PADDING.right, hostW);
+  return { top, right, bottom, left };
+}
 
 interface ContentBox {
   width: number;
@@ -52,18 +92,23 @@ function computeFitScale(
   ) {
     return FIT_SCALE;
   }
-  const pad = Math.min(hostW, hostH) * FIT_PADDING_RATIO;
-  const availW = Math.max(hostW - pad * 2, 1);
-  const availH = Math.max(hostH - pad * 2, 1);
+  const pad = paddingFor(hostW, hostH);
+  const availW = Math.max(hostW - pad.left - pad.right, 1);
+  const availH = Math.max(hostH - pad.top - pad.bottom, 1);
   const needed = Math.min(availW / content.width, availH / content.height);
   return Math.min(FIT_SCALE, needed);
 }
 
 /**
  * Clamps one axis of translation so the scaled content can never be panned
- * entirely off the host box: when the content is bigger than the box its
- * far edge can never move past the box's edge, and when it is smaller (the
- * fitted case) it is locked centred rather than allowed to drift.
+ * entirely off the host box, and stops short of the box's edges by
+ * `padStart`/`padEnd` so a chip at the limit of a pan keeps its breathing
+ * room. When the content is smaller than that padded box it is locked to the
+ * padded box's centre rather than allowed to drift.
+ *
+ * All positions are measured from the host box's centre, so the padded box
+ * runs from `-hostSize / 2 + padStart` to `hostSize / 2 - padEnd`, and its
+ * own centre sits at `(padStart - padEnd) / 2` whenever the two differ.
  */
 function clampAxis(
   v: number,
@@ -71,14 +116,21 @@ function clampAxis(
   size: number,
   hostSize: number,
   scale: number,
+  padStart: number,
+  padEnd: number,
 ): number {
   const scaledSize = size * scale;
   const half = scaledSize / 2;
-  if (scaledSize <= hostSize) {
-    return -offset * scale;
+  const avail = hostSize - padStart - padEnd;
+  const center = (padStart - padEnd) / 2;
+
+  if (scaledSize <= avail) {
+    return center - offset * scale;
   }
-  const min = hostSize / 2 - half - offset * scale;
-  const max = half - hostSize / 2 - offset * scale;
+  // Content overflows the padded box, so it may be panned only until the
+  // trailing edge reaches the padded box's matching edge.
+  const min = hostSize / 2 - padEnd - half - offset * scale;
+  const max = half - hostSize / 2 + padStart - offset * scale;
   return Math.min(max, Math.max(min, v));
 }
 
@@ -144,8 +196,25 @@ export function initPanZoom(): void {
   const clampTranslation = () => {
     if (!content) return;
     const hostRect = host.getBoundingClientRect();
-    tx = clampAxis(tx, content.offsetX, content.width, hostRect.width, scale);
-    ty = clampAxis(ty, content.offsetY, content.height, hostRect.height, scale);
+    const pad = paddingFor(hostRect.width, hostRect.height);
+    tx = clampAxis(
+      tx,
+      content.offsetX,
+      content.width,
+      hostRect.width,
+      scale,
+      pad.left,
+      pad.right,
+    );
+    ty = clampAxis(
+      ty,
+      content.offsetY,
+      content.height,
+      hostRect.height,
+      scale,
+      pad.top,
+      pad.bottom,
+    );
   };
 
   /**
