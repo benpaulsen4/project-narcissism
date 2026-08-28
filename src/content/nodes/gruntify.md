@@ -4,8 +4,8 @@ kind: job
 order: 1
 meta: JOB · 2022 → NOW
 eyebrow: JOB · 2022 → NOW · PLATFORM LEAD
-pos: { x: 0.156, y: 0.208 }
-posMobile: { x: 0.156, y: 0.122 }
+pos: { x: 0.156, y: 0.156 }
+posMobile: { x: 0.156, y: 0.098 }
 wiredTo: [frontend, backend, platform, product]
 highlights:
   - label: AI FEATURES, DESIGN TO SHIP

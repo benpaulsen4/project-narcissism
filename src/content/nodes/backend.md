@@ -4,8 +4,8 @@ kind: capability
 order: 2
 meta: CAPABILITY
 eyebrow: CAPABILITY · EVERY DAY
-pos: { x: 0.78, y: 0.5 }
-posMobile: { x: 0.85, y: 0.5 }
+pos: { x: 0.78, y: 0.45 }
+posMobile: { x: 0.85, y: 0.45 }
 tags: [C# / .NET, Node.js, Hono, Postgres, Drizzle, MongoDB, REST]
 seo:
   title: Backend — Ben Paulsen

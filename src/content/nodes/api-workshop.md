@@ -4,8 +4,8 @@ kind: project
 order: 3
 meta: PROJECT · 2025
 eyebrow: PROJECT · JUNE 2025 · SCHEMA EDITOR
-pos: { x: 0.711, y: 0.877 }
-posMobile: { x: 0.644, y: 0.923 }
+pos: { x: 0.679, y: 0.875 }
+posMobile: { x: 0.664, y: 1 }
 wiredTo: [frontend, platform]
 screenshot: ../../assets/projects/api-workshop.png
 stack: TS · ANGULAR · RXDB · RAILWAY

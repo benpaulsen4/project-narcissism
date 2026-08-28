@@ -4,8 +4,8 @@ kind: project
 order: 2
 meta: PROJECT · 2025
 eyebrow: PROJECT · NOVEMBER 2025 · SOCIAL
-pos: { x: 0.878, y: 0.65 }
-posMobile: { x: 0.856, y: 0.745 }
+pos: { x: 0.853, y: 0.74 }
+posMobile: { x: 0.833, y: 0.79 }
 wiredTo: [frontend, backend]
 screenshot: ../../assets/projects/watchthis.png
 stack: TS · NEXT.JS · DRIZZLE · POSTGRES

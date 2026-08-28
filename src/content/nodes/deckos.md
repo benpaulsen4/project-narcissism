@@ -4,8 +4,8 @@ kind: project
 order: 1
 meta: PROJECT · 2026
 eyebrow: PROJECT · APRIL 2026 · SELF-HOSTED
-pos: { x: 0.853, y: 0.195 }
-posMobile: { x: 0.833, y: 0.122 }
+pos: { x: 0.853, y: 0.156 }
+posMobile: { x: 0.833, y: 0.098 }
 wiredTo: [frontend, backend, platform]
 screenshot: ../../assets/projects/deckos.png
 stack: TS · REACT · HONO · DOCKER

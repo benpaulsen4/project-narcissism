@@ -4,8 +4,8 @@ kind: education
 order: 1
 meta: EDUCATION · 2019–22
 eyebrow: EDUCATION · BRISBANE · ORIGIN NODE
-pos: { x: 0.124, y: 0.78 }
-posMobile: { x: 0.144, y: 0.765 }
+pos: { x: 0.156, y: 0.74 }
+posMobile: { x: 0.156, y: 0.79 }
 stack: CS + BUSINESS · DISTINCTION · 2019–2022
 seo:
   title: QUT — Ben Paulsen

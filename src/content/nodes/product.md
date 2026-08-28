@@ -4,8 +4,8 @@ kind: capability
 order: 4
 meta: CAPABILITY
 eyebrow: CAPABILITY · THE OTHER HALF OF THE DEGREE
-pos: { x: 0.22, y: 0.5 }
-posMobile: { x: 0.15, y: 0.5 }
+pos: { x: 0.22, y: 0.45 }
+posMobile: { x: 0.15, y: 0.45 }
 tags:
   [Solutions consulting, Discovery, Roadmapping, Support leadership, UI design]
 seo:

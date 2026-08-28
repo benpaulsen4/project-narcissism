@@ -4,7 +4,7 @@ kind: core
 order: 0
 meta: CORE
 eyebrow: SOFTWARE DEVELOPER · BRISBANE, AU
-pos: { x: 0.5, y: 0.5 }
+pos: { x: 0.5, y: 0.45 }
 wiredTo: [frontend, backend, platform, product, qut]
 stats:
   - { value: "%CAREER_YEARS% yrs", label: SHIPPING SOFTWARE }

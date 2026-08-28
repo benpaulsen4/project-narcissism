@@ -4,8 +4,8 @@ kind: capability
 order: 1
 meta: CAPABILITY
 eyebrow: CAPABILITY · EVERY DAY
-pos: { x: 0.5, y: 0.24 }
-posMobile: { x: 0.5, y: 0.245 }
+pos: { x: 0.5, y: 0.192 }
+posMobile: { x: 0.5, y: 0.196 }
 tags: [Angular, React, TypeScript, Next.js, RxJS, HTML/CSS, UX design]
 seo:
   title: Frontend — Ben Paulsen

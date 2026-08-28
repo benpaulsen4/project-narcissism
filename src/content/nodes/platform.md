@@ -4,8 +4,8 @@ kind: capability
 order: 3
 meta: CAPABILITY
 eyebrow: CAPABILITY · INFRA AS CODE, CI/CD
-pos: { x: 0.5, y: 0.76 }
-posMobile: { x: 0.5, y: 0.755 }
+pos: { x: 0.5, y: 0.70 }
+posMobile: { x: 0.5, y: 0.70 }
 tags:
   [
     Azure,
