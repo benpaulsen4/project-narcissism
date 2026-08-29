@@ -31,13 +31,14 @@ const VH = 1000;
   class="relative overflow-hidden bg-[radial-gradient(rgba(255,255,255,.05)_1px,transparent_1px)]"
   class:list={[
     mobile
-      ? // 392px is the design's height, but it is a ceiling rather than a
-        // constant: a short landscape phone has to leave room for the header,
-        // the legend row and the panel, and this column is inside an
-        // `h-dvh` / `overflow-hidden` shell, so an over-tall map used to push
-        // the panel clean off the bottom of the screen. 260px is the budget
-        // the rest of the column needs (header + legend + a usable panel).
-        "h-[min(392px,100dvh_-_260px)] touch-none bg-[size:28px_28px]"
+      ? // The map takes whatever the column gives it, which is now
+        // everything below the header and the legend strip. It used to be
+        // capped at `min(392px, 100dvh - 260px)` because the reading panel
+        // shared the column and needed a floor of its own — on a landscape
+        // phone that arithmetic left the map a 130px letterbox. The panel
+        // is an overlay now (see Screen.astro), so there is nothing left to
+        // budget against and the cap goes with it.
+        "h-full touch-none bg-[size:28px_28px]"
       : // The desktop chips size themselves off this element's width — see
         // the scale unit in NodeChip.astro.
         "[container-type:inline-size] h-full bg-[size:34px_34px]",
@@ -107,10 +108,43 @@ const VH = 1000;
   {
     mobile && (
       <>
-        <p class="text-ink/30 pointer-events-none absolute top-2.5 left-4 z-6 m-0 font-mono text-[8.5px] font-medium tracking-[0.12em]">
-          DRAG TO PAN · PINCH TO ZOOM
+        {/* Two lines sharing one grid cell, crossfaded by `data-hint`. The
+            shared cell is what keeps the box sized to the longer of them
+            from the start, so the swap several seconds into a visit cannot
+            move or resize the corner it sits in. The pan/zoom line is the
+            one the server renders as visible, so nothing here depends on
+            the hint script running. */}
+        <p
+          data-map-hint
+          class="pointer-events-none absolute top-2.5 left-4 z-6 m-0 grid font-mono text-[8.5px] font-medium tracking-[0.12em]"
+        >
+          <span data-hint-pan class="text-ink/30 col-start-1 row-start-1">
+            DRAG TO PAN · PINCH TO ZOOM
+          </span>
+          <span data-hint-tap class="text-accent col-start-1 row-start-1">
+            TAP ANY NODE TO READ MORE
+          </span>
         </p>
-        <div class="absolute right-3 bottom-2.5 z-6 flex gap-1.5">
+        {/* The legend shares the bottom edge with the zoom controls
+            opposite, and on one line the pair needs 374px of width — so
+            below that the legend wraps rather than colliding. The 148px
+            reserved here is the room the other end of that edge needs:
+            113px of controls, their 12px offset from the right, this
+            legend's own 16px offset from the left, and ~7px of gap
+            between the two. Keep it in step with those offsets. The
+            two-line case still fits inside the vertical room
+            `EDGE_PADDING.bottom` in panzoom.ts reserves, so a panned chip
+            cannot come to rest under it. */}
+        <div
+          data-legend
+          class="absolute bottom-2.5 left-4 z-6 max-w-[calc(100%-148px)]"
+        >
+          <Legend variant="mobile" />
+        </div>
+        <div
+          data-zoom-controls
+          class="absolute right-3 bottom-2.5 z-6 flex gap-1.5"
+        >
           <button
             type="button"
             data-zoom="out"

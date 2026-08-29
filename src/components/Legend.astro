@@ -12,10 +12,16 @@ const items = [
 ];
 ---
 
+<!-- The mobile variant wraps: it sits in the map's bottom-left corner
+     opposite the zoom controls, and on a phone narrower than ~375px the
+     two cannot share one line. The desktop variant has a corner to
+     itself and never needs to. -->
 <div
   class="text-ink/42 flex items-center font-mono font-medium tracking-[0.1em]"
   class:list={[
-    variant === "mobile" ? "gap-3 text-[8.5px]" : "gap-[18px] text-[10.5px]",
+    variant === "mobile"
+      ? "flex-wrap gap-x-3 gap-y-1 text-[8.5px]"
+      : "gap-[18px] text-[10.5px]",
   ]}
 >
   {

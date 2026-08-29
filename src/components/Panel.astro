@@ -40,11 +40,21 @@ const stats = node.stats?.map((s) => ({
 const Heading = active ? "h1" : "h2";
 ---
 
+<!-- The id is what makes `/#ben` expressible without JavaScript: it is the
+     only way to distinguish "core node open" from `/`, which the mobile
+     rendition reads as "sheet closed". Only the core node's is acted on
+     (see the sheet rules in global.css); the rest are stamped for
+     consistency rather than because anything targets them.
+
+     `top-11` clears the sheet's handle-and-close bar, which is chrome on
+     the sheet rather than on any one panel. Above the breakpoint there is
+     no bar and the panel fills its column as before. -->
 <article
+  id={node.id}
   data-panel={node.id}
   data-active={active ? "" : null}
   inert={active ? undefined : true}
-  class="desktop:px-[30px] desktop:pt-6 desktop:pb-6 absolute inset-0 translate-y-2.5 overflow-auto px-5 pt-[18px] pb-[26px] opacity-0 transition-[opacity,transform] duration-[380ms] data-active:translate-y-0 data-active:opacity-100"
+  class="desktop:px-[30px] desktop:pt-6 desktop:pb-6 desktop:top-0 absolute inset-x-0 top-11 bottom-0 translate-y-2.5 overflow-auto px-5 pt-[18px] pb-[26px] opacity-0 transition-[opacity,transform] duration-[380ms] data-active:translate-y-0 data-active:opacity-100"
 >
   <Heading
     class="font-display desktop:text-[30px] m-0 text-[21px] font-bold tracking-[-0.03em]"
@@ -63,8 +73,8 @@ const Heading = active ? "h1" : "h2";
         src={node.screenshot}
         alt={`${node.label} screenshot`}
         widths={[400, 800]}
-        sizes="(max-width: 900px) 90vw, 380px"
-        class="mt-[18px] w-full rounded-[10px] border border-white/9 object-cover"
+        sizes="380px"
+        class="mt-[18px] w-full max-w-[380px] rounded-[10px] border border-white/9 object-cover"
       />
     )
   }

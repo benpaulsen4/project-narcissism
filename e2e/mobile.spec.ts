@@ -152,9 +152,23 @@ test.describe("mobile map", () => {
       await page.locator('[data-zoom="in"]').click();
       await page.locator('[data-zoom="in"]').click();
 
+      // One move, not an interpolated sweep. A drag that starts over the
+      // map is cancelled by the browser straight after its first
+      // pointermove: panzoom.ts receives `pointercancel`, drops the
+      // gesture, and every later step is ignored. So a stepped move only
+      // ever pans by its FIRST step — 75px of the 900 asked for here.
+      // This test passed on that alone while the map was 392px tall,
+      // because 75px already reached the limit in a box that small; the
+      // map now fills the column and it does not. Sending the whole delta
+      // in the one move that gets through removes the dependency on how
+      // many moves survive, which is the part that was never being
+      // asserted and differs between engines. (Verified in Chromium; the
+      // suite's mobile project is WebKit, which cannot be launched on
+      // every dev machine, so this is deliberately not written to depend
+      // on either engine's cancellation timing.)
       await page.mouse.move(cx, cy);
       await page.mouse.down();
-      await page.mouse.move(cx + dx, cy + dy, { steps: 12 });
+      await page.mouse.move(cx + dx, cy + dy);
       await page.mouse.up();
 
       const inset = await page.evaluate(() => {
@@ -216,5 +230,117 @@ test.describe("mobile map", () => {
     await page.mouse.up();
 
     await expect(page).toHaveURL("/");
+  });
+});
+
+/**
+ * A visitor who lands on the map and does not realise the nodes are
+ * tappable has no way forward — the reading panel is an overlay now, so
+ * there is nothing on screen telling them what a node does. The map's
+ * existing top-left caption takes that job over after a few seconds of
+ * nothing being opened, rather than a new piece of furniture being added
+ * to the two corners that are already spoken for.
+ *
+ * These tests wait out the real delay instead of reaching into the module
+ * for it. A shorter delay exposed for the suite's benefit would be
+ * test-only code in a shipped script, and it would stop the tests from
+ * proving the thing that actually matters — that the prompt arrives on
+ * its own, without being asked.
+ */
+test.describe("the tap prompt", () => {
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(testInfo.project.name !== "mobile");
+  });
+
+  test("the map opens showing the pan and zoom caption", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("[data-hint-pan]")).toBeVisible();
+    await expect(page.locator("[data-hint-tap]")).toBeHidden();
+  });
+
+  test("the prompt takes over after a few seconds with nothing open", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.locator("[data-hint-tap]")).toBeVisible({
+      timeout: 10_000,
+    });
+    await expect(page.locator("[data-hint-pan]")).toBeHidden();
+  });
+
+  /**
+   * Swapping the caption must not resize it, or the map's top-left corner
+   * visibly jumps several seconds after load. The two lines share one grid
+   * cell precisely so the box is sized to the longer of them from the
+   * start.
+   */
+  test("the swap does not move or resize the caption", async ({ page }) => {
+    await page.goto("/");
+    const caption = page.locator("[data-map-hint]");
+    const before = (await caption.boundingBox())!;
+
+    await expect(page.locator("[data-hint-tap]")).toBeVisible({
+      timeout: 10_000,
+    });
+    const after = (await caption.boundingBox())!;
+
+    expect(after.x, "caption x").toBeCloseTo(before.x, 0);
+    expect(after.y, "caption y").toBeCloseTo(before.y, 0);
+    expect(after.width, "caption width").toBeCloseTo(before.width, 0);
+    expect(after.height, "caption height").toBeCloseTo(before.height, 0);
+  });
+
+  test("a node route never prompts, because its panel is already open", async ({
+    page,
+  }) => {
+    await page.goto("/gruntify");
+    await page.waitForTimeout(7000);
+    await expect(page.locator("[data-hint-tap]")).toBeHidden();
+    // The caption itself is still there showing its usual line — without
+    // this, a build that dropped the prompt markup altogether would pass.
+    await expect(page.locator("[data-hint-pan]")).toBeVisible();
+  });
+
+  test("opening a node retires the prompt for the rest of the page", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.locator("[data-hint-tap]")).toBeVisible({
+      timeout: 10_000,
+    });
+
+    await page.locator("#bpGM [data-node='gruntify']").tap();
+    await expect(page.locator("[data-hint-tap]")).toBeHidden();
+
+    // Closing the sheet must not bring it back. This visitor has been
+    // shown what a node does, and waiting well past the delay proves the
+    // timer is spent rather than merely restarted.
+    await page.locator("[data-sheet-close]").tap();
+    await page.waitForTimeout(7000);
+    await expect(page.locator("[data-hint-tap]")).toBeHidden();
+    await expect(page.locator("[data-hint-pan]")).toBeVisible();
+  });
+
+  /**
+   * Suppression lasts for the page, not for the tab.
+   *
+   * It used to be persisted in `sessionStorage`, on the reasoning that a
+   * visitor should only ever be told once. In practice that meant the
+   * first node anyone opened silenced the prompt for the whole life of
+   * the tab, reloads included — so on any browser that had been used to
+   * look at the site even once, the prompt simply never appeared again.
+   * A five-second caption in a corner is not worth remembering that hard.
+   */
+  test("a reload arms the prompt again", async ({ page }) => {
+    await page.goto("/");
+    await page.locator("#bpGM [data-node='gruntify']").tap();
+    await page.locator("[data-sheet-close]").tap();
+    await expect(page.locator("[data-hint-tap]")).toBeHidden();
+
+    await page.reload();
+
+    await expect(page.locator("[data-hint-tap]")).toBeVisible({
+      timeout: 10_000,
+    });
   });
 });

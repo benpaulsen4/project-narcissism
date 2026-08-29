@@ -1,6 +1,5 @@
 ---
 import Header from "./Header.astro";
-import Legend from "./Legend.astro";
 import Map from "./Map.astro";
 import Panel from "./Panel.astro";
 import type { SiteNode } from "../lib/nodes";
@@ -11,6 +10,14 @@ interface Props {
 }
 
 const { nodes, activeId } = Astro.props;
+
+// `/` means "the map"; every other route means "reading that node". So the
+// mobile sheet's open state is a pure function of the route, decided here
+// at build time — which is what lets a cold load of /gruntify arrive with
+// its panel already open and no script involved. The one state a path
+// cannot express is the core node open, because `/` is already spoken for;
+// that is `/#ben`, and a `:target` rule in global.css covers it.
+const sheetOpen = activeId !== "ben";
 ---
 
 <div class="flex h-dvh flex-col overflow-hidden">
@@ -19,31 +26,68 @@ const { nodes, activeId } = Astro.props;
   <div
     class="max-desktop:flex max-desktop:flex-col grid min-h-0 flex-1 grid-cols-[1fr_440px]"
   >
-    <nav class="max-desktop:flex-none relative" aria-label="System map">
+    <nav
+      class="max-desktop:min-h-0 max-desktop:flex-1 relative"
+      aria-label="System map"
+    >
       <div class="max-desktop:hidden h-full">
         <Map nodes={nodes} activeId={activeId} variant="desktop" />
       </div>
-      <div class="max-desktop:block hidden">
+      <!-- The mobile map now owns everything below the header at any
+           orientation. It used to share the column with the reading panel,
+           which a landscape phone cannot fund: 390px of height had to
+           cover a header, a legend, a map and something readable. -->
+      <div class="max-desktop:block hidden h-full">
         <Map nodes={nodes} activeId={activeId} variant="mobile" />
       </div>
     </nav>
 
-    <div class="max-desktop:block hidden border-y border-white/7 px-5 py-2.5">
-      <Legend variant="mobile" />
-    </div>
+    <!-- Desktop: the grid's second column, a fixed 440px reading panel
+         beside the map, exactly as before. Mobile: an overlay summoned
+         over the map and dismissed again. One element serves both, so the
+         rendition-specific half lives in global.css behind the shared
+         `max-desktop` variant rather than being duplicated here.
 
-    <!-- The floor matters only on the narrow column, where the panel is the
-         flexible item: it guarantees the panel keeps a readable, scrollable
-         height even if the fixed pieces above it grow (a wrapped header, a
-         taller legend) on a very short viewport. -->
+         `data-open` is the server's answer for this route. The island
+         takes ownership of it once it runs; see initMap. -->
     <div
-      class="bg-panel max-desktop:min-h-[120px] max-desktop:flex-1 max-desktop:border-t max-desktop:border-l-0 relative min-h-0 border-l border-white/8"
+      data-sheet
+      data-open={sheetOpen ? "" : null}
+      class="desktop:border-l desktop:relative desktop:min-h-0 border-white/8"
     >
-      {
-        nodes.map((node) => (
-          <Panel node={node} nodes={nodes} active={node.id === activeId} />
-        ))
-      }
+      <!-- Positioned by `desktop:` utilities above the breakpoint and by
+           the sheet rules in global.css below it. The insets are not set
+           unconditionally because Tailwind emits utilities in a later
+           layer than those rules, so an `inset-0` here would quietly win
+           over the sheet's own `top` and pin the surface to the top of
+           the viewport. -->
+      <div data-sheet-surface class="bg-panel desktop:inset-0 absolute">
+        <!-- Sheet chrome: mobile only. The handle marks the surface as
+             something that can be dismissed, and the close control is a
+             real link to `/` so it still works with no JavaScript — from a
+             node route it is a navigation, and from `/#ben` it simply
+             drops the fragment that was holding the sheet open. -->
+        <div
+          class="bg-panel desktop:hidden absolute inset-x-0 top-0 z-10 flex h-11 items-center justify-end rounded-t-2xl px-3"
+        >
+          <span
+            class="bg-ink/20 pointer-events-none absolute top-2 left-1/2 h-1 w-9 -translate-x-1/2 rounded-full"
+            aria-hidden="true"></span>
+          <a
+            data-sheet-close
+            href="/"
+            aria-label="Close reading panel"
+            class="text-ink/60 flex size-8 items-center justify-center rounded-full border border-white/12 font-mono text-[13px] leading-none no-underline"
+            >✕</a
+          >
+        </div>
+
+        {
+          nodes.map((node) => (
+            <Panel node={node} nodes={nodes} active={node.id === activeId} />
+          ))
+        }
+      </div>
     </div>
   </div>
 </div>
@@ -52,8 +96,12 @@ const { nodes, activeId } = Astro.props;
   import { initMap } from "../scripts/map";
   import { initPanZoom } from "../scripts/panzoom";
   import { initStatus } from "../scripts/status";
+  import { initHint } from "../scripts/hint";
 
   initMap();
   initPanZoom();
   initStatus();
+  // After initMap, which is what settles `data-open` on the sheet — the
+  // hint reads it to decide whether this visitor needs prompting at all.
+  initHint();
 </script>

@@ -20,12 +20,17 @@ export default defineConfig({
   projects: [
     {
       name: "desktop",
-      testMatch: ["map.spec.ts", "layout.spec.ts", "no-js.spec.ts"],
+      testMatch: [
+        "map.spec.ts",
+        "layout.spec.ts",
+        "sheet.spec.ts",
+        "no-js.spec.ts",
+      ],
       use: { ...devices["Desktop Chrome"] },
     },
     {
       name: "mobile",
-      testMatch: ["mobile.spec.ts", "no-js.spec.ts"],
+      testMatch: ["mobile.spec.ts", "sheet.spec.ts", "no-js.spec.ts"],
       use: { ...devices["iPhone 14 Pro"] },
     },
   ],

@@ -431,11 +431,52 @@ test.describe("map geometry away from the two default viewports", () => {
     }
   });
 
-  test("the panel is reachable on a short landscape phone (640x360)", async ({
+  /**
+   * A short landscape phone is the viewport this layout was hardest to
+   * satisfy, and the contract for it has changed. The panel used to have
+   * to be on screen in the column alongside the map at every route, which
+   * is what a 360px-tall viewport could not honour for both at once — the
+   * map was squeezed to a letterbox to keep a sliver of panel visible.
+   * The panel is an overlay now, so the two claims are separate:
+   *
+   *   on `/`      the map owns the viewport and no panel is on screen
+   *   on a route  the panel is on screen, and tall enough to read
+   *
+   * Both are asserted, because a regression in either direction — a panel
+   * that will not open, or one that never goes away — is the failure this
+   * viewport is here to catch.
+   */
+  test("the map owns a short landscape phone until a panel is opened (640x360)", async ({
     page,
   }) => {
     await page.setViewportSize({ width: 640, height: 360 });
     await page.goto("/");
+
+    const closed = await page.evaluate(() => {
+      const host = document.querySelector("#bpGM")!.getBoundingClientRect();
+      const sheet = document.querySelector("[data-sheet]")!;
+      return {
+        mapHeight: host.height,
+        mapBottom: host.bottom,
+        sheetHidden: getComputedStyle(sheet).visibility === "hidden",
+        viewportHeight: window.innerHeight,
+      };
+    });
+
+    expect(closed.sheetHidden, "sheet hidden on /").toBe(true);
+    // Whatever is left below the header and the legend strip is the map's.
+    expect(closed.mapHeight, "map height").toBeGreaterThan(200);
+    expect(
+      closed.mapBottom,
+      "map reaches the bottom of the viewport",
+    ).toBeGreaterThan(closed.viewportHeight - 2);
+  });
+
+  test("an opened panel is readable on a short landscape phone (640x360)", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 640, height: 360 });
+    await page.goto("/gruntify");
 
     const measured = await page.evaluate(() => {
       const panel = document.querySelector("[data-panel][data-active]")!;
@@ -443,6 +484,7 @@ test.describe("map geometry away from the two default viewports", () => {
       return {
         hostHeight: host.getBoundingClientRect().height,
         panelTop: panel.getBoundingClientRect().top,
+        panelHeight: panel.getBoundingClientRect().height,
         viewportHeight: window.innerHeight,
       };
     });
@@ -452,6 +494,10 @@ test.describe("map geometry away from the two default viewports", () => {
       measured.viewportHeight,
     );
     expect(measured.panelTop, "active panel top").toBeGreaterThanOrEqual(0);
+    // Reachable is not the same as readable: the sheet has to leave a
+    // usable amount of the panel on screen once its own chrome is taken
+    // off the top, or landscape is no better off than it was before.
+    expect(measured.panelHeight, "readable panel height").toBeGreaterThan(180);
   });
 
   // 1000px used to render the (broken) desktop rendition — it is now

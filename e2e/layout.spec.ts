@@ -313,3 +313,157 @@ test.describe("header", () => {
     });
   }
 });
+
+/**
+ * The legend lives in the mobile map's bottom-left corner, mirroring the
+ * desktop rendition, rather than in a strip of its own above the map —
+ * that strip cost the map ~34px of height on the viewports with least to
+ * spare.
+ *
+ * It has to share the bottom edge with the zoom controls in the opposite
+ * corner, and on one line it does not fit: the legend measures ~225px and
+ * the controls ~113px, which with the corner offsets needs 374px of
+ * width. That is fine from 375px up and collides at 360 and 320, so the
+ * legend wraps. This sweeps the widths either side of that threshold,
+ * because a regression here changes no markup at all — the legend and the
+ * controls are both present and correct in the DOM in every broken case.
+ */
+test.describe("the mobile map's legend", () => {
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop");
+  });
+
+  // Either side of the 374px one-line threshold, plus a landscape phone
+  // and the top of the band the mobile rendition serves (breakpoint 1152).
+  const VIEWPORTS: Array<[number, number]> = [
+    [320, 720],
+    [360, 740],
+    [375, 812],
+    [393, 659],
+    [412, 915],
+    [844, 390],
+    [1000, 800],
+    [1151, 700],
+  ];
+
+  for (const [width, height] of VIEWPORTS) {
+    test(`the legend clears the zoom controls at ${width}x${height}`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto("/");
+
+      const measured = await page.evaluate(() => {
+        const mapEl = document.querySelector("#bpGM");
+        const legendEl = document.querySelector("#bpGM [data-legend]");
+        const zoomEl = document.querySelector("#bpGM [data-zoom-controls]");
+        if (!mapEl || !legendEl || !zoomEl) return null;
+
+        const map = mapEl.getBoundingClientRect();
+        const legend = legendEl.getBoundingClientRect();
+        const zoom = zoomEl.getBoundingClientRect();
+        const overlapW =
+          Math.min(legend.right, zoom.right) - Math.max(legend.left, zoom.left);
+        const overlapH =
+          Math.min(legend.bottom, zoom.bottom) - Math.max(legend.top, zoom.top);
+
+        return {
+          overlaps: overlapW > 0.5 && overlapH > 0.5,
+          insideMap:
+            legend.left >= map.left - 0.5 &&
+            legend.right <= map.right + 0.5 &&
+            legend.bottom <= map.bottom + 0.5 &&
+            legend.top >= map.top - 0.5,
+          fromLeft: legend.left - map.left,
+          fromBottom: map.bottom - legend.bottom,
+          height: legend.height,
+        };
+      });
+
+      expect(
+        measured,
+        "legend and zoom controls inside the mobile map",
+      ).not.toBeNull();
+      expect(
+        measured!.overlaps,
+        `legend overlaps the zoom controls at ${width}x${height}`,
+      ).toBe(false);
+      expect(measured!.insideMap, "legend inside the map box").toBe(true);
+      expect(
+        measured!.fromLeft,
+        "legend inset from the map's left",
+      ).toBeLessThan(24);
+      expect(
+        measured!.fromBottom,
+        "legend inset from the map's bottom",
+      ).toBeLessThan(24);
+      // Wrapping to a second line is allowed, but the whole legend has to
+      // stay inside the vertical room panzoom.ts reserves along the bottom
+      // edge (EDGE_PADDING.bottom = 44), or a panned chip can come to rest
+      // underneath it.
+      expect(
+        measured!.fromBottom + measured!.height,
+        "legend's total footprint above the map's bottom edge",
+      ).toBeLessThan(44);
+    });
+  }
+});
+
+/**
+ * A panel screenshot is `w-full`, which on the desktop panel and a
+ * portrait phone is the right answer — both are around 353-380px wide. A
+ * landscape phone is not: the sheet is as wide as the viewport there, so
+ * an uncapped screenshot rendered ~800px across and buried the copy under
+ * it. The cap is a width, so the image keeps its aspect ratio and nothing
+ * is cropped.
+ */
+test.describe("panel screenshots", () => {
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(testInfo.project.name !== "desktop");
+  });
+
+  const CAP = 380;
+
+  for (const [label, width, height, minWidth] of [
+    ["desktop", 1440, 900, 370],
+    ["portrait phone", 393, 812, 330],
+    ["landscape phone", 844, 390, 370],
+  ] as const) {
+    test(`the screenshot is capped at ${CAP}px wide (${label})`, async ({
+      page,
+    }) => {
+      await page.setViewportSize({ width, height });
+      await page.goto("/deckos");
+
+      const img = page.locator('[data-panel="deckos"] img');
+      const box = (await img.boundingBox())!;
+      const panel = (await page
+        .locator('[data-panel="deckos"]')
+        .boundingBox())!;
+
+      expect(box.width, `screenshot width (${label})`).toBeLessThanOrEqual(
+        CAP + 1,
+      );
+      // Not merely small: an image that failed to load, or one collapsed
+      // by a bad cap, would satisfy the assertion above on its own.
+      expect(box.width, `screenshot still renders (${label})`).toBeGreaterThan(
+        minWidth,
+      );
+      expect(
+        box.width,
+        `screenshot fits its panel (${label})`,
+      ).toBeLessThanOrEqual(panel.width);
+    });
+  }
+
+  // Without this the landscape case above proves nothing: if the panel
+  // were narrower than the cap, `w-full` alone would satisfy it.
+  test("the landscape panel is wide enough for the cap to bind", async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 844, height: 390 });
+    await page.goto("/deckos");
+    const panel = (await page.locator('[data-panel="deckos"]').boundingBox())!;
+    expect(panel.width, "landscape panel width").toBeGreaterThan(CAP + 120);
+  });
+});

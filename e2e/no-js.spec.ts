@@ -141,3 +141,66 @@ test("the status word is server-rendered and non-empty on every route", async ({
     expect(text).toContain("currently");
   }
 });
+
+/**
+ * The mobile rendition puts the reading panel in an overlay sheet whose
+ * open state is derived from the URL. That derivation has to hold with no
+ * script at all, or the per-node static pages — the reason this rebuild
+ * exists — would degrade to a map with no way to read anything.
+ *
+ * The sheet's markup carries the server's answer for the route, and a
+ * `:target` rule covers the one state a path alone cannot express: the
+ * core node open, at `/#ben`. Both halves are exercised here because both
+ * are load-bearing and neither involves JavaScript.
+ */
+test.describe("the reading sheet without JavaScript", () => {
+  test.beforeEach(async ({}, testInfo) => {
+    test.skip(
+      testInfo.project.name !== "mobile",
+      "the sheet is the mobile rendition of the panel",
+    );
+  });
+
+  test("/ serves the map with the sheet closed", async ({ page }) => {
+    await page.goto("/");
+    await expect(page.locator("[data-sheet]")).toHaveCount(1);
+    await expect(page.locator("[data-sheet]")).toBeHidden();
+  });
+
+  test("a node route serves its sheet open", async ({ page }) => {
+    await page.goto("/gruntify");
+    await expect(page.locator("[data-sheet]")).toBeVisible();
+    await expect(page.locator('[data-panel="gruntify"]')).toBeVisible();
+  });
+
+  test("/#ben opens the core node's sheet", async ({ page }) => {
+    await page.goto("/#ben");
+    await expect(page.locator("[data-sheet]")).toBeVisible();
+    await expect(page.locator('[data-panel="ben"]')).toBeVisible();
+  });
+
+  test("the core node's chip links to the fragment that opens it", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.locator('#bpGM [data-node="ben"]')).toHaveAttribute(
+      "href",
+      "/#ben",
+    );
+  });
+
+  test("the close control is a real link back to the map", async ({ page }) => {
+    await page.goto("/gruntify");
+    await page.locator("[data-sheet-close]").click();
+
+    await expect(page).toHaveURL("/");
+    await expect(page.locator("[data-sheet]")).toBeHidden();
+  });
+
+  test("the close control also clears the fragment", async ({ page }) => {
+    await page.goto("/#ben");
+    await page.locator("[data-sheet-close]").click();
+
+    await expect(page.locator("[data-sheet]")).toBeHidden();
+  });
+});

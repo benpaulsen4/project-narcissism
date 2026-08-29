@@ -12,7 +12,12 @@ const { node, variant, active } = Astro.props;
 const mobile = variant === "mobile";
 const status = statusWord();
 const pos = posFor(node, variant);
-const href = node.id === "ben" ? "/" : `/${node.id}`;
+// `/` is the core node's canonical URL, and on the mobile rendition it
+// also means "sheet closed" — so the core chip cannot link there without
+// linking to its own dismissal. The fragment is the difference, and it is
+// what a `:target` rule in global.css acts on when no script is running.
+// Desktop has no sheet and no such collision, so it keeps the bare path.
+const href = node.id === "ben" ? (mobile ? "/#ben" : "/") : `/${node.id}`;
 
 const dotClass = {
   core: "bg-accent",
